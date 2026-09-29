@@ -1,0 +1,32 @@
+{
+  "name": "@vernaculo/compiler",
+  "version": "0.0.0",
+  "description": "Vernáculo compiler: renders a persona intermediate representation as provider-neutral instructions. Deterministic; never calls a model.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "@vernaculo/source": "./src/index.ts",
+      "types": "./dist/index.d.mts",
+      "default": "./dist/index.mjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsdown"
+  },
+  "dependencies": {
+    "@vernaculo/core": "workspace:^",
+    "@vernaculo/schema": "workspace:^"
+  }
+}
