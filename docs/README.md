@@ -1,73 +1,75 @@
-# Vernáculo documentation
+# Documentação do Vernáculo
 
-This directory is the **source of truth** for the project: product, architecture,
-specification, linguistic methodology, evals, development process and decisions.
-Code, specification, evals and documentation evolve together — when one changes a
-decision, behavior, format or contract, the corresponding document changes in the
-same commit. Git keeps the history; these pages describe the current state.
+Este diretório é a **fonte da verdade** do projeto: produto, arquitetura,
+especificação, metodologia linguística, evals, processo de desenvolvimento e
+decisões. Código, especificação, evals e documentação evoluem juntos — quando um
+deles muda uma decisão, um comportamento, um formato ou um contrato, o documento
+correspondente muda no mesmo commit. O Git guarda o histórico; estas páginas
+descrevem o estado atual.
 
-`ideia.txt` (repository root) is the founding conversation, kept as a historical
-record. Its content has been assimilated here; see
+`ideia.txt` (raiz do repositório) é a conversa de concepção, mantida como registro
+histórico. O conteúdo dele foi assimilado aqui; veja
 [reference/idea-assimilation.md](reference/idea-assimilation.md).
 
-## Start here
+## Por onde começar
 
-| If you want to... | Read |
+| Se você quer... | Leia |
 | --- | --- |
-| understand what Vernáculo is and is not | [product/vision.md](product/vision.md) |
-| know the rules that are never broken | [product/principles.md](product/principles.md) |
-| see how the pieces fit | [architecture/overview.md](architecture/overview.md) |
-| write or read a persona file | [specification/persona-format.md](specification/persona-format.md) |
-| contribute a regional pack | [development/contributing-personas.md](development/contributing-personas.md) |
-| know why something was decided | [decisions/](decisions/README.md) |
-| know what is done and what is next | [roadmap/roadmap.md](roadmap/roadmap.md), [roadmap/open-questions.md](roadmap/open-questions.md) |
+| entender o que o Vernáculo é e o que não é | [product/vision.md](product/vision.md) |
+| conhecer as regras que nunca são quebradas | [product/principles.md](product/principles.md) |
+| ver como as peças se encaixam | [architecture/overview.md](architecture/overview.md) |
+| escrever ou ler um arquivo de persona | [specification/persona-format.md](specification/persona-format.md) |
+| contribuir com um pack regional | [development/contributing-personas.md](development/contributing-personas.md) |
+| saber por que algo foi decidido | [decisions/](decisions/README.md) |
+| saber o que está feito e o que vem depois | [roadmap/roadmap.md](roadmap/roadmap.md), [roadmap/open-questions.md](roadmap/open-questions.md) |
 
-## Map
+## Mapa
 
-**Product** — [vision](product/vision.md) · [principles](product/principles.md) ·
-[use cases](product/use-cases.md) · [scope](product/scope.md)
+**Produto** — [visão](product/vision.md) · [princípios](product/principles.md) ·
+[casos de uso](product/use-cases.md) · [escopo](product/scope.md)
 
-**Architecture** — [overview](architecture/overview.md) ·
-[packages](architecture/packages.md) · [compilation (IR, compiler, targets)](architecture/compilation.md) ·
-[provider adapters](architecture/provider-adapters.md) ·
-[distribution and eject](architecture/distribution.md) ·
-[zero infrastructure](architecture/zero-infrastructure.md) ·
-[persona lifecycle](architecture/persona-lifecycle.md)
+**Arquitetura** — [visão geral](architecture/overview.md) ·
+[pacotes](architecture/packages.md) · [compilação (IR, compilador, targets)](architecture/compilation.md) ·
+[adapters de provedores](architecture/provider-adapters.md) ·
+[distribuição e eject](architecture/distribution.md) ·
+[infraestrutura zero](architecture/zero-infrastructure.md) ·
+[ciclo de vida de uma persona](architecture/persona-lifecycle.md)
 
-**Specification** (`vernaculo.dev/v1alpha1`) — [overview, ids, conformance](specification/overview.md) ·
-[persona format and semantic rules](specification/persona-format.md) ·
-[inheritance and composition](specification/inheritance-and-composition.md) ·
-[regional intensity](specification/regional-intensity.md) ·
-[provenance, evidence, maturity](specification/provenance.md)
+**Especificação** (`vernaculo.dev/v1alpha1`) — [visão geral, ids, conformidade](specification/overview.md) ·
+[formato de persona e regras semânticas](specification/persona-format.md) ·
+[herança e composição](specification/inheritance-and-composition.md) ·
+[intensidade regional](specification/regional-intensity.md) ·
+[proveniência, evidência, maturidade](specification/provenance.md)
 
-**Linguistics** — [methodology](linguistic/methodology.md) ·
-[regional packs](linguistic/regional-packs.md) ·
-[anti-caricature policy](linguistic/anti-caricature.md) ·
-[human review](linguistic/human-review.md) · [research sources](linguistic/sources.md)
+**Linguística** — [metodologia](linguistic/methodology.md) ·
+[packs regionais](linguistic/regional-packs.md) ·
+[política anti-caricatura](linguistic/anti-caricature.md) ·
+[revisão humana](linguistic/human-review.md) · [fontes de pesquisa](linguistic/sources.md)
 
-**Evals** — [strategy](evals/strategy.md) · [dimensions](evals/dimensions.md)
-(naturalness, regional fidelity, task and rule preservation, overuse, caricature,
-stereotype leakage, invented regionalisms, intensity) ·
-[cross-provider](evals/cross-provider.md)
+**Evals** — [estratégia](evals/strategy.md) · [dimensões](evals/dimensions.md)
+(naturalidade, fidelidade regional, preservação da tarefa e das regras, excesso,
+caricatura, vazamento de estereótipos, regionalismos inventados, intensidade) ·
+[entre provedores](evals/cross-provider.md)
 
-**Development** — [stack](development/stack.md) ·
-[repository structure](development/repository-structure.md) ·
-[testing](development/testing.md) ·
-[contributing personas](development/contributing-personas.md) ·
-[releasing](development/releasing.md)
+**Desenvolvimento** — [stack](development/stack.md) ·
+[estrutura do repositório](development/repository-structure.md) ·
+[testes](development/testing.md) ·
+[contribuindo com personas](development/contributing-personas.md) ·
+[releases](development/releasing.md)
 
-**Decisions** — [ADR index](decisions/README.md)
+**Decisões** — [índice de ADRs](decisions/README.md)
 
-**Roadmap** — [roadmap](roadmap/roadmap.md) · [open questions](roadmap/open-questions.md)
+**Roadmap** — [roadmap](roadmap/roadmap.md) · [questões em aberto](roadmap/open-questions.md)
 
-**Reference** — [CLI](reference/cli.md) · [glossary](reference/glossary.md) ·
-[external facts (dated)](reference/external-facts.md) ·
-[assimilation of ideia.txt](reference/idea-assimilation.md)
+**Referência** — [CLI](reference/cli.md) · [glossário](reference/glossary.md) ·
+[fatos externos (datados)](reference/external-facts.md) ·
+[assimilação de ideia.txt](reference/idea-assimilation.md)
 
-## Conventions
+## Convenções
 
-- Documentation is in English; reviewer-facing material for a variety uses its language.
-- One topic per page; link instead of duplicating. The eval dimensions share one page instead of one file each, to avoid fragmentation.
-- Mark status honestly: *done*, *planned*, *idea*, *open question*. Never present planned work as existing, or a pack as validated without evidence.
-- Time-sensitive external facts go to [reference/external-facts.md](reference/external-facts.md) with a verification date.
-- Structural decisions get an ADR ([decisions/README.md](decisions/README.md)).
+- A documentação é escrita em português brasileiro ([ADR-0016](decisions/0016-documentation-in-portuguese.md)); o material voltado a revisores de uma variedade usa o idioma dela. Código, mensagens da CLI e o texto lido pelos modelos ficam em inglês.
+- Nomes de arquivos e diretórios ficam como estão, para manter os links estáveis.
+- Um assunto por página; faça links em vez de duplicar. As dimensões de eval compartilham uma única página, para evitar fragmentação.
+- Marque o status com honestidade: *feito*, *planejado*, *ideia*, *questão em aberto*. Nunca apresente trabalho planejado como existente, nem um pack como validado sem evidência.
+- Fatos externos que mudam com o tempo vão para [reference/external-facts.md](reference/external-facts.md), com data de verificação.
+- Decisões estruturais ganham um ADR ([decisions/README.md](decisions/README.md)).
