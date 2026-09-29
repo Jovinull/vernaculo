@@ -1,76 +1,76 @@
-# Regional persona packs
+# Packs de persona regional
 
-A **regional persona pack** (the conversation also used "Regional Style Pack") is
-a persona describing one language variety, published in the library under
-[`personas/`](../../personas/). The name "persona" is kept for continuity; a pack
-never describes a personality ([ADR-0010](../decisions/0010-observable-sociolinguistic-features-only.md)).
+Um **pack de persona regional** (a conversa também usou "Regional Style Pack") é uma
+persona que descreve uma variedade linguística, publicada na biblioteca em
+[`personas/`](../../personas/). O nome "persona" é mantido por continuidade; um pack
+nunca descreve uma personalidade ([ADR-0010](../decisions/0010-observable-sociolinguistic-features-only.md)).
 
-## Initial set (direction for v0.1)
+## Conjunto inicial (direção para a v0.1)
 
-Quality over coverage: four excellent packs rather than 27 states.
+Qualidade acima de cobertura: quatro packs excelentes em vez de 27 estados.
 
-| Id | Variety | Status |
+| Id | Variedade | Status |
 | --- | --- | --- |
-| `pt-BR/ba/salvador` | Salvador (BA) | not started — research pending |
-| `pt-BR/se/aracaju` | Aracaju (SE) | not started — research pending |
-| `pt-BR/pe/recife` | Recife (PE) | not started — research pending |
-| `pt-BR/sp/sao-paulo` | São Paulo (SP) | not started — research pending |
+| `pt-BR/ba/salvador` | Salvador (BA) | não iniciado — pesquisa pendente |
+| `pt-BR/se/aracaju` | Aracaju (SE) | não iniciado — pesquisa pendente |
+| `pt-BR/pe/recife` | Recife (PE) | não iniciado — pesquisa pendente |
+| `pt-BR/sp/sao-paulo` | São Paulo (SP) | não iniciado — pesquisa pendente |
 
-Each will ship with configurable intensity, sources, positive and negative
-examples, automated checks and evals, under Apache-2.0
-([ADR-0014](../decisions/0014-apache-2-0-persona-content.md)). Human review by
-speakers is recommended for each of them (never mandatory,
-[ADR-0015](../decisions/0015-human-review-recommended-not-mandatory.md)); a pack is
-marked `reviewed` only once a review has actually taken place.
+Cada um virá com intensidade configurável, fontes, exemplos positivos e negativos,
+verificações automáticas e evals, sob Apache-2.0
+([ADR-0014](../decisions/0014-apache-2-0-persona-content.md)). A revisão humana por
+falantes é recomendada para cada um deles (nunca obrigatória,
+[ADR-0015](../decisions/0015-human-review-recommended-not-mandatory.md)); um pack só é
+marcado `reviewed` quando uma revisão realmente aconteceu.
 
-Whether these four share a `pt-BR` base persona, and what such a base could
-legitimately contain, is an [open question](../roadmap/open-questions.md) (the
-conversation's layout had a `personas/pt-BR/base/` directory).
+Se esses quatro vão compartilhar uma persona base `pt-BR`, e o que essa base poderia
+conter de forma legítima, é uma [questão em aberto](../roadmap/open-questions.md) (a
+estrutura da conversa tinha um diretório `personas/pt-BR/base/`).
 
-## Layout
+## Estrutura
 
-v1alpha1 pack source:
+Fonte de um pack na v1alpha1:
 
 ```text
 personas/pt-BR/ba/salvador/
-└── persona.yaml          # the whole pack: features, examples, anti-patterns, provenance
+└── persona.yaml          # o pack inteiro: traços, exemplos, antipadrões, proveniência
 ```
 
-Proposed in the conversation and **not adopted yet** (open question: multi-file packs):
+Proposto na conversa e **ainda não adotado** (questão em aberto: packs com vários arquivos):
 
 ```text
 pt-BR/ba/salvador/
 ├── persona.yaml
-├── SKILL.md                          # generated in v1alpha1 (vernaculo export), not authored
+├── SKILL.md                          # gerado na v1alpha1 (vernaculo export), não escrito à mão
 ├── knowledge/{vocabulary,discourse,pragmatics,grammar}.yaml
 ├── examples/{customer-service,casual,professional}.yaml
 ├── evals/{naturalness,regionality,stereotypes}.yaml
 └── SOURCES.md
 ```
 
-When per-pack evals and review records exist, they will live next to
-`persona.yaml`; the specification will be extended first.
+Quando existirem evals e registros de revisão por pack, eles ficarão ao lado do
+`persona.yaml`; a especificação será estendida antes.
 
-## Granularity and future varieties
+## Granularidade e variedades futuras
 
-Ids allow progressive granularity (`pt-BR` → `pt-BR/ba` → `pt-BR/ba/salvador`)
-and non-administrative varieties, but only with evidence
-([methodology.md](methodology.md#granularity)). Ideas mentioned in the conversation,
-none of which is planned work yet:
+Os ids permitem granularidade progressiva (`pt-BR` → `pt-BR/ba` → `pt-BR/ba/salvador`)
+e variedades não administrativas, mas só com evidência
+([methodology.md](methodology.md#granularidade)). Ideias citadas na conversa, nenhuma
+delas trabalho planejado ainda:
 
-- Brazil: `pt-BR/ba/reconcavo`, `pt-BR/ba/sul`, `pt-BR/se/interior`;
-- other languages: `pt-PT/lisboa`, `es-AR/buenos-aires`, `es-MX/cdmx`, `en-US/ny/new-york`, `en-US/tx`, `en-GB/london`;
-- registers as sub-personas: `pt-BR/ba/salvador/customer-service`, `.../casual`, `.../formal` (open question).
+- Brasil: `pt-BR/ba/reconcavo`, `pt-BR/ba/sul`, `pt-BR/se/interior`;
+- outros idiomas: `pt-PT/lisboa`, `es-AR/buenos-aires`, `es-MX/cdmx`, `en-US/ny/new-york`, `en-US/tx`, `en-GB/london`;
+- registros como subpersonas: `pt-BR/ba/salvador/customer-service`, `.../casual`, `.../formal` (questão em aberto).
 
-## Fixtures are not packs
+## Fixtures não são packs
 
-[`fixtures/personas`](../../fixtures/personas) holds synthetic personas
-(`maturity: fixture`, `evidence: synthetic`) under `pt-BR/x-fixture/...`. Their
-"regional" forms are invented placeholders such as `termo-sintético-a`. They exist
-to test and demonstrate tooling and must never be presented or copied as
-linguistic content.
+[`fixtures/personas`](../../fixtures/personas) contém personas sintéticas
+(`maturity: fixture`, `evidence: synthetic`) em `pt-BR/x-fixture/...`. As formas
+"regionais" delas são marcadores inventados como `termo-sintético-a`. Elas existem
+para testar e demonstrar as ferramentas e nunca devem ser apresentadas ou copiadas
+como conteúdo linguístico.
 
-## Contributing a pack
+## Contribuindo com um pack
 
-See [development/contributing-personas.md](../development/contributing-personas.md)
-and the `linguistic-research` project skill.
+Veja [development/contributing-personas.md](../development/contributing-personas.md)
+e a skill de projeto `linguistic-research`.

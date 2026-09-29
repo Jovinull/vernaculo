@@ -1,34 +1,34 @@
-# Research sources
+# Fontes de pesquisa
 
-Sources mentioned in the founding conversation, with what was verified on
-**2026-09-29**. "Verified" means the fact was confirmed against the source or
-reliable references during the bootstrap; licenses must be re-checked before any
-use beyond consultation.
+Fontes citadas na conversa de concepção, com o que foi verificado em
+**2026-09-29**. "Verificado" significa que o fato foi confirmado na própria fonte ou
+em referências confiáveis durante o bootstrap; as licenças precisam ser reconferidas
+antes de qualquer uso além da consulta.
 
-Nothing from these sources has been copied into the repository.
+Nada destas fontes foi copiado para o repositório.
 
-| Source | What it is | Relevance | License / terms | Allowed use (until re-checked) | Status |
+| Fonte | O que é | Relevância | Licença / termos | Uso permitido (até nova conferência) | Status |
 | --- | --- | --- | --- | --- | --- |
-| **ALiB — Atlas Linguístico do Brasil** ([alib.ufba.br](https://alib.ufba.br/)) | Geolinguistic atlas of Brazilian Portuguese coordinated from UFBA (genesis 1996). Fieldwork in 250 localities: 25 capitals + 225 interior points; multidimensional (sex, age, schooling). Volumes published (vol. 3 recently launched). | Primary methodological and descriptive reference; evidence for lexical and other features by locality; the argument against state-level homogeneity. | Not determined (publications have their own publisher terms). | consult, cite | facts verified via academic references; official site reachable (TLS certificate warning) |
-| **Projeto NURC** (Norma Urbana Culta) | Corpus/project started in 1969 documenting educated urban speech of Recife, Salvador, Rio de Janeiro, São Paulo and Porto Alegre, across phonetic-phonological, morphosyntactic, lexical, semantic and stylistic dimensions; digitization efforts exist. | Urban speech in three of the four initial cities (Recife, Salvador, São Paulo). Note: historical recordings, educated register — contemporaneity and register must be considered. | Not determined; varies by collection/digitization project. | consult, cite | project facts verified |
-| **MuPe-Diversidades** ([github.com/nilc-nlp/MuPe-Diversidades](https://github.com/nilc-nlp/MuPe-Diversidades)) | Spontaneous speech with revised transcriptions (~2h32m), diversity of age, gender and accents across Brazilian states including PE, AL, SE and SP. Citation: Craveiro & Galdino (BRACIS 2024 proceedings, 2025). | Spontaneous speech from states of the initial packs. | **CC BY-NC-ND 4.0** (verified in the repository's LICENSE). Non-commercial, no derivatives. | consult, cite. **Do not redistribute** content or derived material. | verified |
-| **"Projeto SOTAQUE"** (open dataset of Brazilian voices with region/state/city and declared accent, reportedly CDLA-Permissive-2.0) | As described in the conversation. | Would matter for a future voice phase. | Claimed CDLA-Permissive-2.0. | none until identified | **not verified**: no project matching this description was found. A different project, **Sotaque Brasileiro** (voice dataset, 2021, GitHub `sotaque-brasileiro`), exists and is licensed **GPL-3.0** (PyPI metadata). |
+| **ALiB — Atlas Linguístico do Brasil** ([alib.ufba.br](https://alib.ufba.br/)) | Atlas geolinguístico do português brasileiro coordenado a partir da UFBA (surgiu em 1996). Trabalho de campo em 250 localidades: 25 capitais + 225 pontos do interior; multidimensional (sexo, idade, escolaridade). Volumes publicados (o vol. 3 foi lançado recentemente). | Principal referência metodológica e descritiva; evidência para traços lexicais e outros por localidade; o argumento contra a homogeneidade por estado. | Não determinada (as publicações têm termos próprios das editoras). | consultar, citar | fatos verificados em referências acadêmicas; site oficial acessível (aviso de certificado TLS) |
+| **Projeto NURC** (Norma Urbana Culta) | Corpus/projeto iniciado em 1969 que documenta a fala urbana culta de Recife, Salvador, Rio de Janeiro, São Paulo e Porto Alegre, nas dimensões fonético-fonológica, morfossintática, lexical, semântica e estilística; há iniciativas de digitalização. | Fala urbana em três das quatro cidades iniciais (Recife, Salvador, São Paulo). Atenção: gravações históricas, registro culto — é preciso considerar a atualidade e o registro. | Não determinada; varia por acervo/projeto de digitalização. | consultar, citar | fatos do projeto verificados |
+| **MuPe-Diversidades** ([github.com/nilc-nlp/MuPe-Diversidades](https://github.com/nilc-nlp/MuPe-Diversidades)) | Fala espontânea com transcrições revisadas (~2h32m), com diversidade de idade, gênero e sotaque em estados brasileiros, incluindo PE, AL, SE e SP. Citação: Craveiro & Galdino (anais do BRACIS 2024, 2025). | Fala espontânea de estados dos packs iniciais. | **CC BY-NC-ND 4.0** (verificado no LICENSE do repositório). Não comercial, sem derivados. | consultar, citar. **Não redistribuir** conteúdo nem material derivado. | verificado |
+| **"Projeto SOTAQUE"** (dataset aberto de vozes brasileiras com região/estado/cidade e sotaque declarado, supostamente sob CDLA-Permissive-2.0) | Como descrito na conversa. | Seria relevante para uma futura fase de voz. | Alegadamente CDLA-Permissive-2.0. | nenhum até ser identificado | **não verificado**: nenhum projeto com essa descrição foi encontrado. Existe um projeto diferente, o **Sotaque Brasileiro** (dataset de vozes, 2021, GitHub `sotaque-brasileiro`), licenciado sob **GPL-3.0** (metadados do PyPI). |
 
-## Related projects (positioning, not sources)
+## Projetos relacionados (posicionamento, não fontes)
 
-| Project | Note | Status |
+| Projeto | Observação | Status |
 | --- | --- | --- |
-| PERSONA.md / Personaxis | Cited in the conversation as a sophisticated generic persona specification. | not verified (not found) |
-| Character Cards, PersonaNexus | Cited as generic persona/character formats. | Character Cards is a known community format; PersonaNexus not verified |
-| Soul Spec, stax persona spec, AIEOS | Other generic persona specifications found during verification. | exist (found 2026-09-29) |
+| PERSONA.md / Personaxis | Citado na conversa como uma especificação genérica de persona sofisticada. | não verificado (não encontrado) |
+| Character Cards, PersonaNexus | Citados como formatos genéricos de persona/personagem. | Character Cards é um formato conhecido da comunidade; PersonaNexus não verificado |
+| Soul Spec, stax persona spec, AIEOS | Outras especificações genéricas de persona encontradas durante a verificação. | existem (encontradas em 2026-09-29) |
 
-These confirm the positioning in [vision.md](../product/vision.md): generic
-persona formats exist; sociolinguistic localization is a narrower niche.
+Isso confirma o posicionamento de [vision.md](../product/vision.md): formatos
+genéricos de persona existem; a localização sociolinguística é um nicho mais estreito.
 
-## Rules for adding a source
+## Regras para acrescentar uma fonte
 
-1. Prefer primary sources: universities, institutional documentation, peer-reviewed articles, official repositories.
-2. Record the license you found and the date you checked it (`accessed`).
-3. Decide the usage level (`consulted`, `cited`, `redistributed`) and check it against the license.
-4. Never copy corpora or datasets into the repository just because they are publicly downloadable.
-5. Add the source here if it is relevant beyond a single pack.
+1. Prefira fontes primárias: universidades, documentação institucional, artigos revisados por pares, repositórios oficiais.
+2. Registre a licença encontrada e a data em que a conferiu (`accessed`).
+3. Decida o nível de uso (`consulted`, `cited`, `redistributed`) e confira contra a licença.
+4. Nunca copie corpora ou datasets para o repositório só porque podem ser baixados publicamente.
+5. Acrescente a fonte aqui se ela for relevante para além de um único pack.

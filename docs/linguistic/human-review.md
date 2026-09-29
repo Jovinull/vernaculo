@@ -1,68 +1,70 @@
-# Human review
+# Revisão humana
 
-Automated checks can prove structure; only people familiar with a variety can
-judge whether output sounds natural, exaggerated or wrong. Review by speakers of
-the variety is **always recommended and never mandatory**
-([ADR-0015](../decisions/0015-human-review-recommended-not-mandatory.md)): there is no
-minimum number of reviewers, no agreement threshold and no review gate for
-publishing or using a pack. Everything on this page is guidance for doing review
-well. The CLI recommends review whenever it handles a `draft` persona.
+Verificações automáticas conseguem provar estrutura; só pessoas familiarizadas com
+uma variedade conseguem julgar se a saída soa natural, exagerada ou errada. A
+revisão por falantes da variedade é **sempre recomendada e nunca obrigatória**
+([ADR-0015](../decisions/0015-human-review-recommended-not-mandatory.md)): não há
+número mínimo de revisores, limiar de concordância nem portão de revisão para
+publicar ou usar um pack. Tudo nesta página é orientação para fazer uma boa
+revisão. A CLI recomenda revisão sempre que lida com uma persona `draft`.
 
-Status: **process defined, not yet run** (no real pack exists). The record format
-below is a proposal; it becomes a schema when the first review round happens.
+Status: **processo definido, ainda não executado** (não existe pack real). O formato
+de registro abaixo é uma proposta; ele vira schema quando a primeira rodada de
+revisão acontecer.
 
-## What reviewers see
+## O que os revisores veem
 
-Samples generated locally from a pack (by the reviewer coordinator, with their
-own provider credentials or local models), covering:
+Amostras geradas localmente a partir de um pack (pela pessoa que coordena a
+revisão, com as próprias credenciais de provedor ou modelos locais), cobrindo:
 
-- standard scenarios (customer service first: greeting, product question, price/financing question, complaint, closing);
-- several intensities: 0 (control), the pack's default, ~0.7 and 1;
-- more than one provider/model when possible (see [cross-provider.md](../evals/cross-provider.md));
-- neutral controls mixed in, so reviewers are not primed to find regional features everywhere.
+- cenários padrão (atendimento primeiro: saudação, pergunta sobre produto, pergunta sobre preço/financiamento, reclamação, despedida);
+- várias intensidades: 0 (controle), a padrão do pack, ~0.7 e 1;
+- mais de um provedor/modelo quando possível (veja [cross-provider.md](../evals/cross-provider.md));
+- controles neutros misturados, para que os revisores não sejam induzidos a encontrar traços regionais em tudo.
 
-Reviewers also review the pack's own content directly: each form, its meaning,
-context and examples.
+Os revisores também revisam diretamente o conteúdo do pack: cada forma, seu
+significado, contexto e exemplos.
 
-## Labels
+## Rótulos
 
-Reviewers tag a whole output or a specific form with one or more labels. The
-reviewer-facing wording is in the variety's language; ids are stable.
+Os revisores marcam uma saída inteira ou uma forma específica com um ou mais
+rótulos. O texto mostrado aos revisores fica no idioma da variedade; os ids são
+estáveis.
 
-| Id | Reviewer-facing (pt-BR) | Meaning |
+| Id | Texto para o revisor (pt-BR) | Significado |
 | --- | --- | --- |
-| `natural` | parece natural | plausible for a speaker of the variety in this situation |
-| `authentic` | isso realmente usamos | the form is genuinely in use here (confirms a feature) |
-| `exaggerated` | parece exagerado | too frequent or too marked for the situation/intensity |
-| `unrecognized` | não reconheço essa expressão | reviewer does not know the form in this variety |
-| `wrong-region` | isso é de outra região | the form belongs to a different variety |
-| `caricatural` | parece caricato | sounds like a parody or stereotype |
-| `offensive` | é ofensivo | offensive or demeaning |
-| `register-mismatch` | formalidade inadequada | wrong formality for the situation |
+| `natural` | parece natural | plausível para um falante da variedade nesta situação |
+| `authentic` | isso realmente usamos | a forma é de fato usada aqui (confirma um traço) |
+| `exaggerated` | parece exagerado | frequente ou marcado demais para a situação/intensidade |
+| `unrecognized` | não reconheço essa expressão | o revisor não conhece a forma nesta variedade |
+| `wrong-region` | isso é de outra região | a forma pertence a outra variedade |
+| `caricatural` | parece caricato | soa como paródia ou estereótipo |
+| `offensive` | é ofensivo | ofensivo ou depreciativo |
+| `register-mismatch` | formalidade inadequada | formalidade errada para a situação |
 
-Plus a free-text comment. How labels map to pack changes:
+Mais um comentário livre. Como os rótulos se traduzem em mudanças no pack:
 
-| Signal | Typical action |
+| Sinal | Ação típica |
 | --- | --- |
-| `authentic`, `natural` across reviewers | supports `evidence: reported` (cite the review round) |
-| `exaggerated` | raise `minIntensity`, adjust examples, strengthen bands |
-| `unrecognized`, `wrong-region` | re-check evidence; narrow scope; demote to `hypothesis` or remove |
-| `caricatural`, `offensive` | remove or discourage the form and add an anti-pattern, as the [anti-caricature policy](anti-caricature.md) requires regardless of maturity |
-| `register-mismatch` | add context (`contextual`), adjust examples |
+| `authentic`, `natural` entre revisores | sustenta `evidence: reported` (cite a rodada de revisão) |
+| `exaggerated` | subir `minIntensity`, ajustar exemplos, reforçar as faixas |
+| `unrecognized`, `wrong-region` | reconferir a evidência; reduzir o escopo; rebaixar para `hypothesis` ou remover |
+| `caricatural`, `offensive` | remover ou desencorajar a forma e acrescentar um antipadrão, como a [política anti-caricatura](anti-caricature.md) exige independentemente da maturidade |
+| `register-mismatch` | acrescentar contexto (`contextual`), ajustar exemplos |
 
-## Reviewers
+## Revisores
 
-- People familiar with the variety (e.g. grew up or have long lived there). The profile of each reviewer is recorded coarsely, never identifying them.
-- More reviewers and more diversity (age, background, area) give stronger signals; one careful reviewer is still better than none.
-- There are no required numbers or agreement thresholds. The record shows how extensive a review was, so users can judge for themselves.
+- Pessoas familiarizadas com a variedade (por exemplo, que cresceram ou vivem há muito tempo no lugar). O perfil de cada revisor é registrado de forma genérica, sem identificá-lo.
+- Mais revisores e mais diversidade (idade, trajetória, área) dão sinais mais fortes; um revisor cuidadoso ainda é melhor que nenhum.
+- Não há números obrigatórios nem limiares de concordância. O registro mostra quão extensa foi uma revisão, para que os usuários julguem por si mesmos.
 
-## Privacy and consent
+## Privacidade e consentimento
 
-- Informed consent before participating; reviewers can withdraw.
-- Public records use pseudonymous reviewer ids and coarse profile data only (familiarity, locality, optional age band). No names, contacts or free-text personal data in the repository.
-- Reviews are contributions to an open project: review records are licensed under Apache-2.0 like the rest of the repository ([ADR-0014](../decisions/0014-apache-2-0-persona-content.md)); reviewers are told so when they consent.
+- Consentimento informado antes de participar; os revisores podem desistir.
+- Registros públicos usam ids pseudônimos de revisores e apenas dados de perfil genéricos (familiaridade, localidade, faixa etária opcional). Nada de nomes, contatos ou dados pessoais em texto livre no repositório.
+- Revisões são contribuições para um projeto aberto: os registros de revisão são licenciados sob Apache-2.0, como o resto do repositório ([ADR-0014](../decisions/0014-apache-2-0-persona-content.md)); os revisores são informados disso ao consentir.
 
-## Proposed record shape (not yet normative)
+## Formato de registro proposto (ainda não normativo)
 
 ```yaml
 persona: pt-BR/ba/salvador
@@ -70,25 +72,26 @@ personaVersion: 0.3.0
 instructionsFormat: vernaculo-instructions/v1alpha1
 round: 2026-11-review-1
 reviewer:
-  id: r-017                    # pseudonymous
+  id: r-017                    # pseudônimo
   familiarity: lifelong        # lifelong | long-term-resident | other
   locality: Salvador
 items:
-  - sample: s-042              # id of a generated sample kept with the round
+  - sample: s-042              # id de uma amostra gerada, guardada com a rodada
     intensity: 0.3
     labels: [natural]
-  - form: "..."                # a specific form from the pack
+  - form: "..."                # uma forma específica do pack
     labels: [exaggerated]
     comment: "..."
 ```
 
-A review round is cited from the pack as a `speaker-review` source.
+Uma rodada de revisão é citada no pack como fonte `speaker-review`.
 
-## Outcome
+## Resultado
 
-Set `maturity: reviewed` when a review by speakers of the variety actually took
-place: it is a statement of fact, not a quality score. Recommended: keep the
-review record next to the pack, cite the round as a `speaker-review` source, and
-apply the findings (anything flagged `caricatural` or `offensive` is fixed under
-the anti-caricature policy in any case). A pack that was never reviewed stays
-`draft`, can still be published and used, and keeps recommending review.
+Defina `maturity: reviewed` quando uma revisão por falantes da variedade realmente
+aconteceu: é uma afirmação de fato, não uma nota de qualidade. Recomendado: manter o
+registro da revisão ao lado do pack, citar a rodada como fonte `speaker-review` e
+aplicar as conclusões (qualquer coisa marcada `caricatural` ou `offensive` é
+corrigida pela política anti-caricatura de qualquer forma). Um pack que nunca foi
+revisado continua `draft`, ainda pode ser publicado e usado, e continua recomendando
+revisão.
