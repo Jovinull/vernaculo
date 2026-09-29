@@ -197,6 +197,46 @@ describe("vernaculo eject", () => {
   });
 });
 
+describe("human review is recommended, never required (ADR-0015)", () => {
+  const root = join(scratch, "draft-root");
+  mkdirSync(join(root, "pt-BR", "x-draft"), { recursive: true });
+  writeFileSync(
+    join(root, "pt-BR", "x-draft", "persona.yaml"),
+    "apiVersion: vernaculo.dev/v1alpha1\nkind: Persona\nmetadata:\n  id: pt-BR/x-draft\n  name: Draft\n  language: pt-BR\n  version: 0.1.0\n  maturity: draft\n  license: Apache-2.0\nregionality:\n  defaultIntensity: 0.3\n",
+  );
+
+  it("recommends review when compiling a draft, without failing", async () => {
+    const { code, stderr } = await cli("compile", "pt-BR/x-draft", "--root", root);
+    expect(code).toBe(0);
+    expect(stderr).toContain("human review by speakers of the variety is recommended");
+    expect(stderr).toContain("not required");
+  });
+
+  it("summarizes unreviewed drafts in validate and shows the status in inspect", async () => {
+    const validated = await cli("validate", "--root", root);
+    expect(validated.code).toBe(0);
+    expect(validated.stderr).toContain("1 draft persona(s) not reviewed yet");
+    const inspected = await cli("inspect", "pt-BR/x-draft", "--root", root);
+    expect(inspected.stdout).toMatch(/human review\s+recommended — not reviewed yet/);
+  });
+
+  it("does not recommend review for synthetic fixtures", async () => {
+    const { stderr } = await cli("compile", "pt-BR/x-fixture/cidade-a", ...ROOT);
+    expect(stderr).not.toContain("recommended");
+  });
+
+  it("carries the review recommendation and the content license into ejected files", async () => {
+    const out = join(scratch, "ejected-draft");
+    expect((await cli("eject", "pt-BR/x-draft", "--root", root, "--out", out)).code).toBe(0);
+    const readme = readFileSync(join(out, "README.md"), "utf8");
+    expect(readme).toContain("## Review");
+    expect(readme).toContain("Content licenses in the lineage: Apache-2.0");
+    expect(readFileSync(join(out, "persona.yaml"), "utf8")).toContain(
+      "# Maturity: draft. Not reviewed by speakers of the variety yet; human review is recommended.",
+    );
+  });
+});
+
 describe("usage", () => {
   it("exits 0 for --help and --version", async () => {
     expect((await cli("--help")).code).toBe(0);

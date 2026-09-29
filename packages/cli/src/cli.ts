@@ -54,6 +54,21 @@ export async function run(argv: readonly string[], io: CliIO = defaultIO): Promi
 
 class CliError extends Error {}
 
+// Review is always recommended, never mandatory (ADR-0015).
+const REVIEW_HINT =
+  "hint: human review by speakers of the variety is recommended before production use (not required; see docs/linguistic/human-review.md)";
+
+function reviewStatus(maturity: PersonaIR["persona"]["maturity"]): string {
+  switch (maturity) {
+    case "fixture":
+      return "not applicable (synthetic fixture)";
+    case "draft":
+      return "recommended — not reviewed yet";
+    case "reviewed":
+      return "done (see the persona's speaker-review sources)";
+  }
+}
+
 interface CommonOptions {
   readonly root: string[];
 }
@@ -109,6 +124,7 @@ function buildProgram(io: CliIO): Command {
       io.stderr(`warning: ${id} is a FIXTURE (synthetic test data, not linguistic content)\n`);
     } else if (maturity === "draft") {
       io.stderr(`warning: ${id} is a DRAFT (not reviewed by speakers of the variety)\n`);
+      io.stderr(`${REVIEW_HINT}\n`);
     }
   };
 
@@ -161,9 +177,11 @@ function buildProgram(io: CliIO): Command {
           ? targets
           : (await listPersonas(roots(options))).filter((e) => !e.shadowed).map((e) => e.id);
       let failures = 0;
+      let drafts = 0;
       for (const target of selected) {
         try {
           const resolved = await load(target, options);
+          if (resolved.document.metadata.maturity === "draft") drafts++;
           io.stdout(`ok    ${target} (${resolved.document.metadata.maturity})\n`);
         } catch (error) {
           if (!(error instanceof VernaculoError)) throw error;
@@ -173,6 +191,9 @@ function buildProgram(io: CliIO): Command {
         }
       }
       io.stdout(`${selected.length - failures}/${selected.length} valid\n`);
+      if (drafts > 0) {
+        io.stderr(`hint: ${drafts} draft persona(s) not reviewed yet\n${REVIEW_HINT}\n`);
+      }
       if (failures > 0) throw new CommanderError(1, "vernaculo.invalid", "validation failed");
     });
 
@@ -292,6 +313,7 @@ function summarize(resolved: ResolvedPersona, ir: PersonaIR): string {
     ["version", metadata.version],
     ["language", metadata.language],
     ["maturity", metadata.maturity],
+    ["human review", reviewStatus(metadata.maturity)],
     ["license", metadata.license ?? "(not declared)"],
     ["lineage", resolved.lineage.map((entry) => `${entry.id}@${entry.version}`).join(" -> ")],
     ["default intensity", String(resolved.document.regionality?.defaultIntensity)],
@@ -325,12 +347,9 @@ function ejectFiles(resolved: ResolvedPersona, ir: PersonaIR): { path: string; c
     `Ejected by vernaculo ${packageJson.version}. Self-contained: no "extends", no Vernáculo package needed.`,
     "Flattened from (root first):",
     ...lineage,
-    ...(ir.persona.maturity === "reviewed"
-      ? []
-      : [
-          `Maturity: ${ir.persona.maturity}. This persona is NOT reviewed by speakers of the variety.`,
-        ]),
+    ...maturityLines(ir.persona.maturity),
   ];
+  const licenses = [...new Set(resolved.lineage.flatMap((entry) => entry.license ?? []))];
   const readme = [
     `# ${ir.persona.name} (${id})`,
     "",
@@ -349,12 +368,40 @@ function ejectFiles(resolved: ResolvedPersona, ir: PersonaIR): { path: string; c
     "",
     ...lineage.map((line) => line.replace(/^ {2}/, "")),
     "",
+    ...(ir.persona.maturity === "draft"
+      ? [
+          "## Review",
+          "",
+          "This persona has not been reviewed by speakers of the variety yet. Human review is",
+          "recommended before production use (not required).",
+          "",
+        ]
+      : []),
+    "## License",
+    "",
+    licenses.length > 0
+      ? `Content licenses in the lineage: ${licenses.join(", ")}. If you redistribute these files, keep this notice and mark your changes; see each license's terms (Apache-2.0: https://www.apache.org/licenses/LICENSE-2.0).`
+      : "No persona in the lineage declares a license.",
+    "",
   ];
   return [
     { path: "persona.yaml", content: serializePersonaYaml(resolved.document, { header }) },
     { path: "instructions.md", content: compile(ir).instructions },
     { path: "README.md", content: readme.join("\n") },
   ];
+}
+
+function maturityLines(maturity: PersonaIR["persona"]["maturity"]): string[] {
+  switch (maturity) {
+    case "fixture":
+      return ["Maturity: fixture. Synthetic test data, NOT linguistic content."];
+    case "draft":
+      return [
+        "Maturity: draft. Not reviewed by speakers of the variety yet; human review is recommended.",
+      ];
+    case "reviewed":
+      return [];
+  }
 }
 
 /** Writes files under `base` (a file path when a single entry has an empty path). */
