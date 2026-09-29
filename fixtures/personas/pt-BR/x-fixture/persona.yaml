@@ -1,0 +1,57 @@
+# SYNTHETIC FIXTURE — NOT LINGUISTIC CONTENT.
+# Every term below is an invented placeholder used to test tooling. Nothing here
+# describes how anyone speaks. Never copy this into a real pack.
+apiVersion: vernaculo.dev/v1alpha1
+kind: Persona
+metadata:
+  id: pt-BR/x-fixture
+  name: Fixture — base
+  description: Synthetic base persona shared by the fixture localities.
+  language: pt-BR
+  version: 0.1.0
+  maturity: fixture
+  license: Apache-2.0
+regionality:
+  defaultIntensity: 0.3
+linguistics:
+  vocabulary:
+    preferred:
+      - term: termo-sintético-comum
+        meaning: Synthetic lexical item shared by all fixture localities.
+        evidence: synthetic
+      - term: termo-sintético-marcado
+        meaning: Synthetic item standing in for a strongly marked form.
+        evidence: synthetic
+        minIntensity: 0.6
+    discouraged:
+      - term: termo-sintético-evitado
+        reason: Synthetic item that the persona must avoid.
+  discourse:
+    markers:
+      - form: marcador-sintético-base
+        function: Synthetic discourse marker used to acknowledge the interlocutor.
+        evidence: synthetic
+  morphosyntax:
+    patterns:
+      - id: padrao-sintetico-base
+        description: Synthetic morphosyntactic pattern description.
+        example: Frase sintética que ilustra o padrão.
+        evidence: synthetic
+        minIntensity: 0.4
+  pragmatics:
+    greetings:
+      - form: saudação-sintética-base
+        evidence: synthetic
+    disagreements:
+      - form: discordância-sintética-hipotética
+        evidence: hypothesis
+        notes: Hypotheses stay in the data for research but are never rendered.
+  orthography:
+    phoneticSpelling: avoid
+antiPatterns:
+  - id: excesso-de-marcadores
+    text: marcador-sintético-base, termo-sintético-comum, marcador-sintético-base!
+    category: overuse
+    explanation: Stacking regional markers in every clause reads as caricature.
+provenance:
+  notes: Synthetic fixture; no real sources.

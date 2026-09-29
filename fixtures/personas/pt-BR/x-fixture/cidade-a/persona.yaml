@@ -1,0 +1,44 @@
+# SYNTHETIC FIXTURE — NOT LINGUISTIC CONTENT. See ../persona.yaml.
+apiVersion: vernaculo.dev/v1alpha1
+kind: Persona
+extends: pt-BR/x-fixture
+metadata:
+  id: pt-BR/x-fixture/cidade-a
+  name: Fixture — Cidade A
+  description: Synthetic locality A. Plays the role a real locality pack (e.g. a city) would.
+  language: pt-BR
+  version: 0.1.0
+  maturity: fixture
+  license: Apache-2.0
+regionality:
+  defaultIntensity: 0.25
+linguistics:
+  vocabulary:
+    preferred:
+      - term: termo-sintético-a
+        meaning: Synthetic item specific to locality A.
+        evidence: synthetic
+    contextual:
+      - term: termo-sintético-a-informal
+        context: Only in informal closings.
+        evidence: synthetic
+        minIntensity: 0.5
+  pragmatics:
+    addressForms:
+      - form: tratamento-sintético-a
+        usage: Synthetic form of address for customers.
+        evidence: synthetic
+    closings:
+      - form: despedida-sintética-a
+        evidence: synthetic
+examples:
+  - id: saudacao-cliente
+    situation: Greeting a customer who asks about a product
+    neutral: Olá! Como posso ajudar?
+    text: Olá, tratamento-sintético-a! Como posso ajudar?
+    intensity: 0.25
+  - id: saudacao-marcada
+    situation: Greeting at high intensity
+    neutral: Olá! Como posso ajudar?
+    text: saudação-sintética-base, tratamento-sintético-a! termo-sintético-marcado, como posso ajudar?
+    intensity: 0.7

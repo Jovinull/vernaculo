@@ -1,0 +1,28 @@
+# SYNTHETIC FIXTURE — NOT LINGUISTIC CONTENT. See ../persona.yaml.
+# Shares the base with cidade-a but diverges: it discourages a form the base uses.
+apiVersion: vernaculo.dev/v1alpha1
+kind: Persona
+extends: pt-BR/x-fixture
+metadata:
+  id: pt-BR/x-fixture/cidade-b
+  name: Fixture — Cidade B
+  description: Synthetic locality B.
+  language: pt-BR
+  version: 0.1.0
+  maturity: fixture
+  license: Apache-2.0
+linguistics:
+  vocabulary:
+    preferred:
+      - term: termo-sintético-b
+        meaning: Synthetic item specific to locality B.
+        evidence: synthetic
+    discouraged:
+      - term: termo-sintético-comum
+        reason: Synthetic case of a locality that does not share a base form.
+  discourse:
+    markers:
+      - form: marcador-sintético-b
+        function: Synthetic discourse marker specific to locality B.
+        evidence: synthetic
+        minIntensity: 0.2
