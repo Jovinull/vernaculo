@@ -75,6 +75,7 @@ pnpm changeset             # when a published package's public behavior changes
 - Tests cover behavior and invariants (see `docs/development/testing.md`); run `pnpm check` before calling work done.
 - Never add a dependency without checking its current version, maintenance, engines and license; respect pnpm's minimum-release-age policy (no casual exclusions).
 - Git: never push, publish to npm, tag or create releases without explicit instruction.
+- Commits: Conventional Commits **in Portuguese**, subject line only (no body), **no `Co-Authored-By`** or other trailers; small commits separated by concern (e.g. `feat(cli): ...`, `docs(spec): ...`).
 
 ## Project skills (load when relevant)
 

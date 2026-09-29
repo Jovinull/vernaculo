@@ -17,6 +17,7 @@ pnpm check          # must pass before a PR
 pnpm changeset      # when a published package's public behavior changes
 ```
 
+- Commits follow [Conventional Commits](https://www.conventionalcommits.org/) written in Portuguese, subject line only (no body, no trailers such as `Co-Authored-By`), one concern per commit — e.g. `feat(cli): adiciona comando add`, `docs(spec): documenta regra de herança`.
 - Code, specification, evals and documentation change together: if your change alters a decision, behavior, format or contract, update the corresponding page in `docs/` in the same PR.
 - Tests accompany behavior changes; see [docs/development/testing.md](docs/development/testing.md).
 - Format changes go through the JSON Schema, the Zod mirror, conformance fixtures and the specification docs together.
