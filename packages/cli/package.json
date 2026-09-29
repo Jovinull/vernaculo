@@ -1,0 +1,34 @@
+{
+  "name": "vernaculo",
+  "version": "0.0.0",
+  "description": "Vernáculo CLI: inspect, validate, compile, export and eject regional personas for AI agents. Runs locally; no Vernáculo service involved.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "bin": {
+    "vernaculo": "./dist/bin.mjs"
+  },
+  "exports": {
+    ".": {
+      "@vernaculo/source": "./src/index.ts",
+      "types": "./dist/index.d.mts",
+      "default": "./dist/index.mjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "build": "tsdown"
+  },
+  "dependencies": {
+    "@vernaculo/compiler": "workspace:^",
+    "@vernaculo/core": "workspace:^",
+    "@vernaculo/openai": "workspace:^",
+    "@vernaculo/skills": "workspace:^",
+    "commander": "^15.0.0"
+  }
+}
