@@ -1,79 +1,79 @@
-# Eval dimensions
+# Dimensões de avaliação
 
-What every pack (and every adapter) is evaluated on. For each dimension: the
-question, how it can be measured, and what already exists. The conversation's
-original table is the core of this list (regional fidelity, naturalness, task
-fidelity, stereotype leakage, overuse, cross-model stability); the rest make the
-project's invariants testable.
+Em que todo pack (e todo adapter) é avaliado. Para cada dimensão: a pergunta, como
+pode ser medida e o que já existe. A tabela original da conversa é o núcleo desta
+lista (fidelidade regional, naturalidade, fidelidade à tarefa, vazamento de
+estereótipos, excesso, estabilidade entre modelos); o restante torna os invariantes
+do projeto testáveis.
 
-## Naturalness
+## Naturalidade
 
-- **Question:** does it read like someone speaking normally in that variety, or like a caricature?
-- **Measured by:** human labels `natural` / `exaggerated` / `caricatural`; model judges only as a pre-screen.
-- **Failure looks like:** every sentence carries a marker; forms used in wrong contexts; theatrical tone.
+- **Pergunta:** parece alguém falando normalmente naquela variedade, ou uma caricatura?
+- **Medida por:** rótulos humanos `natural` / `exaggerated` / `caricatural`; juízes com modelo apenas como triagem.
+- **Falha se parece com:** toda frase com um marcador; formas usadas em contextos errados; tom teatral.
 
-## Regional fidelity
+## Fidelidade regional
 
-- **Question:** are the features used compatible with that variety?
-- **Measured by:** human labels `authentic` / `unrecognized` / `wrong-region`; rule checks that only listed forms appear among regionally marked forms.
-- **Failure looks like:** forms from other regions; generic "Northeastern" slang in a Salvador pack.
+- **Pergunta:** os traços usados são compatíveis com aquela variedade?
+- **Medida por:** rótulos humanos `authentic` / `unrecognized` / `wrong-region`; verificações por regra de que só formas listadas aparecem entre as formas regionalmente marcadas.
+- **Falha se parece com:** formas de outras regiões; gíria "nordestina" genérica em um pack de Salvador.
 
-## Task preservation
+## Preservação da tarefa
 
-- **Question:** did regionalization harm the service (accuracy, completeness, clarity)?
-- **Measured by:** the same scenario with and without the layer; task-specific assertions (the answer contains the required information); judge rubrics.
-- **Failure looks like:** vaguer answers, missing facts, misunderstandable phrasing.
+- **Pergunta:** a regionalização prejudicou o atendimento (precisão, completude, clareza)?
+- **Medida por:** o mesmo cenário com e sem a camada; asserções específicas da tarefa (a resposta contém a informação exigida); rubricas de juiz.
+- **Falha se parece com:** respostas mais vagas, fatos faltando, frases difíceis de entender.
 
-## Parent-rule preservation
+## Preservação das regras do agente pai
 
-- **Question:** does the agent still obey the host's role, policies and business rules?
-- **Measured by:** scenarios where rules matter (no unauthorized discounts, escalation rules); assertions on outputs.
-- **Failure looks like:** the "friendly local" tone overriding policy.
+- **Pergunta:** o agente continua obedecendo ao papel, às políticas e às regras de negócio do hospedeiro?
+- **Medida por:** cenários em que as regras importam (nada de descontos não autorizados, regras de encaminhamento); asserções sobre as saídas.
+- **Falha se parece com:** o tom de "gente boa local" passando por cima da política.
 
-## Overuse
+## Excesso
 
-- **Question:** is regionalism stuffed into every sentence?
-- **Measured by:** density of pack forms per reply vs. intensity; human `exaggerated` labels.
-- **Failure looks like:** the conversation's "enfiando regionalismo em toda frase".
+- **Pergunta:** o regionalismo está sendo enfiado em toda frase?
+- **Medida por:** densidade de formas do pack por resposta vs. intensidade; rótulos humanos `exaggerated`.
+- **Falha se parece com:** o "enfiando regionalismo em toda frase" da conversa.
 
-## Caricature
+## Caricatura
 
-- **Question:** does it sound like a parody?
-- **Measured by:** human `caricatural` / `offensive` labels (always acted on, per the anti-caricature policy); anti-pattern similarity checks.
+- **Pergunta:** soa como paródia?
+- **Medida por:** rótulos humanos `caricatural` / `offensive` (sempre tratados, conforme a política anti-caricatura); verificações de similaridade com antipadrões.
 
-## Stereotype leakage
+## Vazamento de estereótipos
 
-- **Question:** did the model start inventing cultural, behavioral or psychological traits — or claim to be from the region?
-- **Measured by:** adversarial scenarios ("tell me a joke about...", "where are you from?", "are people there lazy?"); rule checks for origin claims; judge rubrics; human review.
-- **Deterministic part (done):** the format has no field for traits; every rendering carries ground rules 3–4 ([anti-caricature.md](../linguistic/anti-caricature.md)); tests assert the rules are present at every intensity.
+- **Pergunta:** o modelo começou a inventar traços culturais, comportamentais ou psicológicos — ou a afirmar que é da região?
+- **Medida por:** cenários adversariais ("conta uma piada sobre...", "de onde você é?", "o pessoal de lá é preguiçoso?"); verificações por regra de afirmações de origem; rubricas de juiz; revisão humana.
+- **Parte determinística (feito):** o formato não tem campo para traços; toda renderização carrega as regras de base 3–4 ([anti-caricature.md](../linguistic/anti-caricature.md)); os testes garantem que as regras estão presentes em toda intensidade.
 
-## Invented regionalisms
+## Regionalismos inventados
 
-- **Question:** does the model produce "regional" forms that are not in the pack and not real?
-- **Measured by:** extract marked forms from outputs, compare with the pack; human `unrecognized` labels.
-- **Deterministic part (done):** hypotheses are never rendered; only listed forms are instructed.
+- **Pergunta:** o modelo produz formas "regionais" que não estão no pack e não são reais?
+- **Medida por:** extrair as formas marcadas das saídas e comparar com o pack; rótulos humanos `unrecognized`.
+- **Parte determinística (feito):** hipóteses nunca são renderizadas; só as formas listadas entram nas instruções.
 
-## Intensity behavior
+## Comportamento por intensidade
 
-- **Question:** does output marking grow monotonically and sensibly with intensity, and is intensity 0 neutral?
-- **Measured by:** the same scenarios at 0 / default / ~0.7 / 1; density of forms; human labels per level (`exaggerated` at high intensity is still a defect).
-- **Deterministic part (done):** gating rules, intensity-0 neutrality and bounds are unit-tested; golden files per intensity.
+- **Pergunta:** a marcação da saída cresce de forma monotônica e sensata com a intensidade, e a intensidade 0 é neutra?
+- **Medida por:** os mesmos cenários em 0 / padrão / ~0.7 / 1; densidade de formas; rótulos humanos por nível (`exaggerated` em intensidade alta continua sendo defeito).
+- **Parte determinística (feito):** as regras de filtragem, a neutralidade na intensidade 0 e os limites têm testes unitários; golden files por intensidade.
 
-## Cross-provider consistency
+## Consistência entre provedores
 
-See [cross-provider.md](cross-provider.md).
+Veja [cross-provider.md](cross-provider.md).
 
-## Summary
+## Resumo
 
-| Dimension | Deterministic (now) | Model-based (planned) | Human (planned) |
+| Dimensão | Determinística (agora) | Com modelo (planejado) | Humana (planejado) |
 | --- | --- | --- | --- |
-| Naturalness | — | pre-screen | primary |
-| Regional fidelity | listed forms only | form extraction | primary |
-| Task preservation | ground rule present | primary | spot checks |
-| Parent-rule preservation | ground rule present | primary | spot checks |
-| Overuse | intensity bands rendered | density | `exaggerated` |
-| Caricature | anti-patterns rendered | similarity | primary; findings always fixed |
-| Stereotype leakage | no trait fields; ground rules | adversarial | primary |
-| Invented regionalisms | hypotheses never rendered | form extraction | `unrecognized` |
-| Intensity behavior | gating tests, golden files | density curves | per-level labels |
-| Cross-provider | provider-neutral output | primary | comparison |
+| Naturalidade | — | triagem | principal |
+| Fidelidade regional | só formas listadas | extração de formas | principal |
+| Preservação da tarefa | regra de base presente | principal | verificações pontuais |
+| Preservação das regras do pai | regra de base presente | principal | verificações pontuais |
+| Excesso | faixas de intensidade renderizadas | densidade | `exaggerated` |
+| Caricatura | antipadrões renderizados | similaridade | principal; achados sempre corrigidos |
+| Vazamento de estereótipos | sem campos de traços; regras de base | adversarial | principal |
+| Regionalismos inventados | hipóteses nunca renderizadas | extração de formas | `unrecognized` |
+| Comportamento por intensidade | testes de filtragem, golden files | curvas de densidade | rótulos por nível |
+| Entre provedores | saída neutra de provedor | principal | comparação |

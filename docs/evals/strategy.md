@@ -1,56 +1,57 @@
-# Eval strategy
+# Estratégia de evals
 
-Evals are part of the product. The conversation put it plainly: what can make
-Vernáculo a reference is not the YAML files — it is the evals. Every pack must
-be able to show that it is regionally faithful, natural, preserves the task and
-does not leak stereotypes.
+Evals fazem parte do produto. A conversa foi direta: o que pode transformar o
+Vernáculo em referência não são os arquivos YAML — são os evals. Todo pack precisa
+conseguir mostrar que é fiel à variedade, natural, preserva a tarefa e não deixa
+vazar estereótipos.
 
-## Constraints
+## Restrições
 
-- **Local and reproducible.** Evals run on a developer's machine or in the user's CI with the evaluator's own provider credentials or local models ([ADR-0001](../decisions/0001-no-vernaculo-infrastructure-at-runtime.md)). No hosted eval platform: OpenAI's hosted Evals platform is itself being retired (read-only 2026-10-31, shutdown 2026-11-30), with Promptfoo suggested as a migration path — which confirms keeping evals in the repository from the start.
-- **Versioned with the pack.** Results are tied to the persona version, the instructions format and the model used.
-- **No SaaS** for human feedback in this phase; review rounds are files ([human-review.md](../linguistic/human-review.md)).
+- **Locais e reproduzíveis.** Os evals rodam na máquina de quem desenvolve ou no CI do usuário, com as credenciais de provedor ou os modelos locais de quem avalia ([ADR-0001](../decisions/0001-no-vernaculo-infrastructure-at-runtime.md)). Nada de plataforma de eval hospedada: a própria plataforma hospedada de Evals da OpenAI está sendo encerrada (somente leitura em 2026-10-31, desligamento em 2026-11-30), com o Promptfoo sugerido como caminho de migração — o que confirma a escolha de manter os evals no repositório desde o início.
+- **Versionados com o pack.** Os resultados ficam ligados à versão da persona, ao formato das instruções e ao modelo usado.
+- **Sem SaaS** para feedback humano nesta fase; as rodadas de revisão são arquivos ([human-review.md](../linguistic/human-review.md)).
 
-## Three layers of evaluation
+## Três camadas de avaliação
 
-| Layer | What | Needs a model? | Status |
+| Camada | O quê | Precisa de modelo? | Status |
 | --- | --- | --- | --- |
-| **1. Deterministic checks** | schema and semantic rules; intensity gating; ground rules present at every intensity; hypotheses never rendered; skills valid; outputs deterministic; no network | no | **done** (unit, conformance, golden and architecture tests; `vernaculo validate` in CI) |
-| **2. Model-based evals** | generate replies for standard scenarios with the layer at several intensities; check them with rule-based assertions (e.g. discouraged forms absent, no regional-origin claims) and rubric-based judges | yes (evaluator's own) | planned |
-| **3. Human review** | speakers label samples ([labels](../linguistic/human-review.md#labels)) | no model to judge; humans | process defined, not run |
+| **1. Verificações determinísticas** | schema e regras semânticas; filtragem por intensidade; regras de base presentes em toda intensidade; hipóteses nunca renderizadas; skills válidas; saídas determinísticas; sem rede | não | **feito** (testes unitários, de conformidade, golden files e de arquitetura; `vernaculo validate` no CI) |
+| **2. Evals com modelos** | gerar respostas para cenários padrão com a camada em várias intensidades; verificá-las com asserções baseadas em regras (por exemplo, formas desencorajadas ausentes, nenhuma afirmação de origem regional) e com juízes por rubrica | sim (os de quem avalia) | planejado |
+| **3. Revisão humana** | falantes rotulam amostras ([rótulos](../linguistic/human-review.md#rótulos)) | nenhum modelo julga; pessoas | processo definido, não executado; sempre recomendada, nunca obrigatória |
 
-LLM-as-judge results are signals, not proof: a pack's maturity and any claim of
-naturalness rest on human review.
+Resultados de LLM como juiz são sinais, não provas: a maturidade de um pack e
+qualquer afirmação de naturalidade se apoiam em revisão humana.
 
-## Dimensions
+## Dimensões
 
-Defined in [dimensions.md](dimensions.md): naturalness, regional fidelity, task
-preservation, parent-rule preservation, overuse, caricature, stereotype leakage,
-invented regionalisms, intensity behavior, cross-provider consistency
-([cross-provider.md](cross-provider.md)).
+Definidas em [dimensions.md](dimensions.md): naturalidade, fidelidade regional,
+preservação da tarefa, preservação das regras do agente pai, excesso, caricatura,
+vazamento de estereótipos, regionalismos inventados, comportamento por intensidade e
+consistência entre provedores ([cross-provider.md](cross-provider.md)).
 
-## Scenario sets (planned)
+## Conjuntos de cenários (planejado)
 
-Shared, pack-independent scenarios, written in the variety's language and
-reused across packs so results are comparable:
+Cenários compartilhados e independentes de pack, escritos no idioma da variedade e
+reutilizados entre packs para que os resultados sejam comparáveis:
 
-- customer service (greeting, product question, price/financing, complaint, closing);
-- situations where regional style must yield (legal/financial precision, a customer writing formally, a distressed customer);
-- adversarial prompts ("talk like a real baiano!", "tell me a joke about people from Recife", "where are you from?").
+- atendimento (saudação, pergunta sobre produto, preço/financiamento, reclamação, despedida);
+- situações em que o estilo regional precisa ceder (precisão jurídica/financeira, um cliente que escreve formalmente, um cliente aflito);
+- pedidos adversariais ("fala como um baiano de verdade!", "conta uma piada sobre gente de Recife", "de onde você é?").
 
-Each scenario runs with a neutral host agent prompt and with a business agent
-prompt (to check rule preservation), at intensities 0, default, ~0.7 and 1.
+Cada cenário roda com um prompt de agente hospedeiro neutro e com um prompt de
+agente de negócio (para verificar a preservação das regras), nas intensidades 0,
+padrão, ~0.7 e 1.
 
-## Runner (open question)
+## Executor (questão em aberto)
 
-Options: generate [Promptfoo](https://www.promptfoo.dev/) configurations from
-Vernáculo scenario files, or a small runner in this repository. Either way it must
-run locally, use the evaluator's credentials, and be optional in CI (secrets are
-never required for the default `pnpm check`). Decide before the first real pack;
-record it as an ADR.
+Opções: gerar configurações do [Promptfoo](https://www.promptfoo.dev/) a partir de
+arquivos de cenário do Vernáculo, ou um executor pequeno neste repositório. Em
+qualquer caso ele precisa rodar localmente, usar as credenciais de quem avalia e ser
+opcional no CI (segredos nunca são exigidos pelo `pnpm check` padrão). Decidir antes
+do primeiro pack real e registrar em um ADR.
 
-## Where eval files will live
+## Onde os arquivos de eval vão ficar
 
-- Shared scenario sets: `evals/` at the repository root (created with the first real suite — not before).
-- Pack-specific cases and results: next to the pack (format to be specified).
-- Human review records: next to the pack, per round.
+- Conjuntos de cenários compartilhados: `evals/` na raiz do repositório (criado com a primeira suíte real — não antes).
+- Casos e resultados específicos de um pack: ao lado do pack (formato a especificar).
+- Registros de revisão humana: ao lado do pack, por rodada.
