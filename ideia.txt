@@ -1,0 +1,1645 @@
+Sim. Depois de pesquisar o ecossistema atual, **eu acho que existe um projeto open source interessante aqui**, mas eu mudaria um pouco a definição:
+
+> **não criaria um “MCP de sotaques” nem uma coleção de prompts. Criaria um padrão + runtime open source para personas sociolinguísticas, começando pelo português brasileiro.**
+
+A diferença parece pequena, mas transforma isso de “repositório de prompts engraçados” em infraestrutura reutilizável.
+
+## A ideia que eu construiria
+
+Internamente, eu evitaria tratar `baiano`, `paulista`, `sergipano` etc. como uma personalidade. Seria melhor chamá-los de **Regional Persona Packs** ou **Regional Style Packs**.
+
+Isso permite separar coisas que não deveriam ser confundidas:
+
+| Camada | Exemplo |
+|---|---|
+| Idioma | `pt-BR` |
+| Região | Nordeste |
+| Estado | Bahia |
+| Localidade | Salvador |
+| Registro | conversacional |
+| Intensidade regional | leve / moderada / forte |
+| Papel | vendedor |
+| Domínio | automotivo |
+| Marca | Honda |
+| Regras da empresa | financiamento, concessionária, atendimento etc. |
+
+Então um agente poderia ser composto assim:
+
+```text
+pt-BR
+  + Bahia
+  + Salvador
+  + regionalidade: 0.35
+  + atendimento-comercial
+  + Honda
+```
+
+Enquanto Recife seria:
+
+```text
+pt-BR
+  + Pernambuco
+  + Recife
+  + regionalidade: 0.35
+  + atendimento-comercial
+  + Honda
+```
+
+A inteligência comercial continua sendo exatamente a mesma. Só muda a camada sociolinguística.
+
+Isso é **muito melhor** que manter `honda-baiano-prompt.txt`, `honda-pernambucano-prompt.txt`, `honda-sergipano-prompt.txt` etc.
+
+---
+
+# Por que eu não usaria MCP como núcleo
+
+O próprio MCP separa `prompts`, `resources` e `tools`. Prompts são templates controlados pelo usuário; resources são contexto controlado pela aplicação; tools são capacidades executáveis que o modelo pode chamar. :chatgpt-content-reference{index="0"}
+
+Para o seu exemplo da Honda, **não quero que o modelo decida se vai ou não “usar Bahia”**. A aplicação sabe que aquela concessionária está usando o perfil `br/ba/salvador` e deve aplicar aquilo deterministicamente.
+
+Portanto eu faria:
+
+```text
+Persona Specification
+        ↓
+Persona Compiler
+        ↓
+Provider Adapter
+        ↓
+OpenAI / Anthropic / Gemini / local LLM
+```
+
+MCP seria apenas **uma interface opcional** posteriormente.
+
+Por exemplo:
+
+```text
+persona://br/ba/salvador
+persona://br/pe/recife
+persona://br/se/aracaju
+```
+
+E um MCP poderia expor operações como:
+
+```text
+persona.list
+persona.get
+persona.render
+```
+
+Mas isso seria um produto do projeto, não seu formato fundamental.
+
+---
+
+# E Skills?
+
+**Skills fazem bem mais sentido como formato de exportação.**
+
+OpenAI hoje suporta Agent Skills e os define como diretórios com `SKILL.md`, instruções e arquivos auxiliares; além disso, a implementação é compatível com o padrão aberto de Agent Skills. :chatgpt-content-reference{index="1"}
+
+Então você poderia ter:
+
+```bash
+personabr export br/ba/salvador --target openai-skill
+personabr export br/ba/salvador --target claude-skill
+personabr export br/ba/salvador --target system-prompt
+personabr export br/ba/salvador --target mcp
+```
+
+É aí que acho que o projeto começa a ficar **bem interessante como open source**.
+
+Uma persona, vários runtimes.
+
+---
+
+# O coração do projeto
+
+Eu criaria um formato declarativo.
+
+Algo aproximadamente assim:
+
+```yaml
+apiVersion: regionalpersona.dev/v1
+kind: RegionalPersona
+
+metadata:
+  id: br.ba.salvador
+  language: pt-BR
+  country: BR
+  state: BA
+  city: Salvador
+  version: 1.0.0
+
+scope:
+  type: sociolinguistic
+  register: conversational
+  default_intensity: 0.30
+
+linguistic:
+  vocabulary:
+    preferred: []
+    contextual: []
+    discouraged: []
+
+  discourse_markers: []
+
+  morphosyntax:
+    patterns: []
+
+  pragmatics:
+    greeting_patterns: []
+    acknowledgement_patterns: []
+    disagreement_patterns: []
+    closing_patterns: []
+
+  orthography:
+    phonetic_spelling: avoid
+
+style:
+  rhythm: natural
+  verbosity: moderate
+  regional_marker_frequency: low
+
+constraints:
+  avoid_caricature: true
+  avoid_stereotypes: true
+  preserve_task_accuracy: true
+  never_invent_regionalisms: true
+
+examples:
+  - situation: greeting
+    neutral: "Olá, tudo bem?"
+    regionalized: "..."
+
+provenance:
+  sources:
+    - id: ...
+      type: linguistic-study
+
+review:
+  native_review_required: true
+```
+
+O interessante é que isso **não é o prompt enviado ao modelo**.
+
+É a especificação.
+
+O compiler transforma isso no melhor conjunto de instruções para GPT-5.6, Gemini, Claude etc.
+
+Esse detalhe é fundamental.
+
+---
+
+# O erro que eu evitaria desde o primeiro commit
+
+Não faça:
+
+```yaml
+baiano:
+  relaxed: true
+  humorous: true
+  likes_to_talk: true
+  uses_oxe: true
+  uses_meu_rei: true
+```
+
+Isso rapidamente vira caricatura.
+
+O projeto deveria descrever **fenômenos linguísticos observáveis**, e não presumir traços psicológicos das pessoas de uma região.
+
+Inclusive, a própria pesquisa linguística mostra por que `baiano` é uma abstração excessivamente grande. O ALiB trabalha explicitamente com variação geográfica e multidimensional, abrangendo capitais e localidades do interior; pesquisas também mostram continuidades linguísticas que não respeitam simplesmente fronteiras estaduais, como entre Bahia e Sergipe. :chatgpt-content-reference{index="2"}
+
+Portanto seria perfeitamente possível existir:
+
+```text
+br/ba/salvador
+br/ba/recôncavo
+br/ba/sul
+br/se/aracaju
+br/se/interior
+```
+
+e não simplesmente:
+
+```text
+baiano
+sergipano
+```
+
+Isso dá **credibilidade acadêmica e técnica** ao projeto.
+
+---
+
+# Há dados para fazer isso seriamente
+
+E foi aqui que achei sua ideia mais interessante.
+
+O **Projeto ALiB — Atlas Linguístico do Brasil** existe justamente para descrever a diversidade do português brasileiro sob perspectivas geolinguísticas e dialetológicas. O planejamento atual envolve dados das 25 capitais pesquisadas e mais 225 localidades do interior. :chatgpt-content-reference{index="3"}
+
+O histórico **NURC** trabalhou especificamente com fala urbana em Recife, Salvador, Rio de Janeiro, São Paulo e Porto Alegre, estudando dimensões fonético-fonológicas, morfossintáticas, lexicais, semânticas e estilísticas. :chatgpt-content-reference{index="4"}
+
+Há ainda o **MuPe-Diversidades**, com amostras de fala e transcrições de diversos estados, incluindo Pernambuco, Alagoas, Sergipe e São Paulo. :chatgpt-content-reference{index="5"}
+
+E surgiu recentemente o **Projeto SOTAQUE**, construindo um dataset aberto de vozes brasileiras com região, estado, cidade/microrregião e sotaque declarado; o projeto informa publicação sob CDLA-Permissive-2.0. Isso poderia se tornar particularmente interessante quando seu projeto evoluísse de **texto regionalizado para voz regionalizada**. :chatgpt-content-reference{index="6"}
+
+Não significa automaticamente que todo material acadêmico desses projetos possa ser redistribuído: cada fonte precisaria ter sua licença verificada. Mas podem servir de base metodológica e bibliográfica para criação e avaliação dos packs.
+
+---
+
+# Existe concorrência?
+
+Existe em **persona genérica**, sim.
+
+O projeto **PERSONA.md / Personaxis**, por exemplo, criou uma especificação bastante sofisticada para definir identidade, caráter, personalidade, valores, cognição, voz e outras propriedades de um agente e compilá-las para diferentes plataformas. :chatgpt-content-reference{index="7"}
+
+Também existem Character Cards e projetos como PersonaNexus. :chatgpt-content-reference{index="8"}
+
+Por isso eu **não tentaria competir criando “mais um formato universal de personalidade de IA”**.
+
+Sua vantagem seria:
+
+> **uma especificação e uma biblioteca de localização sociolinguística para agentes.**
+
+É muito mais específico.
+
+E, pelo que encontrei, esse espaço está muito menos ocupado.
+
+---
+
+# Como eu faria o MVP
+
+Eu faria o projeto em **TypeScript**, mas manteria o core completamente independente da OpenAI:
+
+```text
+regional-personas/
+│
+├── spec/
+│   └── persona.schema.json
+│
+├── personas/
+│   └── pt-BR/
+│       ├── base/
+│       ├── ba/
+│       │   └── salvador/
+│       ├── pe/
+│       │   └── recife/
+│       ├── se/
+│       │   └── aracaju/
+│       └── sp/
+│           └── sao-paulo/
+│
+├── packages/
+│   ├── core/
+│   ├── compiler/
+│   ├── openai/
+│   ├── cli/
+│   └── eval/
+│
+├── evals/
+│
+└── docs/
+```
+
+O primeiro adapter pode ser extremamente simples:
+
+```ts
+const persona = await loadPersona("br/ba/salvador");
+
+const instructions = compilePersona(persona, {
+  intensity: 0.35,
+  register: "customer-service",
+});
+
+const response = await openai.responses.create({
+  model: "gpt-5.6-luna",
+  instructions,
+  input: customerMessage,
+});
+```
+
+Isso está perfeitamente alinhado ao modelo atual da OpenAI: `instructions`/developer messages são justamente onde ficam comportamento, estilo e objetivos de alto nível. :chatgpt-content-reference{index="9"}
+
+Há um detalhe importante: quando se usa `previous_response_id`, as `instructions` da chamada anterior **não são automaticamente reaplicadas**. Seu adapter deve tratar isso corretamente e garantir a persona em cada execução relevante. :chatgpt-content-reference{index="10"}
+
+---
+
+# E começaria pela OpenAI?
+
+**Sim. Acho a escolha certa.**
+
+Mas faria:
+
+```text
+@regional-personas/core
+```
+
+sem dependência da OpenAI.
+
+E depois:
+
+```text
+@regional-personas/openai
+```
+
+com OpenAI.
+
+Posteriormente:
+
+```text
+@regional-personas/anthropic
+@regional-personas/google
+@regional-personas/mcp
+@regional-personas/skills
+```
+
+Inclusive o próprio Agents SDK da OpenAI já possui abstração `Model`/`ModelProvider` e suporte a providers externos, então você não estaria tecnicamente encurralado ao começar nele. :chatgpt-content-reference{index="11"}
+
+---
+
+# Há outra decisão atual da OpenAI que favorece muito sua ideia
+
+Hoje, **29 de setembro de 2026**, a OpenAI está justamente recomendando que prompts de produção fiquem **versionados no código**, com testes, fixtures e revisão por Git, em vez de depender de objetos de prompt hospedados.
+
+Os reusable prompt objects foram descontinuados e estão programados para desligamento em **30 de novembro de 2026**. :chatgpt-content-reference{index="12"}
+
+Ou seja:
+
+```text
+persona.yaml
+↓
+Git
+↓
+PR
+↓
+CI
+↓
+evals
+↓
+release 1.3.0
+```
+
+é exatamente a direção arquitetural certa hoje.
+
+O prefixo da persona também tende a ser bastante estável, o que combina com prompt caching da OpenAI: conteúdo estável no começo do contexto pode ser reutilizado para reduzir latência e custo. :chatgpt-content-reference{index="13"}
+
+E eu **não projetaria isso em torno de fine-tuning**. Além da perda de portabilidade, a própria plataforma de fine-tuning da OpenAI está sendo encerrada para novos usuários. :chatgpt-content-reference{index="14"}
+
+---
+
+# A parte que pode fazer esse projeto virar referência
+
+Não são os YAML.
+
+São os **evals**.
+
+Cada regional pack deveria provar quatro coisas:
+
+| Avaliação | Pergunta |
+|---|---|
+| Regional fidelity | A fala contém características compatíveis com aquela variedade? |
+| Naturalness | Parece alguém falando normalmente ou uma caricatura? |
+| Task fidelity | A regionalização prejudicou o atendimento? |
+| Stereotype leakage | O modelo começou a inventar características culturais/comportamentais? |
+| Overuse | Está enfiando regionalismo em toda frase? |
+| Cross-model stability | GPT, Claude e Gemini produzem comportamento semelhante? |
+
+E pessoas da própria região deveriam poder avaliar:
+
+```text
+parece natural
+parece exagerado
+não reconheço essa expressão
+isso é de outra região
+isso é ofensivo/caricato
+isso realmente usamos
+```
+
+Aí nasce um dataset extremamente valioso.
+
+Aliás, a OpenAI também está encerrando sua antiga plataforma hospedada de Evals e aponta migração para ferramentas como **Promptfoo**, então eu manteria os testes do projeto localmente/CI desde o início. :chatgpt-content-reference{index="15"}
+
+---
+
+## O projeto que eu faria
+
+Minha recomendação final seria esta:
+
+> **Um framework open source de localização sociolinguística para agentes de IA.**
+
+Primeiro release com quatro packs bem feitos: **Salvador/BA, Recife/PE, Aracaju/SE e São Paulo/SP**. Todos com intensidade configurável, fontes, exemplos positivos e negativos, testes automáticos e revisão humana.
+
+O fluxo seria:
+
+```text
+Regional Persona Pack
+        │
+        ├── linguistic profile
+        ├── examples
+        ├── anti-patterns
+        ├── provenance
+        └── evals
+             ↓
+        Persona Compiler
+             ↓
+ ┌───────────┼───────────┐
+OpenAI     Agent Skill    MCP
+             ↓
+        Claude/Gemini...
+```
+
+E o caso Honda fica particularmente elegante:
+
+```ts
+createAgent({
+  role: hondaSalesAgent,
+  persona: regional("br/ba/salvador", {
+    intensity: 0.25,
+  }),
+});
+```
+
+versus:
+
+```ts
+createAgent({
+  role: hondaSalesAgent,
+  persona: regional("br/pe/recife", {
+    intensity: 0.25,
+  }),
+});
+```
+
+**O agente não vira “um baiano”.** Ele continua sendo o agente Honda, obedecendo à mesma política comercial. Só passa por uma camada de localização linguística regional.
+
+Essa distinção, para mim, é justamente o que pode fazer o projeto sair de “coleção legal de prompts” e se tornar **infraestrutura que empresas realmente conseguiriam colocar em produção**.
+
+Sim. Com a condição de **custo praticamente zero para você**, eu mudaria a proposta para um projeto que não oferece serviço nenhum: ele **distribui personas como código/dados**. O usuário baixa, instala no próprio projeto/servidor e conecta ao provedor de IA que já usa.
+
+O nome que eu usaria é **Vernáculo** — tecnicamente nos pacotes e CLI, `vernaculo`. O termo remete justamente à forma de falar própria de uma região ou comunidade e não limita o projeto ao Brasil. Eu evitaria “Sotaque”, porque já existe um projeto open source brasileiro com esse nome voltado a vozes e variedades regionais. :chatgpt-content-reference{index="0"}
+
+> **Vernáculo — Local personas for AI agents.**
+
+## O modelo de distribuição
+
+Eu faria o Vernáculo funcionar assim:
+
+```text
+                    GitHub
+                      │
+                Vernáculo OSS
+                      │
+        ┌─────────────┴──────────────┐
+        │                            │
+   Persona Packs                SDK / CLI
+        │                            │
+        └────────────┬───────────────┘
+                     ↓
+               Projeto do usuário
+                     │
+       ┌─────────────┼──────────────┐
+       ↓             ↓              ↓
+    OpenAI         Claude         Gemini
+       │
+       └── ou modelo local
+```
+
+**Nenhuma requisição passa por você.**
+
+Nenhuma API sua.
+
+Nenhum banco seu.
+
+Nenhum servidor seu.
+
+Nenhuma autenticação sua.
+
+Nenhuma conta no Vernáculo.
+
+Nenhum custo de tokens para você.
+
+O usuário pode simplesmente fazer:
+
+```bash
+npm install @vernaculo/core
+npm install @vernaculo/openai
+```
+
+e:
+
+```ts
+import { persona } from "@vernaculo/core";
+import { openaiPersona } from "@vernaculo/openai";
+
+const bahia = persona("pt-BR/ba/salvador");
+
+const instructions = openaiPersona(bahia, {
+  intensity: 0.35
+});
+```
+
+Daí **ele usa a chave da OpenAI dele**:
+
+```ts
+const response = await openai.responses.create({
+  model: "gpt-5.6-luna",
+  instructions: `
+    ${hondaAgentInstructions}
+
+    ${instructions}
+  `,
+  input: customerMessage
+});
+```
+
+Você não está no meio dessa comunicação.
+
+---
+
+# E eu faria funcionar sem SDK também
+
+Isso é muito importante.
+
+O Vernáculo não deveria exigir Node, Python ou sequer instalar biblioteca.
+
+A pessoa poderia baixar:
+
+```text
+vernaculo/
+└── personas/
+    └── pt-BR/
+        └── br/
+            └── ba/
+                └── salvador/
+                    ├── persona.yaml
+                    ├── SKILL.md
+                    ├── examples.yaml
+                    ├── evals.yaml
+                    └── SOURCES.md
+```
+
+E simplesmente colocar a pasta dentro do projeto dela.
+
+Então podemos suportar três formas de uso:
+
+```text
+Vernáculo
+   │
+   ├── Pack
+   │     arquivos portáveis
+   │
+   ├── Skill
+   │     pronto para agentes que suportam skills
+   │
+   └── SDK
+         integração programática
+```
+
+Isso é excelente para open source.
+
+---
+
+# Por exemplo: a empresa Honda
+
+Imagine que a empresa já tenha:
+
+```text
+agent/
+├── AGENT.md
+├── knowledge/
+│   ├── motos.md
+│   ├── financiamento.md
+│   └── concessionarias.md
+│
+└── skills/
+```
+
+Ela instala:
+
+```bash
+vernaculo install pt-BR/ba/salvador
+```
+
+E passa a ter:
+
+```text
+agent/
+├── AGENT.md
+├── knowledge/
+└── skills/
+    └── vernaculo/
+        └── pt-BR/
+            └── ba/
+                └── salvador/
+```
+
+No `AGENT.md`:
+
+```text
+Role:
+Honda dealership sales assistant.
+
+Use:
+skills/vernaculo/pt-BR/ba/salvador
+
+Regional intensity:
+0.30
+```
+
+Pronto.
+
+Não existe um serviço do Vernáculo sendo chamado.
+
+---
+
+# E poderia ser ainda mais simples
+
+Eu criaria uma CLI:
+
+```bash
+vernaculo search brasil
+```
+
+resultado:
+
+```text
+pt-BR/ba/salvador
+pt-BR/pe/recife
+pt-BR/se/aracaju
+pt-BR/sp/sao-paulo
+```
+
+Instala:
+
+```bash
+vernaculo add pt-BR/ba/salvador
+```
+
+Ou:
+
+```bash
+npx vernaculo add pt-BR/ba/salvador
+```
+
+Isso simplesmente **copia os arquivos para o projeto**.
+
+Nada fica dependente do Vernáculo depois.
+
+Inclusive, se amanhã o projeto desaparecer do GitHub, aquela aplicação continua funcionando normalmente.
+
+Essa propriedade é importantíssima.
+
+---
+
+# Melhor ainda: instalação pelo Git
+
+Como tudo é arquivo:
+
+```bash
+git clone ...
+```
+
+ou:
+
+```bash
+npx vernaculo add ...
+```
+
+ou até:
+
+```bash
+curl ...
+```
+
+Não precisa de marketplace.
+
+Não precisa de registry próprio.
+
+Para distribuição eu usaria inicialmente:
+
+```text
+GitHub
+GitHub Releases
+npm
+```
+
+Tudo sem você precisar manter uma infraestrutura comercial.
+
+---
+
+# O que exatamente é uma Skill Vernáculo
+
+Eu faria cada persona ser autocontida.
+
+Por exemplo:
+
+```text
+pt-BR/ba/salvador/
+│
+├── persona.yaml
+├── SKILL.md
+│
+├── knowledge/
+│   ├── vocabulary.yaml
+│   ├── discourse.yaml
+│   ├── pragmatics.yaml
+│   └── grammar.yaml
+│
+├── examples/
+│   ├── customer-service.yaml
+│   ├── casual.yaml
+│   └── professional.yaml
+│
+├── evals/
+│   ├── naturalness.yaml
+│   ├── regionality.yaml
+│   └── stereotypes.yaml
+│
+└── SOURCES.md
+```
+
+O `SKILL.md` poderia dizer, resumidamente:
+
+```markdown
+# Salvador Brazilian Portuguese Persona
+
+Apply the linguistic characteristics defined in this package.
+
+Do not impersonate a stereotypical "Bahian person".
+
+Regional characteristics affect:
+- vocabulary
+- discourse markers
+- syntax
+- pragmatics
+- conversational rhythm
+
+They do not imply:
+- personality
+- intelligence
+- profession
+- socioeconomic status
+- political views
+- behavior
+
+Preserve the parent agent's role and business rules.
+```
+
+Isso permite instalar a persona em **qualquer agente**.
+
+---
+
+# Isso cria uma composição muito poderosa
+
+Porque não precisamos criar:
+
+```text
+honda-baiano
+honda-sergipano
+honda-paulista
+pizzaria-baiano
+banco-baiano
+suporte-baiano
+```
+
+Criamos:
+
+```text
+             Honda Agent
+                  +
+       Vernáculo Salvador
+                  =
+     Honda Salvador Agent
+```
+
+Ou:
+
+```text
+          Banking Agent
+                +
+        Vernáculo Recife
+                =
+       Bank Recife Agent
+```
+
+A persona regional passa a ser um **middleware comportamental**.
+
+Esse é um conceito muito mais forte para o projeto.
+
+---
+
+# Eu colocaria intensidade como conceito de primeira classe
+
+Isso é essencial para empresas.
+
+Por exemplo:
+
+```yaml
+persona:
+  id: pt-BR/ba/salvador
+
+regionality:
+  intensity: 0.25
+```
+
+Teríamos aproximadamente:
+
+```text
+0.0 ─────────────────────────── 1.0
+│                                │
+português                     regionalidade
+neutro                        muito marcada
+```
+
+Para atendimento comercial provavelmente:
+
+```text
+0.15–0.35
+```
+
+Para personagem de jogo:
+
+```text
+0.40–0.70
+```
+
+Para um experimento linguístico:
+
+```text
+0.80+
+```
+
+Mas não significa simplesmente aumentar a quantidade de `"oxente"`.
+
+O compiler ajustaria frequência de:
+
+```text
+léxico
+construções sintáticas
+marcadores discursivos
+formas de tratamento
+pragmática
+ritmo textual
+regionalismos
+```
+
+Isso deixa o resultado muito mais natural.
+
+---
+
+# E o usuário poderia modificar tudo
+
+Como é OSS:
+
+```yaml
+extends: pt-BR/ba/salvador
+
+regionality:
+  intensity: 0.25
+
+override:
+  vocabulary:
+    discouraged:
+      - ...
+```
+
+Então uma empresa poderia ter:
+
+```text
+vernaculo/
+└── honda-salvador.yaml
+```
+
+que herda:
+
+```text
+pt-BR/ba/salvador
+```
+
+e adiciona regras próprias.
+
+---
+
+# Zero custo para você de verdade
+
+Eu colocaria isso como princípio arquitetural do projeto:
+
+> **Vernáculo must not require Vernáculo infrastructure at runtime.**
+
+Ou, em português:
+
+> Uma aplicação que usa Vernáculo nunca deve depender dos servidores do Vernáculo para funcionar.
+
+Isso implica:
+
+- **Apache-2.0** para código seria minha preferência; permissiva e adequada para adoção empresarial.
+- GitHub como repositório principal.
+- GitHub Actions apenas para CI.
+- GitHub Pages para documentação, se quisermos.
+- npm/PyPI apenas para distribuição.
+- nenhuma API hospedada.
+- nenhuma telemetria obrigatória.
+- nenhuma chave Vernáculo.
+- nenhum banco.
+- nenhum SaaS.
+- nenhum backend.
+- nenhum modelo de IA executado por você.
+
+Se amanhã houver 1 milhão de instalações, seu custo de inferência continua:
+
+**R$ 0.**
+
+O GitHub/npm absorvem a distribuição normal do OSS; quem executa o software arca com a própria infraestrutura.
+
+---
+
+# E local LLM?
+
+Eu colocaria isso desde o começo no desenho, mesmo que não implemente de imediato.
+
+Porque aí alguém poderia usar:
+
+```text
+Vernáculo
+    +
+Ollama
+    +
+Qwen / Llama / Gemma / etc.
+```
+
+com tudo rodando dentro da empresa.
+
+Resultado:
+
+```text
+Internet
+   X
+
+OpenAI API
+   X
+
+Vernáculo API
+   X
+
+Empresa
+ ├── modelo local
+ ├── sistema
+ └── persona
+```
+
+Para determinadas empresas isso seria um diferencial enorme.
+
+---
+
+# O que eu lançaria no v0.1
+
+Eu não tentaria fazer 27 estados.
+
+Faria quatro packs extremamente bons:
+
+1. `pt-BR/ba/salvador`
+2. `pt-BR/se/aracaju`
+3. `pt-BR/pe/recife`
+4. `pt-BR/sp/sao-paulo`
+
+E o software:
+
+```text
+@vernaculo/core
+@vernaculo/openai
+vernaculo CLI
+```
+
+Com comandos:
+
+```bash
+vernaculo list
+
+vernaculo add pt-BR/ba/salvador
+
+vernaculo inspect pt-BR/ba/salvador
+
+vernaculo compile pt-BR/ba/salvador \
+  --provider openai \
+  --intensity 0.3
+
+vernaculo eject pt-BR/ba/salvador
+```
+
+`eject` seria particularmente legal:
+
+```bash
+vernaculo eject pt-BR/ba/salvador
+```
+
+Ele joga tudo para dentro do projeto e remove até a dependência do pacote Vernáculo.
+
+**Zero lock-in.**
+
+---
+
+# E tem uma consequência interessante
+
+O Vernáculo não precisa ser apenas:
+
+> "baiano, sergipano, paulista".
+
+No futuro:
+
+```text
+pt-BR/ba/salvador
+pt-BR/pe/recife
+
+en-US/ny/new-york
+en-US/tx
+en-GB/london
+
+es-AR/buenos-aires
+es-MX/cdmx
+
+pt-PT/lisboa
+```
+
+Depois até registros:
+
+```text
+pt-BR/ba/salvador/customer-service
+pt-BR/ba/salvador/casual
+pt-BR/ba/salvador/formal
+```
+
+Por isso **Vernáculo** funciona melhor como nome do que alguma coisa terminada em `BR`.
+
+---
+
+## A definição que eu colocaria no README
+
+> **Vernáculo is an open-source, self-hosted persona layer for AI agents.**
+>
+> Add regional language, conversational identity and sociolinguistic variation to AI applications without changing models, fine-tuning them or depending on Vernáculo infrastructure.
+>
+> Personas are portable files that run inside your application. Bring your own AI provider — or run completely locally.
+
+E eu usaria algo como:
+
+```text
+VERNÁCULO
+Local language. Local identity. Any AI.
+```
+
+Essa versão do projeto eu acho **consideravelmente melhor** que a proposta de um MCP isolado. MCP, OpenAI Skills, Claude, Gemini etc. passam a ser **targets/adapters do Vernáculo**. O patrimônio do projeto são a especificação aberta, os packs regionais, o compiler e os evals — tudo executável por quem baixar, sem você ter que bancar um servidor.
+
+Eu faria o **Vernáculo praticamente inteiro em TypeScript**, mas com uma separação importante: **o formato das personas não pertence ao TypeScript nem a nenhum provedor**. Ele será composto de YAML + Markdown + JSON Schema. Assim, uma persona continua utilizável mesmo sem instalar nosso SDK.
+
+### Stack definitiva
+
+| Parte | Tecnologia |
+|---|---|
+| Linguagem | **TypeScript** |
+| Runtime de desenvolvimento | **Node.js LTS** |
+| Monorepo | **pnpm workspaces** |
+| Formato das personas | **YAML + Markdown** |
+| Schema oficial | **JSON Schema** |
+| Validação em TS | **Zod 4** |
+| CLI | **TypeScript + Commander + @clack/prompts** |
+| Testes | **Vitest** |
+| Lint/format | **Biome** |
+| Build dos packages | **tsdown** |
+| CI/CD | **GitHub Actions** |
+| Releases | **Changesets + npm + GitHub Releases** |
+| Primeiro provider | **OpenAI Responses API / Agents SDK** |
+| Skills | **Agent Skills / `SKILL.md`** |
+| MCP | **MCP TypeScript SDK v2**, posteriormente |
+| Infraestrutura | **nenhuma** |
+| Banco | **nenhum** |
+| Backend Vernáculo | **nenhum** |
+
+O uso de TypeScript também nos deixa perfeitamente alinhados com o ecossistema atual: o Agents SDK oficial da OpenAI tem implementação TypeScript, e o MCP TypeScript SDK v2 já é a linha estável que implementa a especificação MCP de 28 de julho de 2026. :chatgpt-content-reference{index="0"}
+
+## A arquitetura
+
+Eu faria o repositório assim:
+
+```text
+vernaculo/
+│
+├── packages/
+│   ├── core/
+│   ├── schema/
+│   ├── compiler/
+│   ├── cli/
+│   ├── openai/
+│   ├── skills/
+│   └── mcp/                  # posteriormente
+│
+├── personas/
+│   └── pt-BR/
+│       ├── base/
+│       ├── ba/
+│       │   └── salvador/
+│       ├── se/
+│       │   └── aracaju/
+│       ├── pe/
+│       │   └── recife/
+│       └── sp/
+│           └── sao-paulo/
+│
+├── schemas/
+│   └── persona.schema.json
+│
+├── evals/
+│
+├── docs/
+│
+├── examples/
+│   ├── openai/
+│   ├── openai-agents/
+│   ├── raw-prompt/
+│   └── skill/
+│
+├── pnpm-workspace.yaml
+├── package.json
+└── README.md
+```
+
+### `@vernaculo/core`
+
+Esse é o coração e **não conhece OpenAI, Claude, Gemini ou MCP**.
+
+```ts
+import {
+  loadPersona,
+  resolvePersona,
+  validatePersona,
+} from "@vernaculo/core";
+
+const persona = await loadPersona("pt-BR/ba/salvador");
+
+const resolved = resolvePersona(persona, {
+  intensity: 0.3,
+});
+```
+
+Ele cuida somente de herança, composição, intensidade, validação e resolução dos arquivos.
+
+Isso é deliberadamente pequeno.
+
+---
+
+## O formato é mais importante que o SDK
+
+Uma persona seria aproximadamente:
+
+```yaml
+apiVersion: vernaculo.dev/v1
+kind: Persona
+
+metadata:
+  id: pt-BR/ba/salvador
+  name: Salvador
+  language: pt-BR
+  country: BR
+  state: BA
+  locality: Salvador
+
+regionality:
+  defaultIntensity: 0.30
+
+linguistics:
+  vocabulary:
+    preferred: []
+    contextual: []
+    discouraged: []
+
+  discourse:
+    markers: []
+
+  morphosyntax:
+    patterns: []
+
+  pragmatics:
+    greetings: []
+    acknowledgements: []
+    closings: []
+
+constraints:
+  avoidCaricature: true
+  avoidStereotypes: true
+  preserveParentRole: true
+  preserveTaskAccuracy: true
+
+provenance:
+  sources: []
+```
+
+E o JSON Schema vai definir formalmente o que é ou não uma persona Vernáculo.
+
+Assim, amanhã alguém pode escrever um parser em:
+
+```text
+Python
+Rust
+Go
+Java
+C#
+```
+
+sem depender do nosso código TypeScript.
+
+**Esse ponto é muito importante para um padrão open source.**
+
+---
+
+# E o compiler?
+
+Teremos:
+
+```text
+persona.yaml
+      ↓
+@vernaculo/compiler
+      ↓
+Intermediate Persona Representation
+      ↓
+      ├── OpenAI instructions
+      ├── SKILL.md
+      ├── plain Markdown
+      ├── Claude instructions
+      ├── Gemini instructions
+      └── MCP resource
+```
+
+Algo como:
+
+```ts
+const compiled = compile(persona, {
+  target: "openai",
+  intensity: 0.30,
+  register: "customer-service",
+});
+```
+
+O resultado poderia ser:
+
+```ts
+{
+  instructions: "...",
+  metadata: {
+    persona: "pt-BR/ba/salvador",
+    version: "1.0.0"
+  }
+}
+```
+
+O ponto-chave é:
+
+**o compiler não chama IA.**
+
+Portanto custa:
+
+> **R$ 0.**
+
+É basicamente transformação determinística de dados.
+
+---
+
+# O adapter OpenAI
+
+Eu teria:
+
+```text
+@vernaculo/openai
+```
+
+mas ele seria fino.
+
+Por exemplo:
+
+```ts
+import OpenAI from "openai";
+import { vernaculo } from "@vernaculo/openai";
+
+const openai = new OpenAI();
+
+const persona = await vernaculo("pt-BR/ba/salvador", {
+  intensity: 0.25,
+});
+
+const response = await openai.responses.create({
+  model: "gpt-5.6-luna",
+
+  instructions: `
+    Você é um atendente de uma concessionária Honda.
+
+    ${persona.instructions}
+  `,
+
+  input: "Estou procurando uma moto para trabalhar."
+});
+```
+
+A API key continua sendo:
+
+```text
+OPENAI_API_KEY do usuário
+```
+
+e nunca nossa.
+
+---
+
+# E eu separaria OpenAI de OpenAI Agents
+
+Teríamos conceitualmente:
+
+```text
+@vernaculo/openai
+```
+
+para Responses API.
+
+E talvez:
+
+```text
+@vernaculo/openai-agents
+```
+
+para quem usa:
+
+```ts
+import { Agent } from "@openai/agents";
+```
+
+porque o Agents SDK oficial roda dentro da própria aplicação do desenvolvedor e é especificamente indicado para casos em que o servidor do cliente controla deployment, tools, estado etc. :chatgpt-content-reference{index="1"}
+
+Então:
+
+```ts
+const agent = new Agent({
+  name: "Honda Salvador",
+
+  instructions: vernaculo.instructions,
+});
+```
+
+Mas eu **não colocaria `@openai/agents` dentro do core**.
+
+---
+
+# Agent Skills deve entrar já no MVP
+
+Isso eu mudaria em relação ao que falamos anteriormente.
+
+Eu implementaria o exporter de Skill **logo na v0.1**.
+
+O padrão Agent Skills atualmente é extremamente simples: uma skill é um diretório contendo obrigatoriamente um `SKILL.md`, podendo possuir scripts, referências e assets adicionais. :chatgpt-content-reference{index="2"}
+
+Então:
+
+```bash
+vernaculo export pt-BR/ba/salvador --target skill
+```
+
+poderia gerar:
+
+```text
+salvador-persona/
+├── SKILL.md
+├── references/
+│   ├── vocabulary.md
+│   ├── discourse.md
+│   ├── pragmatics.md
+│   └── sources.md
+└── assets/
+    └── examples.yaml
+```
+
+A pessoa pega essa pasta e joga no projeto/agente dela.
+
+**Não precisa nem instalar `@vernaculo/core`.**
+
+Essa é uma propriedade excelente do projeto.
+
+---
+
+# MCP eu deixaria para v0.2/v0.3
+
+Não porque seja ruim.
+
+O ecossistema MCP está ótimo para isso e o SDK TypeScript v2 já suporta Node, Bun e Deno, além de tools, resources e prompts. :chatgpt-content-reference{index="3"}
+
+Mas não precisamos dele para provar nossa tese.
+
+Primeiro:
+
+```text
+Vernáculo Spec
+        +
+Persona Packs
+        +
+Compiler
+        +
+CLI
+        +
+SKILL.md
+        +
+OpenAI
+```
+
+Depois:
+
+```text
+@vernaculo/mcp
+```
+
+permitindo algo como:
+
+```text
+resources/list
+
+vernaculo://pt-BR/ba/salvador
+vernaculo://pt-BR/se/aracaju
+vernaculo://pt-BR/pe/recife
+```
+
+E uma empresa poderia levantar localmente:
+
+```bash
+npx @vernaculo/mcp
+```
+
+via `stdio`.
+
+Isso continuaria **100% local**, sem servidor nosso.
+
+MCP suporta justamente servidores locais via `stdio`, e o Agents SDK da OpenAI já consegue trabalhar diretamente com esse modelo. :chatgpt-content-reference{index="4"}
+
+---
+
+# Eu não colocaria banco de dados
+
+Nada de:
+
+```text
+PostgreSQL
+SQLite
+Redis
+MongoDB
+```
+
+no Vernáculo.
+
+O banco é:
+
+```text
+Git
++
+filesystem
+```
+
+Por exemplo:
+
+```text
+personas/
+  pt-BR/
+    ba/
+      salvador/
+        persona.yaml
+```
+
+Quer atualizar?
+
+```bash
+pnpm update @vernaculo/personas
+```
+
+ou:
+
+```bash
+vernaculo update
+```
+
+Para projeto open source desse tipo, dados versionados em Git são melhores que introduzir banco prematuramente.
+
+---
+
+# Também não colocaria Next.js
+
+Mesmo você conhecendo Next.js, **não vejo motivo para ele estar no core do projeto**.
+
+Se futuramente quisermos criar:
+
+```text
+vernaculo.dev
+```
+
+aí podemos fazer uma documentação/site estático.
+
+Algo simples como:
+
+```text
+Astro
++
+Starlight
+```
+
+seria até mais apropriado que Next.js porque o site é essencialmente documentação e catálogo.
+
+E GitHub Pages/Cloudflare Pages pode hospedar gratuitamente.
+
+Mas isso não entra no runtime.
+
+---
+
+# E Rust?
+
+Aqui acho que tem uma oportunidade futura legal.
+
+Não usaria Rust para começar porque complicaria contribuição e distribuição no ecossistema de agentes.
+
+Mas poderíamos posteriormente ter:
+
+```text
+vernaculo-core
+```
+
+em Rust e gerar bindings.
+
+**Eu só faria isso se surgir necessidade real de performance ou CLI standalone.**
+
+Por exemplo:
+
+```bash
+vernaculo
+```
+
+como binário único de ~alguns MB:
+
+```text
+Linux
+Windows
+macOS
+```
+
+sem Node instalado.
+
+Aí Rust faria bastante sentido.
+
+Mas **não agora**.
+
+Nosso problema não é CPU. É qualidade dos dados, especificação, compatibilidade e evals.
+
+---
+
+# Eu fecharia então nessa stack
+
+```text
+                    VERNÁCULO
+
+        ┌─────────────────────────────┐
+        │       Persona Format        │
+        │ YAML + Markdown + JSONSchema│
+        └──────────────┬──────────────┘
+                       │
+                       ▼
+                TypeScript Core
+                  Zod 4
+                       │
+               ┌───────┴───────┐
+               ▼               ▼
+            Compiler          CLI
+               │
+      ┌────────┼─────────┐
+      ▼        ▼         ▼
+   OpenAI    Skill     Markdown
+      │
+      │                 futuro
+      │                   │
+      └───────────────► MCP
+                          │
+                 Claude / Gemini /
+                 Codex / Cursor / etc.
+```
+
+E o monorepo:
+
+```text
+TypeScript
+pnpm
+Zod 4
+Vitest
+Biome
+tsdown
+Commander
+Clack
+Changesets
+GitHub Actions
+JSON Schema
+YAML
+Markdown
+```
+
+**Essa é a stack que eu usaria para começar o Vernáculo.**
+
+E eu tomaria mais uma decisão já no início: o produto principal **não é `@vernaculo/openai`**. O produto principal é a **Vernáculo Persona Specification + biblioteca pública de personas**. OpenAI é apenas nosso **primeiro adapter oficial**.
+
+Isso é o que permite que daqui a alguns anos o projeto continue relevante mesmo que o ecossistema de agentes tenha mudado completamente.
