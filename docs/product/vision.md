@@ -27,7 +27,7 @@ business agent  +  regional persona layer  =  localized agent
 It has four assets, in order of importance:
 
 1. **The Vernáculo Persona Specification** — an open, declarative format (YAML + Markdown + JSON Schema) for describing observable features of a language variety, with intensity, provenance and review status. Implementable in any language.
-2. **A public library of regional persona packs** — small, researched, human-reviewed, starting with Brazilian Portuguese.
+2. **A public library of regional persona packs** — small, researched, openly licensed (Apache-2.0), with review by speakers always recommended, starting with Brazilian Portuguese.
 3. **A deterministic compiler and adapters** — turning packs into instructions for OpenAI, Agent Skills, plain system prompts, and later other providers and MCP.
 4. **Evals** — local, reproducible checks that a pack is natural, regionally faithful, preserves the agent's task and rules, does not overuse features and does not leak stereotypes.
 

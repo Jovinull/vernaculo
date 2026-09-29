@@ -1,8 +1,12 @@
 # Human review
 
 Automated checks can prove structure; only people familiar with a variety can
-judge whether output sounds natural, exaggerated or wrong. Review by speakers is
-part of the methodology, not an optional extra.
+judge whether output sounds natural, exaggerated or wrong. Review by speakers of
+the variety is **always recommended and never mandatory**
+([ADR-0015](../decisions/0015-human-review-recommended-not-mandatory.md)): there is no
+minimum number of reviewers, no agreement threshold and no review gate for
+publishing or using a pack. Everything on this page is guidance for doing review
+well. The CLI recommends review whenever it handles a `draft` persona.
 
 Status: **process defined, not yet run** (no real pack exists). The record format
 below is a proposal; it becomes a schema when the first review round happens.
@@ -43,20 +47,20 @@ Plus a free-text comment. How labels map to pack changes:
 | `authentic`, `natural` across reviewers | supports `evidence: reported` (cite the review round) |
 | `exaggerated` | raise `minIntensity`, adjust examples, strengthen bands |
 | `unrecognized`, `wrong-region` | re-check evidence; narrow scope; demote to `hypothesis` or remove |
-| `caricatural`, `offensive` | remove/discourage; add an anti-pattern; treat as blocking |
+| `caricatural`, `offensive` | remove or discourage the form and add an anti-pattern, as the [anti-caricature policy](anti-caricature.md) requires regardless of maturity |
 | `register-mismatch` | add context (`contextual`), adjust examples |
 
 ## Reviewers
 
 - People familiar with the variety (e.g. grew up or have long lived there). The profile of each reviewer is recorded coarsely, never identifying them.
-- Several reviewers per pack; diversity in age and background within the variety where possible.
-- Required numbers and agreement thresholds for `reviewed` maturity: **open question** ([open-questions.md](../roadmap/open-questions.md)).
+- More reviewers and more diversity (age, background, area) give stronger signals; one careful reviewer is still better than none.
+- There are no required numbers or agreement thresholds. The record shows how extensive a review was, so users can judge for themselves.
 
 ## Privacy and consent
 
 - Informed consent before participating; reviewers can withdraw.
 - Public records use pseudonymous reviewer ids and coarse profile data only (familiarity, locality, optional age band). No names, contacts or free-text personal data in the repository.
-- Reviews are contributions to an open project: the license of review records must be agreed with reviewers (tied to the pack content license open question).
+- Reviews are contributions to an open project: review records are licensed under Apache-2.0 like the rest of the repository ([ADR-0014](../decisions/0014-apache-2-0-persona-content.md)); reviewers are told so when they consent.
 
 ## Proposed record shape (not yet normative)
 
@@ -82,6 +86,9 @@ A review round is cited from the pack as a `speaker-review` source.
 
 ## Outcome
 
-Maintainers may set `maturity: reviewed` only after a round meets the agreed
-criteria and blocking labels (`caricatural`, `offensive`) are resolved. The review
-record is merged together with that change.
+Set `maturity: reviewed` when a review by speakers of the variety actually took
+place: it is a statement of fact, not a quality score. Recommended: keep the
+review record next to the pack, cite the round as a `speaker-review` source, and
+apply the findings (anything flagged `caricatural` or `offensive` is fixed under
+the anti-caricature policy in any case). A pack that was never reviewed stays
+`draft`, can still be published and used, and keeps recommending review.

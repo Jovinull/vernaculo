@@ -20,5 +20,4 @@ Nothing has been published yet. All packages are at `0.0.0`.
 
 - npm scope `@vernaculo` and package name `vernaculo` claimed by the maintainer (both were unregistered on 2026-09-29 — see open questions).
 - Repository URL decided and added to every `package.json` (`repository`, `homepage`, `bugs`).
-- Content license for packs decided.
 - At least one real pack, or the release clearly labeled as tooling-only with fixtures.

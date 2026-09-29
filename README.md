@@ -64,7 +64,7 @@ real packs — Salvador/BA, Aracaju/SE, Recife/PE, São Paulo/SP — are planned
 - **Provider-agnostic.** The specification and core know nothing about any provider. OpenAI is the first adapter; Agent Skills export is built in; other providers, local models and MCP are planned. [ADR-0002](docs/decisions/0002-provider-agnostic-specification-and-core.md)
 - **Open format.** YAML + Markdown with a normative JSON Schema and a language-neutral conformance suite, implementable in any language. [Specification](docs/specification/overview.md)
 - **Deterministic.** Compiling a persona never calls a model. [ADR-0011](docs/decisions/0011-deterministic-llm-free-compilation.md)
-- **Evidence before claims.** Every feature declares its evidence and sources; hypotheses are never rendered; maturity (`fixture` / `draft` / `reviewed`) is visible in every output. Evals and review by speakers of each variety are part of the product.
+- **Evidence before claims.** Every feature declares its evidence and sources; hypotheses are never rendered; maturity (`fixture` / `draft` / `reviewed`) is visible in every output. Evals are part of the product; review by speakers of each variety is always recommended (never mandatory), and the CLI says so for every draft.
 - **No lock-in.** `vernaculo eject` writes a self-contained persona and compiled instructions into your project.
 
 ## What exists today
@@ -112,6 +112,8 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) and [docs/](docs/README.md).
 
 ## License
 
-Code: [Apache-2.0](LICENSE). Third-party linguistic material keeps its own license
-and is only consulted, cited or redistributed as that license allows; the license
-of the future persona packs' content is still an [open question](docs/roadmap/open-questions.md).
+Everything in this repository — code, specification, documentation and persona
+packs — is open source under [Apache-2.0](LICENSE): free to use, modify and embed,
+including commercially ([ADR-0014](docs/decisions/0014-apache-2-0-persona-content.md)).
+Third-party linguistic material keeps its own license and is only consulted, cited
+or redistributed as that license allows.

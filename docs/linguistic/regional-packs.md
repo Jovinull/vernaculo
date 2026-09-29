@@ -17,8 +17,11 @@ Quality over coverage: four excellent packs rather than 27 states.
 | `pt-BR/sp/sao-paulo` | São Paulo (SP) | not started — research pending |
 
 Each will ship with configurable intensity, sources, positive and negative
-examples, automated checks, human review records and evals. None will be marked
-`reviewed` until the human-review criteria are met.
+examples, automated checks and evals, under Apache-2.0
+([ADR-0014](../decisions/0014-apache-2-0-persona-content.md)). Human review by
+speakers is recommended for each of them (never mandatory,
+[ADR-0015](../decisions/0015-human-review-recommended-not-mandatory.md)); a pack is
+marked `reviewed` only once a review has actually taken place.
 
 Whether these four share a `pt-BR` base persona, and what such a base could
 legitimately contain, is an [open question](../roadmap/open-questions.md) (the

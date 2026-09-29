@@ -10,7 +10,11 @@ Common options:
 - `--intensity <0..1>` — rejected when out of range or not a number.
 
 Maturity warnings (`FIXTURE`, `DRAFT`) are printed to stderr by `compile`,
-`export` and `eject`.
+`export` and `eject`. For `draft` personas they come with a recommendation to have
+speakers of the variety review the persona (never required,
+[ADR-0015](../decisions/0015-human-review-recommended-not-mandatory.md)); `validate`
+summarizes how many drafts are unreviewed and `inspect` shows a "human review"
+line. Hints never change the exit code.
 
 ## Implemented
 
@@ -21,7 +25,7 @@ Maturity warnings (`FIXTURE`, `DRAFT`) are printed to stderr by `compile`,
 | `vernaculo validate [personas...]` | validate the given personas, or every persona in the roots; exit 1 on any failure |
 | `vernaculo compile <persona> [--target markdown\|openai] [--intensity x] [--agent file] [--out file]` | print instructions; `openai` prints `{ instructions, metadata }` JSON and can compose agent instructions from `--agent` |
 | `vernaculo export <persona> --target skill [--intensity x] [--out dir] [--force]` | write an Agent Skill directory `<out>/vernaculo-<id-slug>/`; refuses to overwrite a non-empty directory without `--force` |
-| `vernaculo eject <persona> [--intensity x] [--out dir] [--force]` | write `persona.yaml` (flattened, self-contained), `instructions.md` and `README.md` to `vernaculo/<id>/` or `--out` |
+| `vernaculo eject <persona> [--intensity x] [--out dir] [--force]` | write `persona.yaml` (flattened, self-contained; lineage, licenses and maturity in the header), `instructions.md` and `README.md` (with review recommendation for drafts and the lineage's content licenses) to `vernaculo/<id>/` or `--out` |
 
 ## Planned (contract draft)
 

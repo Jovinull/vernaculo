@@ -30,13 +30,14 @@ levels, a sensible `defaultIntensity`.
 `pnpm check` runs lint, typecheck, tests, build, and `vernaculo validate` over all
 persona roots: structure, semantic rules, lineage resolution.
 
-## 4. Human review
+## 4. Human review (recommended, not mandatory)
 
 Speakers of the variety review compiled outputs at several intensities using the
 label set in [human-review.md](../linguistic/human-review.md). Findings change the
-pack (remove, re-scope, lower `minIntensity`, add anti-patterns). Only when the
-review criteria are met may `maturity` become `reviewed` (criteria are an open
-question to settle before the first real pack).
+pack (remove, re-scope, lower `minIntensity`, add anti-patterns). There is no
+mandatory criterion ([ADR-0015](../decisions/0015-human-review-recommended-not-mandatory.md)):
+a pack may be released as `draft`, and becomes `reviewed` once a review has actually
+taken place and is documented. Tooling keeps recommending review for drafts.
 
 ## 5. Evals
 

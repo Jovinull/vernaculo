@@ -31,10 +31,13 @@ pnpm changeset      # when a published package's public behavior changes
 ## Persona packs
 
 See [docs/development/contributing-personas.md](docs/development/contributing-personas.md).
-Evidence, sources, licenses and human review are required; synthetic data belongs
-only in `fixtures/`.
+Evidence, sources and license checks are required; review by speakers of the
+variety is always recommended (never mandatory). Synthetic data belongs only in
+`fixtures/`.
 
 ## License
 
-By contributing you agree that your contribution is licensed under Apache-2.0
-(contribution terms such as DCO/CLA are still an open question).
+Everything in the repository (code, docs, schemas and persona content) is
+Apache-2.0. By contributing you license your contribution under Apache-2.0
+(its section 5); no CLA is required. Whether to require a DCO sign-off is still an
+open question.

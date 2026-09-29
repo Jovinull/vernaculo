@@ -14,10 +14,12 @@ Legend: ✅ done · 🔜 next · 📋 planned · 💡 idea (not a commitment).
 | CLI: `list`, `inspect`, `validate`, `compile` (markdown, openai), `export --target skill`, `eject` | ✅ |
 | CI, Changesets, Apache-2.0 | ✅ |
 | Documentation, ADRs, Claude Code project setup | ✅ |
-| Settle blocking open questions: pack content license, `reviewed` criteria, eval runner, catalog distribution | 🔜 |
+| Pack content license: Apache-2.0, one license for the whole repository (ADR-0014) | ✅ |
+| Review policy: human review always recommended, never mandatory; CLI recommends it for drafts (ADR-0015) | ✅ |
+| Settle remaining open questions: eval runner, catalog distribution | 🔜 |
 | Research + draft `pt-BR/ba/salvador`, `pt-BR/se/aracaju`, `pt-BR/pe/recife`, `pt-BR/sp/sao-paulo` | 🔜 |
 | Shared scenario set and model-based eval runner (local, user credentials) | 📋 |
-| First human review rounds; review record schema | 📋 |
+| First human review rounds (recommended, not a gate); review record schema | 📋 |
 | CLI `add`, `search`, `update` (after the catalog decision); `@clack/prompts` for interactive flows | 📋 |
 | First npm / GitHub Releases publication (manual) | 📋 |
 | Library releases include pre-built artifacts per pack (exported skill + compiled `instructions.md`), so consumers need no Node/Python | 📋 |

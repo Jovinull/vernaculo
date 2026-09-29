@@ -72,9 +72,9 @@ Describing a feature in your own words, with a citation, is the normal case.
 
 ## Review and evaluation
 
-- Every pack is reviewed by people familiar with the variety ([human-review.md](human-review.md)).
+- Review by people familiar with the variety is always recommended, never mandatory ([human-review.md](human-review.md), [ADR-0015](../decisions/0015-human-review-recommended-not-mandatory.md)).
 - Every pack is evaluated with local, reproducible evals ([evals/strategy.md](../evals/strategy.md)).
-- Claims about a pack (natural, representative, validated) are made only with that evidence.
+- Claims about a pack (natural, representative, validated) are made only with evidence from review and evals.
 
 ## Initial packs
 

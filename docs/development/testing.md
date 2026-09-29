@@ -20,11 +20,11 @@ Tests import package sources through the `@vernaculo/source` export condition
 | Resolution | `packages/core/test/resolve.test.ts` | lineage, cancellation, scalar inheritance, determinism, root shadowing, project files, path-safe ids, depth bound, listing order |
 | Intensity / IR | `packages/core/test/ir.test.ts` | bounds, neutral at 0, gating, hypotheses never rendered, examples gating, frozen IR, no mutation |
 | Serialization | `packages/core/test/serialize.test.ts` | round trip; YAML 1.1-safe quoting |
-| Architecture invariants | `packages/core/test/architecture.test.ts` | no provider SDK/network imports or deps; dependency direction; runtime-agnostic entries |
+| Architecture invariants | `packages/core/test/architecture.test.ts` | no provider SDK/network imports or deps; dependency direction; runtime-agnostic entries; every library persona is Apache-2.0 (ADR-0014) |
 | Compiler | `packages/compiler/test/compile.test.ts` | golden outputs per intensity; ground rules at every intensity; maturity notice; determinism; escaping; works with network disabled |
 | OpenAI adapter | `packages/openai/test/openai.test.ts` | composition order, immutability, per-request idempotence, no SDK dependency |
 | Skill exporter | `packages/skills/test/skills.test.ts` | Agent Skills spec constraints, layout, gating, determinism |
-| CLI | `packages/cli/test/cli.test.ts` | every command, exit codes, overwrite protection, eject round trip (ejected persona compiles to identical instructions) |
+| CLI | `packages/cli/test/cli.test.ts` | every command, exit codes, overwrite protection, eject round trip (ejected persona compiles to identical instructions), review recommendations for drafts and license notes in ejected files (ADR-0015) |
 
 ## Conventions
 

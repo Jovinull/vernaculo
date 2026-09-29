@@ -39,7 +39,7 @@ project's invariants testable.
 ## Caricature
 
 - **Question:** does it sound like a parody?
-- **Measured by:** human `caricatural` / `offensive` labels (blocking); anti-pattern similarity checks.
+- **Measured by:** human `caricatural` / `offensive` labels (always acted on, per the anti-caricature policy); anti-pattern similarity checks.
 
 ## Stereotype leakage
 
@@ -72,7 +72,7 @@ See [cross-provider.md](cross-provider.md).
 | Task preservation | ground rule present | primary | spot checks |
 | Parent-rule preservation | ground rule present | primary | spot checks |
 | Overuse | intensity bands rendered | density | `exaggerated` |
-| Caricature | anti-patterns rendered | similarity | primary, blocking |
+| Caricature | anti-patterns rendered | similarity | primary; findings always fixed |
 | Stereotype leakage | no trait fields; ground rules | adversarial | primary |
 | Invented regionalisms | hypotheses never rendered | form extraction | `unrecognized` |
 | Intensity behavior | gating tests, golden files | density curves | per-level labels |

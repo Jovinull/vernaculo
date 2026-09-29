@@ -62,6 +62,7 @@ vernaculo eject pt-BR/ba/salvador --intensity 0.3
 - `persona.yaml` is **flattened**: the whole lineage resolved, `extends` removed, the lineage (ids, versions, maturity, licenses) recorded in a header comment. It is a valid standalone persona.
 - `instructions.md` is the compiled layer; the application can read it as plain text with no Vernáculo package installed.
 - Re-compiling the ejected `persona.yaml` produces byte-identical instructions (tested).
+- The ejected `README.md` lists the content licenses of the lineage (library packs are Apache-2.0: keep the notice and mark changes if you redistribute the files) and, for drafts, recommends human review.
 - The CLI does not edit the user's `package.json`; removing `@vernaculo/*` dependencies after ejecting is the user's decision.
 
 ## Planned: `add`, `search`, `update`

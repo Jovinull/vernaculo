@@ -206,7 +206,10 @@ Line numbers refer to `ideia.txt`.
 
 ## Open questions originating in the conversation
 
-All tracked in [open-questions.md](../roadmap/open-questions.md): pack content
+Tracked in [open-questions.md](../roadmap/open-questions.md) (OQ-01 and OQ-02 were
+resolved right after the bootstrap by the maintainer: Apache-2.0 for pack content,
+[ADR-0014](../decisions/0014-apache-2-0-persona-content.md); review recommended, not
+mandatory, [ADR-0015](../decisions/0015-human-review-recommended-not-mandatory.md)): pack content
 license (OQ-01), `reviewed` criteria (OQ-02), eval runner/Promptfoo (OQ-03),
 catalog distribution and `@vernaculo/personas` (OQ-04), register modeling (OQ-05),
 multi-file packs (OQ-06), runtime intensity in skills (OQ-07), a `pt-BR` base

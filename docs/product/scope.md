@@ -14,7 +14,8 @@ direction, not implemented), **idea** (possible future, not a requirement),
 | `@vernaculo/skills` (Agent Skill exporter) | done |
 | CLI: `list`, `inspect`, `validate`, `compile`, `export --target skill`, `eject` | done |
 | CLI: `add`, `search`, `update` | planned (depends on catalog distribution, see open questions) |
-| Four researched, human-reviewed packs: `pt-BR/ba/salvador`, `pt-BR/se/aracaju`, `pt-BR/pe/recife`, `pt-BR/sp/sao-paulo` | planned (research not started) |
+| Four researched packs, human review recommended: `pt-BR/ba/salvador`, `pt-BR/se/aracaju`, `pt-BR/pe/recife`, `pt-BR/sp/sao-paulo` | planned (research not started) |
+| Content license (Apache-2.0) and review policy (recommended, not mandatory) | done (ADR-0014, ADR-0015) |
 | Eval methodology, dimensions and human-review labels | done (documented) |
 | Eval runner and per-pack eval suites | planned |
 | CI (GitHub Actions), Changesets | done |

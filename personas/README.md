@@ -14,8 +14,13 @@ started:
 | `pt-BR/sp/sao-paulo` | not started |
 
 A pack is added here only with real research: evidence and sources for every
-feature, licenses checked, positive and negative examples, `maturity: draft`
-until human review by speakers of the variety is complete.
+feature, source licenses checked, positive and negative examples. Packs start as
+`maturity: draft`; human review by speakers of the variety is always recommended
+(never mandatory) and a pack becomes `reviewed` once such a review has actually
+taken place.
+
+License: every pack here is **Apache-2.0** (`metadata.license: Apache-2.0`), like
+the rest of the repository.
 
 - How packs are built: [docs/linguistic/methodology.md](../docs/linguistic/methodology.md)
 - What must never be in a pack: [docs/linguistic/anti-caricature.md](../docs/linguistic/anti-caricature.md)

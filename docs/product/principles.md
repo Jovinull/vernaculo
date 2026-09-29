@@ -53,8 +53,10 @@ output. [provenance.md](../specification/provenance.md)
 
 ## 8. Evals are part of the product
 
-Packs ship with — and are judged by — local, reproducible evals and human review
-by speakers of the variety. [evals/strategy.md](../evals/strategy.md)
+Packs ship with — and are judged by — local, reproducible evals. Human review by
+speakers of the variety is always recommended and never mandatory; tooling
+recommends it for every draft. [evals/strategy.md](../evals/strategy.md) ·
+[ADR-0015](../decisions/0015-human-review-recommended-not-mandatory.md)
 
 ## 9. No lock-in
 
@@ -62,11 +64,13 @@ Personas are portable files. Users can copy, fork, override (`extends`) or eject
 them; if the project disappeared, installed packs keep working.
 [distribution.md](../architecture/distribution.md)
 
-## 10. Respect licenses
+## 10. Open license, respect for others' licenses
 
-The code is Apache-2.0; third-party linguistic material keeps its own license and
+Everything in the repository (code, specification, documentation and persona
+content) is Apache-2.0. Third-party linguistic material keeps its own license and
 is consulted, cited or redistributed only as that license allows.
-[ADR-0012](../decisions/0012-apache-2-0-code-license.md)
+[ADR-0012](../decisions/0012-apache-2-0-code-license.md) ·
+[ADR-0014](../decisions/0014-apache-2-0-persona-content.md)
 
 ## 11. Small, correct, extensible
 

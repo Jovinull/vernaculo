@@ -43,15 +43,15 @@ Known research sources and their verified licenses: [linguistic/sources.md](../l
 | --- | --- | --- |
 | `fixture` | synthetic data for tests and demos; **not linguistic content** | anyone, for tests |
 | `draft` | under research; not reviewed by speakers | pack authors |
-| `reviewed` | human review completed per [human-review.md](../linguistic/human-review.md) | maintainers, after the review record is merged |
+| `reviewed` | a human review by speakers of the variety actually took place and is documented ([human-review.md](../linguistic/human-review.md)) | pack authors/maintainers, when that is true; cite the round as a `speaker-review` source (recommended) |
 
 - The **effective maturity** of a persona is the least mature level in its lineage; a `reviewed` persona extending a `draft` one is effectively `draft`.
 - Renderers MUST surface non-`reviewed` maturity in their output (the reference compiler adds a notice; the CLI also warns on stderr).
 - There is intentionally **no `validated` level**: the project has no validation process that would justify the word. Adding a level (e.g. "evaluated", tied to eval results) requires specification and methodology changes.
-- Criteria for `reviewed` (number and profile of reviewers, agreement) are an open question to settle before the first real pack.
+- **Human review is always recommended, never mandatory** ([ADR-0015](../decisions/0015-human-review-recommended-not-mandatory.md)): there is no minimum number of reviewers or agreement threshold, and `draft` packs may be published and used. Tooling recommends review for every `draft` persona. `reviewed` is an honest statement that a review happened, not a quality threshold.
 
 ## Licensing of persona content
 
 - `metadata.license` declares the license of *this persona's own content* (SPDX expression recommended). It is not inherited: a derived persona declares its own, and the lineage's licenses remain visible (lineage metadata, ejected file headers, skill `sources.md`).
 - The repository's code license (Apache-2.0) does not by itself license third-party material ([ADR-0012](../decisions/0012-apache-2-0-code-license.md)).
-- The license for official packs is an [open question](../roadmap/open-questions.md).
+- The official library's content is licensed under **Apache-2.0**, like the code: every persona in `personas/` declares `metadata.license: Apache-2.0` (enforced by a test). See [ADR-0014](../decisions/0014-apache-2-0-persona-content.md).
