@@ -2,7 +2,7 @@
   "name": "vernaculo-monorepo",
   "private": true,
   "type": "module",
-  "description": "Vernáculo monorepo: open specification, reference implementation and regional persona packs for sociolinguistic localization of AI agents.",
+  "description": "Monorepo do Vernáculo: especificação aberta, implementação de referência e packs de persona regional para localização sociolinguística de agentes de IA.",
   "license": "Apache-2.0",
   "packageManager": "pnpm@12.8.1",
   "engines": {

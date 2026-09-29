@@ -1,8 +1,29 @@
 {
   "name": "vernaculo",
   "version": "0.0.0",
-  "description": "Vernáculo CLI: inspect, validate, compile, export and eject regional personas for AI agents. Runs locally; no Vernáculo service involved.",
+  "description": "CLI do Vernáculo: inspeciona, valida, compila, exporta e ejeta personas regionais para agentes de IA. Roda localmente; nenhum serviço do Vernáculo envolvido.",
   "license": "Apache-2.0",
+  "keywords": [
+    "vernaculo",
+    "ia",
+    "agentes-de-ia",
+    "llm",
+    "portugues-brasileiro",
+    "pt-br",
+    "sociolinguistica",
+    "regionalismos",
+    "localizacao",
+    "persona"
+  ],
+  "homepage": "https://github.com/Jovinull/vernaculo#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jovinull/vernaculo.git",
+    "directory": "packages/cli"
+  },
+  "bugs": {
+    "url": "https://github.com/Jovinull/vernaculo/issues"
+  },
   "type": "module",
   "bin": {
     "vernaculo": "./dist/bin.mjs"

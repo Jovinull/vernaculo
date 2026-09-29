@@ -1,8 +1,29 @@
 {
   "name": "@vernaculo/skills",
   "version": "0.0.0",
-  "description": "Vernáculo exporter for Agent Skills: turns a persona into a self-contained SKILL.md directory.",
+  "description": "Exportador de Agent Skills do Vernáculo: transforma uma persona em um diretório SKILL.md autocontido.",
   "license": "Apache-2.0",
+  "keywords": [
+    "vernaculo",
+    "ia",
+    "agentes-de-ia",
+    "llm",
+    "portugues-brasileiro",
+    "pt-br",
+    "sociolinguistica",
+    "regionalismos",
+    "localizacao",
+    "persona"
+  ],
+  "homepage": "https://github.com/Jovinull/vernaculo#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jovinull/vernaculo.git",
+    "directory": "packages/skills"
+  },
+  "bugs": {
+    "url": "https://github.com/Jovinull/vernaculo/issues"
+  },
   "type": "module",
   "sideEffects": false,
   "exports": {

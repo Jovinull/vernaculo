@@ -1,8 +1,29 @@
 {
   "name": "@vernaculo/compiler",
   "version": "0.0.0",
-  "description": "Vernáculo compiler: renders a persona intermediate representation as provider-neutral instructions. Deterministic; never calls a model.",
+  "description": "Compilador do Vernáculo: transforma a representação intermediária de uma persona em instruções neutras de provedor. Determinístico; nunca chama um modelo.",
   "license": "Apache-2.0",
+  "keywords": [
+    "vernaculo",
+    "ia",
+    "agentes-de-ia",
+    "llm",
+    "portugues-brasileiro",
+    "pt-br",
+    "sociolinguistica",
+    "regionalismos",
+    "localizacao",
+    "persona"
+  ],
+  "homepage": "https://github.com/Jovinull/vernaculo#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jovinull/vernaculo.git",
+    "directory": "packages/compiler"
+  },
+  "bugs": {
+    "url": "https://github.com/Jovinull/vernaculo/issues"
+  },
   "type": "module",
   "sideEffects": false,
   "exports": {

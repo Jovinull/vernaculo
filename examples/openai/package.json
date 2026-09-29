@@ -2,7 +2,7 @@
   "name": "@vernaculo/example-openai",
   "private": true,
   "type": "module",
-  "description": "Example: a business agent + a Vernáculo persona layer on the OpenAI Responses API, with your own key and model.",
+  "description": "Exemplo: um agente de negócio + uma camada de persona do Vernáculo na OpenAI Responses API, com a sua própria chave e modelo.",
   "scripts": {
     "start": "node src/main.ts"
   },

@@ -1,8 +1,29 @@
 {
   "name": "@vernaculo/core",
   "version": "0.0.0",
-  "description": "Vernáculo core: parse, validate and resolve persona documents and apply regional intensity. No provider, no network.",
+  "description": "Núcleo do Vernáculo: parse, validação e resolução de personas e aplicação da intensidade regional. Sem provedor, sem rede.",
   "license": "Apache-2.0",
+  "keywords": [
+    "vernaculo",
+    "ia",
+    "agentes-de-ia",
+    "llm",
+    "portugues-brasileiro",
+    "pt-br",
+    "sociolinguistica",
+    "regionalismos",
+    "localizacao",
+    "persona"
+  ],
+  "homepage": "https://github.com/Jovinull/vernaculo#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jovinull/vernaculo.git",
+    "directory": "packages/core"
+  },
+  "bugs": {
+    "url": "https://github.com/Jovinull/vernaculo/issues"
+  },
   "type": "module",
   "sideEffects": false,
   "exports": {
