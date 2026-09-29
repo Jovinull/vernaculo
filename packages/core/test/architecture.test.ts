@@ -1,6 +1,8 @@
 import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
+import { parsePersonaYaml } from "../src/index.ts";
+import { listPersonas } from "../src/node.ts";
 import { repoRoot } from "./helpers.ts";
 
 // Executable architecture invariants (docs/architecture/overview.md, ADR-0001,
@@ -99,6 +101,14 @@ describe("architecture invariants", () => {
       }
     },
   );
+
+  it("licenses every persona of the official library under Apache-2.0 (ADR-0014)", async () => {
+    const listed = await listPersonas(join(repoRoot, "personas"));
+    for (const { path, id } of listed) {
+      const { metadata } = parsePersonaYaml(readFileSync(path, "utf8"), { origin: path });
+      expect(metadata.license, `${id} must declare license: Apache-2.0`).toBe("Apache-2.0");
+    }
+  });
 
   it("keeps Node-specific code of @vernaculo/core in src/node.ts only", () => {
     for (const { file, text } of sourceFiles("core")) {
