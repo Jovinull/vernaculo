@@ -1,0 +1,15 @@
+{
+  "name": "@vernaculo/example-openai",
+  "private": true,
+  "type": "module",
+  "description": "Example: a business agent + a Vernáculo persona layer on the OpenAI Responses API, with your own key and model.",
+  "scripts": {
+    "start": "node src/main.ts"
+  },
+  "dependencies": {
+    "@vernaculo/compiler": "workspace:^",
+    "@vernaculo/core": "workspace:^",
+    "@vernaculo/openai": "workspace:^",
+    "openai": "7.23.0"
+  }
+}
