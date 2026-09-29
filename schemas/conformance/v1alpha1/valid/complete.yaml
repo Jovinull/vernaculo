@@ -1,0 +1,110 @@
+# Uses every field defined by v1alpha1. All linguistic content is SYNTHETIC:
+# terms such as "termo-sintético-a" are placeholders, not real regionalisms.
+apiVersion: vernaculo.dev/v1alpha1
+kind: Persona
+metadata:
+  id: pt-BR/x-conformance/complete
+  name: Conformance — complete
+  description: Exercises every field of the v1alpha1 format with synthetic data.
+  language: pt-BR
+  version: 1.2.3-alpha.1+build.5
+  maturity: draft
+  license: Apache-2.0
+  region:
+    country: BR
+    subdivision: BA
+    locality: Synthetic locality
+    note: Region data is informational and does not drive inheritance.
+regionality:
+  defaultIntensity: 0.25
+linguistics:
+  vocabulary:
+    preferred:
+      - term: termo-sintético-a
+        meaning: Synthetic lexical item used for conformance testing.
+        evidence: attested
+        sources: [synthetic-atlas]
+        notes: Not a real word.
+      - term: termo-sintético-b
+        evidence: reported
+        sources: [synthetic-review]
+        minIntensity: 0.5
+    contextual:
+      - term: termo-sintético-c
+        context: Only in informal closings.
+        meaning: Synthetic contextual item.
+        evidence: attested
+        sources: [synthetic-atlas]
+        minIntensity: 0.4
+    discouraged:
+      - term: termo-sintético-d
+        reason: Synthetic discouraged item.
+        sources: [synthetic-review]
+        notes: Discouraged items are always rendered as restrictions.
+  discourse:
+    markers:
+      - form: marcador-sintético-a
+        function: Synthetic turn-taking marker.
+        evidence: attested
+        sources: [synthetic-atlas]
+        minIntensity: 0.2
+  morphosyntax:
+    patterns:
+      - id: padrao-sintetico-a
+        description: Synthetic morphosyntactic pattern.
+        example: Frase sintética de exemplo.
+        evidence: attested
+        sources: [synthetic-atlas]
+  pragmatics:
+    addressForms:
+      - form: tratamento-sintético-a
+        usage: Synthetic form of address for unknown interlocutors.
+        evidence: attested
+        sources: [synthetic-atlas]
+    greetings:
+      - form: saudação-sintética-a
+        evidence: attested
+        sources: [synthetic-atlas]
+    acknowledgements:
+      - form: confirmação-sintética-a
+        evidence: attested
+        sources: [synthetic-atlas]
+    disagreements:
+      - form: discordância-sintética-a
+        evidence: hypothesis
+        notes: Hypotheses are kept for research but never rendered.
+    closings:
+      - form: despedida-sintética-a
+        evidence: attested
+        sources: [synthetic-atlas]
+  orthography:
+    phoneticSpelling: avoid
+examples:
+  - id: saudacao
+    situation: Greeting a customer
+    neutral: Olá, tudo bem?
+    text: Olá, tudo bem? saudação-sintética-a.
+    intensity: 0.25
+    sources: [synthetic-atlas]
+    notes: Synthetic example.
+antiPatterns:
+  - id: excesso
+    text: termo-sintético-a termo-sintético-a termo-sintético-a!
+    category: overuse
+    explanation: Repeating a marker in every clause is overuse, not naturalness.
+provenance:
+  sources:
+    - id: synthetic-atlas
+      type: atlas
+      title: Synthetic atlas (not a real work)
+      url: https://example.org/synthetic-atlas
+      citation: Synthetic citation used only for conformance tests.
+      license: CC-BY-4.0
+      usage: consulted
+      accessed: "2026-09-29" # quoted: YAML 1.1 parsers would read an unquoted date as a timestamp
+      notes: Fictitious source.
+    - id: synthetic-review
+      type: speaker-review
+      title: Synthetic review round (not real)
+      usage: cited
+  notes: All provenance here is fictitious.

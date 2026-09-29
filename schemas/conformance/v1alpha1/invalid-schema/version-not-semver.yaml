@@ -1,0 +1,9 @@
+# reason: metadata.version must be a semantic version.
+apiVersion: vernaculo.dev/v1alpha1
+kind: Persona
+metadata:
+  id: pt-BR/x-conformance/invalid
+  name: Conformance — invalid
+  language: pt-BR
+  version: "1.0"
+  maturity: fixture

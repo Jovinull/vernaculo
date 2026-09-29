@@ -1,0 +1,14 @@
+# reason: anti-pattern categories are a closed set.
+apiVersion: vernaculo.dev/v1alpha1
+kind: Persona
+metadata:
+  id: pt-BR/x-conformance/invalid
+  name: Conformance — invalid
+  language: pt-BR
+  version: 0.1.0
+  maturity: fixture
+antiPatterns:
+  - id: exemplo
+    text: Texto sintético.
+    category: funny
+    explanation: Unknown category.

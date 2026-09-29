@@ -1,0 +1,10 @@
+# expect: missing-default-intensity
+# reason: the resolved lineage must define regionality.defaultIntensity.
+apiVersion: vernaculo.dev/v1alpha1
+kind: Persona
+metadata:
+  id: pt-BR/x-conformance/invalid
+  name: Conformance — invalid
+  language: pt-BR
+  version: 0.1.0
+  maturity: fixture

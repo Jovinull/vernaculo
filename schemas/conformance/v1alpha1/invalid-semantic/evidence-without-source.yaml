@@ -1,0 +1,18 @@
+# expect: evidence-without-source
+# reason: attested and reported features must cite at least one source.
+apiVersion: vernaculo.dev/v1alpha1
+kind: Persona
+metadata:
+  id: pt-BR/x-conformance/invalid
+  name: Conformance — invalid
+  language: pt-BR
+  version: 0.1.0
+  maturity: fixture
+regionality:
+  defaultIntensity: 0.3
+linguistics:
+  discourse:
+    markers:
+      - form: marcador-sintético-a
+        function: Synthetic marker.
+        evidence: attested

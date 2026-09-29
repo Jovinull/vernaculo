@@ -1,0 +1,14 @@
+# reason: the format has no place for personality or psychological traits
+# (anti-caricature invariant, ADR-0010). Unknown top-level fields are rejected.
+apiVersion: vernaculo.dev/v1alpha1
+kind: Persona
+metadata:
+  id: pt-BR/x-conformance/invalid
+  name: Conformance — invalid
+  language: pt-BR
+  version: 0.1.0
+  maturity: fixture
+personality:
+  relaxed: true
+  humorous: true
+  likesToTalk: true

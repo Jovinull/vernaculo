@@ -1,0 +1,11 @@
+# reason: intensity must be a number, not a string.
+apiVersion: vernaculo.dev/v1alpha1
+kind: Persona
+metadata:
+  id: pt-BR/x-conformance/invalid
+  name: Conformance — invalid
+  language: pt-BR
+  version: 0.1.0
+  maturity: fixture
+regionality:
+  defaultIntensity: "0.3"

@@ -1,0 +1,62 @@
+description: >-
+  Keyed list merge (replace in place, append), lineage-ordered cancellation between
+  discouraged and positive surface forms, scalar override, effective maturity
+  (least mature in lineage), and non-inherited metadata (description, license, region).
+resolve: pt-BR/x-conformance/base/child
+expect:
+  lineage:
+    - pt-BR/x-conformance/base
+    - pt-BR/x-conformance/base/child
+  document:
+    apiVersion: vernaculo.dev/v1alpha1
+    kind: Persona
+    metadata:
+      id: pt-BR/x-conformance/base/child
+      name: Conformance — child
+      language: pt-BR
+      version: 0.2.0
+      maturity: fixture
+    regionality:
+      defaultIntensity: 0.2
+    linguistics:
+      vocabulary:
+        preferred:
+          - term: TERMO-A
+            evidence: synthetic
+            notes: overridden by child (keys compare case-insensitively)
+          - term: termo-c
+            evidence: synthetic
+          - term: termo-x
+            evidence: synthetic
+            notes: re-enabled by child; cancels the inherited discouragement
+        discouraged:
+          - term: termo-b
+            reason: discouraged by child; cancels the inherited preference
+      discourse:
+        markers:
+          - form: marcador-1
+            function: Synthetic marker from base.
+            evidence: synthetic
+          - form: marcador-2
+            function: Synthetic marker from child.
+            evidence: synthetic
+      orthography:
+        phoneticSpelling: avoid
+    examples:
+      - id: e1
+        situation: Greeting
+        text: Texto do filho.
+      - id: e2
+        situation: Closing
+        text: Texto do base, mantido.
+    provenance:
+      sources:
+        - id: s1
+          type: other
+          title: Synthetic source 1
+          usage: consulted
+        - id: s2
+          type: other
+          title: Synthetic source 2
+          usage: cited
+      notes: Notes from base.

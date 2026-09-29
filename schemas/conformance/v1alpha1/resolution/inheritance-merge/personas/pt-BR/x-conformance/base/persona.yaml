@@ -1,0 +1,46 @@
+apiVersion: vernaculo.dev/v1alpha1
+kind: Persona
+metadata:
+  id: pt-BR/x-conformance/base
+  name: Conformance — base
+  description: Base persona; its description is not inherited.
+  language: pt-BR
+  version: 1.0.0
+  maturity: fixture
+  license: Apache-2.0
+  region:
+    country: BR
+regionality:
+  defaultIntensity: 0.3
+linguistics:
+  vocabulary:
+    preferred:
+      - term: termo-a
+        notes: from base
+        evidence: synthetic
+      - term: termo-b
+        evidence: synthetic
+    discouraged:
+      - term: termo-x
+        reason: discouraged by base
+  discourse:
+    markers:
+      - form: marcador-1
+        function: Synthetic marker from base.
+        evidence: synthetic
+  orthography:
+    phoneticSpelling: avoid
+examples:
+  - id: e1
+    situation: Greeting
+    text: Texto do base.
+  - id: e2
+    situation: Closing
+    text: Texto do base, mantido.
+provenance:
+  sources:
+    - id: s1
+      type: other
+      title: Synthetic source 1
+      usage: consulted
+  notes: Notes from base.

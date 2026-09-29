@@ -1,0 +1,19 @@
+# expect: duplicate-key
+# reason: keys are unique within a list; terms compare after NFC normalization and lowercasing.
+apiVersion: vernaculo.dev/v1alpha1
+kind: Persona
+metadata:
+  id: pt-BR/x-conformance/invalid
+  name: Conformance — invalid
+  language: pt-BR
+  version: 0.1.0
+  maturity: fixture
+regionality:
+  defaultIntensity: 0.3
+linguistics:
+  vocabulary:
+    preferred:
+      - term: termo-sintético-a
+        evidence: synthetic
+      - term: TERMO-SINTÉTICO-A
+        evidence: synthetic

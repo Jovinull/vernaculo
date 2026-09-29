@@ -1,0 +1,4 @@
+description: A source returned a document whose metadata.id differs from the requested id (in a persona root, <root>/<id>/persona.yaml must declare <id>).
+resolve: pt-BR/x-conformance/here
+expect:
+  error: id-mismatch

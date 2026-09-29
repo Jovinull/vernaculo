@@ -1,0 +1,13 @@
+# expect: inheritance-cycle
+# reason: a persona cannot extend itself (or any descendant).
+apiVersion: vernaculo.dev/v1alpha1
+kind: Persona
+extends: pt-BR/x-conformance/invalid
+metadata:
+  id: pt-BR/x-conformance/invalid
+  name: Conformance — invalid
+  language: pt-BR
+  version: 0.1.0
+  maturity: fixture
+regionality:
+  defaultIntensity: 0.3

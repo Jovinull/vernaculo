@@ -1,0 +1,17 @@
+# expect: synthetic-outside-fixture
+# reason: synthetic (invented) content is only allowed when the effective maturity is fixture.
+apiVersion: vernaculo.dev/v1alpha1
+kind: Persona
+metadata:
+  id: pt-BR/x-conformance/invalid
+  name: Conformance — invalid
+  language: pt-BR
+  version: 0.1.0
+  maturity: draft
+regionality:
+  defaultIntensity: 0.3
+linguistics:
+  vocabulary:
+    preferred:
+      - term: termo-sintético-a
+        evidence: synthetic

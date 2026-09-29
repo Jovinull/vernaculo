@@ -1,0 +1,11 @@
+# The smallest persona that is structurally and semantically valid.
+apiVersion: vernaculo.dev/v1alpha1
+kind: Persona
+metadata:
+  id: pt-BR/x-conformance/minimal
+  name: Conformance — minimal
+  language: pt-BR
+  version: 0.1.0
+  maturity: fixture
+regionality:
+  defaultIntensity: 0.3

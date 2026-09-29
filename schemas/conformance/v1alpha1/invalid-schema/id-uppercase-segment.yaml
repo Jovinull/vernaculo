@@ -1,0 +1,9 @@
+# reason: segments after the language tag are lowercase ASCII slugs.
+apiVersion: vernaculo.dev/v1alpha1
+kind: Persona
+metadata:
+  id: pt-BR/BA/Salvador
+  name: Conformance — invalid
+  language: pt-BR
+  version: 0.1.0
+  maturity: fixture

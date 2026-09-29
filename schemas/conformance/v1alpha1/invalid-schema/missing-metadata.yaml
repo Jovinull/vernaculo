@@ -1,0 +1,5 @@
+# reason: metadata is required.
+apiVersion: vernaculo.dev/v1alpha1
+kind: Persona
+regionality:
+  defaultIntensity: 0.3

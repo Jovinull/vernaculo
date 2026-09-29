@@ -1,0 +1,40 @@
+apiVersion: vernaculo.dev/v1alpha1
+kind: Persona
+extends: pt-BR/x-conformance/base
+metadata:
+  id: pt-BR/x-conformance/base/child
+  name: Conformance — child
+  language: pt-BR
+  version: 0.2.0
+  maturity: draft
+regionality:
+  defaultIntensity: 0.2
+linguistics:
+  vocabulary:
+    preferred:
+      - term: TERMO-A
+        notes: overridden by child (keys compare case-insensitively)
+        evidence: synthetic
+      - term: termo-c
+        evidence: synthetic
+      - term: termo-x
+        evidence: synthetic
+        notes: re-enabled by child; cancels the inherited discouragement
+    discouraged:
+      - term: termo-b
+        reason: discouraged by child; cancels the inherited preference
+  discourse:
+    markers:
+      - form: marcador-2
+        function: Synthetic marker from child.
+        evidence: synthetic
+examples:
+  - id: e1
+    situation: Greeting
+    text: Texto do filho.
+provenance:
+  sources:
+    - id: s2
+      type: other
+      title: Synthetic source 2
+      usage: cited

@@ -1,0 +1,9 @@
+# reason: 'validated' is not a maturity level; the format cannot claim validation it has no process for.
+apiVersion: vernaculo.dev/v1alpha1
+kind: Persona
+metadata:
+  id: pt-BR/x-conformance/invalid
+  name: Conformance — invalid
+  language: pt-BR
+  version: 0.1.0
+  maturity: validated

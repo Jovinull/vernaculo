@@ -1,0 +1,4 @@
+description: The parent named in extends does not exist in any root.
+resolve: pt-BR/x-conformance/orphan
+expect:
+  error: parent-not-found

@@ -1,0 +1,9 @@
+# reason: slugs are ASCII for filesystem/URL portability; display names go in metadata.name.
+apiVersion: vernaculo.dev/v1alpha1
+kind: Persona
+metadata:
+  id: pt-BR/ba/recôncavo
+  name: Conformance — invalid
+  language: pt-BR
+  version: 0.1.0
+  maturity: fixture

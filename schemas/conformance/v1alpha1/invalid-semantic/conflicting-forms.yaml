@@ -1,0 +1,19 @@
+# expect: conflicting-forms
+# reason: within one document a surface form cannot be both used and discouraged.
+apiVersion: vernaculo.dev/v1alpha1
+kind: Persona
+metadata:
+  id: pt-BR/x-conformance/invalid
+  name: Conformance — invalid
+  language: pt-BR
+  version: 0.1.0
+  maturity: fixture
+regionality:
+  defaultIntensity: 0.3
+linguistics:
+  vocabulary:
+    preferred:
+      - term: termo-sintético-a
+        evidence: synthetic
+    discouraged:
+      - term: termo-sintético-a

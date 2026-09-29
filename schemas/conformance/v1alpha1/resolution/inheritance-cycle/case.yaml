@@ -1,0 +1,4 @@
+description: a extends b and b extends a.
+resolve: pt-BR/x-conformance/a
+expect:
+  error: inheritance-cycle

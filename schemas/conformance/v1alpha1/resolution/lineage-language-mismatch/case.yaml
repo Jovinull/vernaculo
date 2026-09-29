@@ -1,0 +1,4 @@
+description: Every persona in a lineage must declare the same language.
+resolve: pt-PT/x-conformance/child
+expect:
+  error: lineage-language-mismatch
