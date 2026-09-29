@@ -1,29 +1,29 @@
-# ADR-0006: MCP is a future adapter, not the canonical representation
+# ADR-0006: MCP é um adapter futuro, não a representação canônica
 
-- Status: Accepted
-- Date: 2026-09-29
-- Origin: `ideia.txt` ("Por que eu não usaria MCP como núcleo", "MCP eu deixaria para v0.2/v0.3")
+- Status: Aceito
+- Data: 2026-09-29
+- Origem: `ideia.txt` ("Por que eu não usaria MCP como núcleo", "MCP eu deixaria para v0.2/v0.3")
 
-## Context
+## Contexto
 
-MCP separates *prompts* (user-controlled templates), *resources*
-(application-controlled context) and *tools* (capabilities the model may call).
-A regional persona is configuration the **application** applies deterministically:
-a dealership in Salvador always uses its Salvador layer; the model should not
-decide whether to "use Bahia". Personas are knowledge/configuration, not an
-external capability that requires a server.
+O MCP separa *prompts* (templates controlados pelo usuário), *resources* (contexto
+controlado pela aplicação) e *tools* (capacidades que o modelo pode chamar). Uma
+persona regional é configuração que a **aplicação** aplica de forma determinística:
+uma concessionária em Salvador sempre usa sua camada de Salvador; o modelo não
+deve decidir se vai ou não "usar Bahia". Personas são conhecimento/configuração,
+não uma capacidade externa que exija um servidor.
 
-## Decision
+## Decisão
 
-- **MCP is not the canonical persona format** and the project is not an "MCP of accents".
-- An `@vernaculo/mcp` package may later expose personas locally (e.g. resources such as `vernaculo://pt-BR/ba/salvador`, listing/rendering operations) over `stdio`, run by the user (`npx @vernaculo/mcp`). It stays 100% local — never a server run by the project ([ADR-0001](0001-no-vernaculo-infrastructure-at-runtime.md)).
-- Planned no earlier than v0.2/v0.3; it is not needed to prove the thesis.
+- **O MCP não é o formato canônico das personas**, e o projeto não é um "MCP de sotaques".
+- Um pacote `@vernaculo/mcp` poderá expor personas localmente (por exemplo, recursos como `vernaculo://pt-BR/ba/salvador` e operações de listagem/renderização) via `stdio`, executado pelo usuário (`npx @vernaculo/mcp`). Ele continua 100% local — nunca um servidor mantido pelo projeto ([ADR-0001](0001-no-vernaculo-infrastructure-at-runtime.md)).
+- Planejado para não antes da v0.2/v0.3; não é necessário para provar a tese.
 
-## Consequences
+## Consequências
 
-- When implemented, it will target the MCP TypeScript SDK v2 (`@modelcontextprotocol/server`), the stable line implementing the 2026-07-28 MCP specification (verified 2026-09-29), and will consume the compiler output like any other adapter.
-- The early conversation's URI sketch `persona://br/ba/salvador` is superseded by the `vernaculo://<persona id>` form and the `pt-BR/...` id scheme.
+- Quando implementado, terá como alvo o MCP TypeScript SDK v2 (`@modelcontextprotocol/server`), a linha estável que implementa a especificação MCP de 2026-07-28 (verificado em 2026-09-29), e consumirá a saída do compilador como qualquer outro adapter.
+- O esboço de URI da conversa inicial, `persona://br/ba/salvador`, foi substituído pela forma `vernaculo://<id da persona>` e pelo esquema de ids `pt-BR/...`.
 
-## Alternatives considered
+## Alternativas consideradas
 
-- **MCP server as the core product** — rejected: requires running a server for what is static configuration, and moves the decision to apply a persona from the application to the model.
+- **Servidor MCP como produto central** — rejeitado: exige rodar um servidor para algo que é configuração estática, e transfere para o modelo a decisão de aplicar uma persona, que é da aplicação.

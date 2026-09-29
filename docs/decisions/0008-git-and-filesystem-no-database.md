@@ -1,30 +1,31 @@
-# ADR-0008: Git and the filesystem instead of a database, registry or marketplace
+# ADR-0008: Git e sistema de arquivos em vez de banco de dados, registry ou marketplace
 
-- Status: Accepted
-- Date: 2026-09-29
-- Origin: `ideia.txt` ("Eu não colocaria banco de dados", "Não precisa de marketplace. Não precisa de registry próprio.")
+- Status: Aceito
+- Data: 2026-09-29
+- Origem: `ideia.txt` ("Eu não colocaria banco de dados", "Não precisa de marketplace. Não precisa de registry próprio.")
 
-## Context
+## Contexto
 
-Personas are small, human-reviewed, versioned documents. Their history, review
-and release process map naturally onto Git (commits, pull requests, CI, tags).
-A database or a proprietary registry would add infrastructure, cost and lock-in
+Personas são documentos pequenos, revisados por pessoas e versionados. O
+histórico, a revisão e o processo de release delas se encaixam naturalmente no Git
+(commits, pull requests, CI, tags). Um banco de dados ou um registry proprietário
+acrescentaria infraestrutura, custo e lock-in
 ([ADR-0001](0001-no-vernaculo-infrastructure-at-runtime.md)).
 
-## Decision
+## Decisão
 
-- **No database** (PostgreSQL, SQLite, Redis, MongoDB, ...) anywhere in Vernáculo. The "database" is **Git + filesystem**.
-- A **persona root** is a directory where each persona lives at `<root>/<persona id>/persona.yaml`. Tools search one or more roots in order; the first root that contains an id wins.
-- **Distribution channels are optional conveniences**, all mirrorable and free: GitHub (clone), GitHub Releases, npm (and possibly PyPI later), or plain copy (`curl`, file copy). None is required at runtime.
-- `vernaculo eject` materializes a self-contained persona (flattened `persona.yaml` + compiled `instructions.md`) inside the user's project, removing any dependency on Vernáculo packages.
-- There is no proprietary marketplace. A community catalog, if it ever exists, is data in a Git repository.
+- **Nenhum banco de dados** (PostgreSQL, SQLite, Redis, MongoDB, ...) em nenhuma parte do Vernáculo. O "banco" é **Git + sistema de arquivos**.
+- Uma **raiz de personas** é um diretório em que cada persona fica em `<raiz>/<id da persona>/persona.yaml`. As ferramentas buscam em uma ou mais raízes, em ordem; a primeira raiz que contém um id vence.
+- **Canais de distribuição são conveniências opcionais**, todos espelháveis e gratuitos: GitHub (clone), GitHub Releases, npm (e talvez PyPI no futuro) ou cópia simples (`curl`, cópia de arquivos). Nenhum é necessário em runtime.
+- `vernaculo eject` materializa uma persona autocontida (`persona.yaml` achatado + `instructions.md` compilado) dentro do projeto do usuário, eliminando qualquer dependência de pacotes do Vernáculo.
+- Não existe marketplace proprietário. Um catálogo da comunidade, se um dia existir, será dado em um repositório Git.
 
-## Consequences
+## Consequências
 
-- Versioning of packs uses semver in `metadata.version` plus Git history; releases go through PR → CI → evals → tag.
-- How the public catalog is delivered to `vernaculo add/search/update` (bundled data, an npm package such as `@vernaculo/personas`, release tarballs or Git) is an [open question](../roadmap/open-questions.md).
+- O versionamento dos packs usa semver em `metadata.version` mais o histórico do Git; releases passam por PR → CI → evals → tag.
+- Como o catálogo público chega a `vernaculo add/search/update` (dados embutidos, um pacote npm como `@vernaculo/personas`, tarballs de release ou Git) é uma [questão em aberto](../roadmap/open-questions.md).
 
-## Alternatives considered
+## Alternativas consideradas
 
-- **SQLite catalog** — rejected: binary, hard to review, unnecessary at this scale.
-- **Hosted registry API** — rejected: runtime/infrastructure cost and lock-in.
+- **Catálogo em SQLite** — rejeitado: binário, difícil de revisar, desnecessário nesta escala.
+- **API de registry hospedada** — rejeitado: custo de runtime/infraestrutura e lock-in.

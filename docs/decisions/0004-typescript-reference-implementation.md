@@ -1,29 +1,30 @@
-# ADR-0004: TypeScript as the first reference implementation
+# ADR-0004: TypeScript como primeira implementação de referência
 
-- Status: Accepted
-- Date: 2026-09-29
-- Origin: `ideia.txt` ("Eu faria o Vernáculo praticamente inteiro em TypeScript", "E Rust?"); bootstrap
+- Status: Aceito
+- Data: 2026-09-29
+- Origem: `ideia.txt` ("Eu faria o Vernáculo praticamente inteiro em TypeScript", "E Rust?"); bootstrap
 
-## Context
+## Contexto
 
-The hard problems are specification quality, linguistic data quality,
-portability, tooling and evals — not CPU. The agent ecosystem's official SDKs
-(OpenAI Agents SDK, MCP TypeScript SDK) have first-class TypeScript
-implementations, and npm is a natural distribution channel for a CLI.
+Os problemas difíceis são a qualidade da especificação, a qualidade dos dados
+linguísticos, a portabilidade, as ferramentas e os evals — não CPU. Os SDKs
+oficiais do ecossistema de agentes (OpenAI Agents SDK, MCP TypeScript SDK) têm
+implementações TypeScript de primeira linha, e o npm é um canal natural de
+distribuição para uma CLI.
 
-## Decision
+## Decisão
 
-- The reference implementation is **TypeScript on Node.js**, in a **pnpm workspaces monorepo**.
-- Development targets the current Node.js LTS line (24 "Krypton" as of 2026-09-29); published packages support Node.js ≥ 22.12 (the oldest maintained LTS line compatible with the dependencies).
-- The core entry point stays runtime-agnostic (no `node:` imports) so it can run in browsers, edge runtimes and bundlers; filesystem helpers live in `@vernaculo/core/node`.
-- Rust (or any other language) is **not** introduced now. A Rust core with bindings, or a standalone binary without Node, may be reconsidered only when a concrete need appears (performance, single-binary distribution) — through a new ADR.
+- A implementação de referência é **TypeScript sobre Node.js**, em um **monorepo com pnpm workspaces**.
+- O desenvolvimento usa a linha LTS atual do Node.js (24 "Krypton" em 2026-09-29); os pacotes publicados suportam Node.js ≥ 22.12 (a linha LTS mantida mais antiga compatível com as dependências).
+- O ponto de entrada do core continua independente de runtime (sem imports `node:`), para rodar em navegadores, edge runtimes e bundlers; os helpers de sistema de arquivos ficam em `@vernaculo/core/node`.
+- Rust (ou qualquer outra linguagem) **não** entra agora. Um core em Rust com bindings, ou um binário standalone sem Node, só será reconsiderado quando surgir uma necessidade concreta (desempenho, distribuição em binário único) — por meio de um ADR novo.
 
-## Consequences
+## Consequências
 
-- Other-language implementations are welcome and rely on the JSON Schema and conformance suite, not on this code ([ADR-0003](0003-yaml-markdown-json-schema-format.md)).
-- Tooling choices and verified versions are recorded in [stack.md](../development/stack.md).
+- Implementações em outras linguagens são bem-vindas e se apoiam no JSON Schema e na suíte de conformidade, não neste código ([ADR-0003](0003-yaml-markdown-json-schema-format.md)).
+- As ferramentas escolhidas e as versões verificadas estão em [stack.md](../development/stack.md).
 
-## Alternatives considered
+## Alternativas consideradas
 
-- **Rust core from day one** — rejected for now: raises the contribution barrier and complicates distribution without solving the actual bottleneck.
-- **Python first** — not chosen: TypeScript aligns with the first adapters and the CLI distribution; a Python implementation (PyPI) remains a roadmap idea.
+- **Core em Rust desde o início** — rejeitado por ora: eleva a barreira de contribuição e complica a distribuição sem resolver o gargalo real.
+- **Python primeiro** — não escolhido: TypeScript se alinha aos primeiros adapters e à distribuição da CLI; uma implementação em Python (PyPI) continua como ideia do roadmap.

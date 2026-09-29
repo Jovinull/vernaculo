@@ -1,53 +1,57 @@
-# ADR-0015: Human review is always recommended, never mandatory
+# ADR-0015: Revisão humana sempre recomendada, nunca obrigatória
 
-- Status: Accepted
-- Date: 2026-09-29
-- Origin: maintainer decision ("sem critério de revisão obrigatório, mas sugerir sempre que seja revisado"), resolving the open question on criteria for `reviewed` maturity
+- Status: Aceito
+- Data: 2026-09-29
+- Origem: decisão do mantenedor ("sem critério de revisão obrigatório, mas sugerir sempre que seja revisado"), resolvendo a questão em aberto sobre critérios para a maturidade `reviewed`
 
-## Context
+## Contexto
 
-The methodology values review by speakers of each variety, and the bootstrap left
-open which criteria (number of reviewers, agreement thresholds, blocking labels)
-would be required before a pack could be marked `reviewed`. Mandatory criteria
-would turn review into a gate that a small open source project may not be able to
-staff, blocking useful packs; no criteria at all would risk packs being presented
-as more trustworthy than they are.
+A metodologia valoriza a revisão por falantes de cada variedade, e o bootstrap
+deixou em aberto quais critérios (número de revisores, limiares de concordância,
+rótulos bloqueantes) seriam exigidos para marcar um pack como `reviewed`.
+Critérios obrigatórios transformariam a revisão em um portão que um projeto open
+source pequeno talvez não consiga sustentar, bloqueando packs úteis; nenhum
+critério, por outro lado, arriscaria apresentar packs como mais confiáveis do que
+são.
 
-## Decision
+## Decisão
 
-- **No mandatory review criteria.** There is no minimum number of reviewers, no
-  agreement threshold and no review gate for merging, publishing or using a pack.
-  Packs may be published and used as `draft`.
-- **Review is always recommended.** Documentation and tooling recommend human
-  review by speakers of the variety whenever a persona is not `reviewed`:
-  - the CLI prints a recommendation with `compile`, `export` and `eject` of a
-    `draft` persona, `inspect` shows a "human review" line, and `validate`
-    summarizes how many draft personas would benefit from review;
-  - the compiled layer keeps its `DRAFT` notice;
-  - docs and contribution guides present review as the recommended next step.
-- **`reviewed` stays an honest statement**: it means a human review by speakers of
-  the variety actually took place and is documented (recommended: cite the round as
-  a `speaker-review` source in `provenance.sources` and keep its record next to the
-  pack). How extensive the review was is visible in that record, not encoded in a
-  threshold.
-- Unchanged invariants: maturity is always visible in outputs; nothing is called
-  validated, natural, representative or stereotype-free without evidence
-  ([ADR-0010](0010-observable-sociolinguistic-features-only.md)); content that
-  anyone (reviewer or not) identifies as caricatural or offensive is handled under
-  the anti-caricature policy — removed, discouraged or turned into an anti-pattern
-  — regardless of maturity.
+- **Nenhum critério de revisão obrigatório.** Não há número mínimo de revisores,
+  limiar de concordância nem portão de revisão para fazer merge, publicar ou usar
+  um pack. Packs `draft` podem ser publicados e usados.
+- **A revisão é sempre recomendada.** A documentação e as ferramentas recomendam
+  revisão humana por falantes da variedade sempre que uma persona não está
+  `reviewed`:
+  - a CLI imprime uma recomendação em `compile`, `export` e `eject` de uma persona
+    `draft`, `inspect` mostra uma linha "human review" e `validate` resume quantas
+    personas em rascunho se beneficiariam de revisão;
+  - a camada compilada mantém o aviso `DRAFT`;
+  - a documentação e os guias de contribuição apresentam a revisão como o próximo
+    passo recomendado.
+- **`reviewed` continua sendo uma afirmação honesta**: significa que uma revisão
+  humana por falantes da variedade realmente aconteceu e está documentada
+  (recomendado: citar a rodada como fonte `speaker-review` em `provenance.sources`
+  e manter o registro junto ao pack). Quão extensa foi a revisão aparece nesse
+  registro, não em um limiar.
+- Invariantes inalterados: a maturidade é sempre visível nas saídas; nada é chamado
+  de validado, natural, representativo ou livre de estereótipos sem evidência
+  ([ADR-0010](0010-observable-sociolinguistic-features-only.md)); conteúdo que
+  qualquer pessoa (revisora ou não) identifique como caricato ou ofensivo é tratado
+  pela política anti-caricatura — removido, desencorajado ou transformado em
+  antipadrão — independentemente da maturidade.
 
-## Consequences
+## Consequências
 
-- The methodology's review process ([human-review.md](../linguistic/human-review.md))
-  is guidance: labels, reviewer profiles, privacy and record shape are
-  recommendations for doing review well.
-- Users choose how much review they need for their product; the maturity level and
-  the review record give them the information to decide.
-- A future, stronger level (e.g. "evaluated", tied to eval results) would need a new
-  ADR and specification change; it would also be informative, not a gate.
+- O processo de revisão da metodologia ([human-review.md](../linguistic/human-review.md))
+  é orientação: rótulos, perfis de revisores, privacidade e formato de registro são
+  recomendações para fazer uma boa revisão.
+- Os usuários decidem quanta revisão o produto deles precisa; o nível de maturidade e
+  o registro de revisão dão a informação para essa decisão.
+- Um nível futuro mais forte (por exemplo, "evaluated", ligado a resultados de evals)
+  exigiria um ADR novo e uma mudança na especificação; também seria informativo, não
+  um portão.
 
-## Alternatives considered
+## Alternativas consideradas
 
-- **Fixed criteria for `reviewed`** (e.g. ≥ N reviewers, agreement ≥ X) — rejected by the maintainer: a gate the project may not be able to staff.
-- **No maturity levels at all** — rejected: users and models must see whether content was reviewed.
+- **Critérios fixos para `reviewed`** (por exemplo, ≥ N revisores, concordância ≥ X) — rejeitado pelo mantenedor: um portão que o projeto talvez não consiga sustentar.
+- **Nenhum nível de maturidade** — rejeitado: usuários e modelos precisam ver se o conteúdo foi revisado.

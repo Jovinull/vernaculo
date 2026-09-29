@@ -1,53 +1,53 @@
-# ADR-0001: No Vernáculo infrastructure at runtime
+# ADR-0001: Nenhuma infraestrutura do Vernáculo em runtime
 
-- Status: Accepted
-- Date: 2026-09-29
-- Origin: `ideia.txt`, "Zero custo para você de verdade" and the distribution model; bootstrap
+- Status: Aceito
+- Data: 2026-09-29
+- Origem: `ideia.txt`, seções "Zero custo para você de verdade" e o modelo de distribuição; bootstrap
 
-## Context
+## Contexto
 
-Vernáculo is maintained as an open source project with an explicit constraint:
-the maintainer's operating cost must stay essentially zero even with massive
-adoption ("se amanhã houver 1 milhão de instalações, seu custo de inferência
-continua R$ 0"). A hosted API, proxy or inference service would make cost grow
-with usage, create a single point of failure and put the maintainer in the path
-of users' data.
+O Vernáculo é mantido como projeto open source com uma restrição explícita: o custo
+operacional do mantenedor deve continuar essencialmente zero mesmo com adoção
+massiva ("se amanhã houver 1 milhão de instalações, seu custo de inferência
+continua R$ 0"). Uma API hospedada, um proxy ou um serviço de inferência fariam o
+custo crescer com o uso, criariam um ponto único de falha e colocariam o mantenedor
+no caminho dos dados dos usuários.
 
-## Decision
+## Decisão
 
-> **An application that uses Vernáculo must not depend on Vernáculo infrastructure at runtime.**
+> **Uma aplicação que utiliza Vernáculo não deve depender da infraestrutura do Vernáculo em runtime.**
 >
-> *Uma aplicação que utiliza Vernáculo nunca deve depender da infraestrutura do Vernáculo em runtime.*
+> *An application that uses Vernáculo must not depend on Vernáculo infrastructure at runtime.*
 
-Concretely, the core and every official package must work without:
+Concretamente, o core e todos os pacotes oficiais funcionam sem:
 
-- a Vernáculo API, backend, proxy or database;
-- a Vernáculo account, key or authentication;
-- tokens or inference paid or executed by the maintainer;
-- mandatory telemetry;
-- a proprietary registry or marketplace required at runtime.
+- API, backend, proxy ou banco de dados do Vernáculo;
+- conta, chave ou autenticação do Vernáculo;
+- tokens ou inferência pagos ou executados pelo mantenedor;
+- telemetria obrigatória;
+- registry ou marketplace proprietário necessário em runtime.
 
-Users run Vernáculo inside their own project or servers, with their own provider
-account, API key, or local model. Personas are files the user owns: if the
-Vernáculo repository disappeared, applications that already installed or ejected
-a pack keep working unchanged.
+Os usuários executam o Vernáculo dentro do próprio projeto ou servidor, com a
+própria conta de provedor, a própria API key ou um modelo local. Personas são
+arquivos que o usuário possui: se o repositório do Vernáculo desaparecesse,
+aplicações que já instalaram ou ejetaram um pack continuariam funcionando.
 
-Allowed maintainer-side services are those that cost nothing per use and are not
-on the runtime path: GitHub (repository, Actions for CI, Releases), npm (and
-possibly PyPI) for optional distribution, and optionally a static documentation
-site on free hosting.
+Serviços permitidos do lado do mantenedor são os que não custam nada por uso e não
+ficam no caminho de runtime: GitHub (repositório, Actions para CI, Releases), npm
+(e talvez PyPI) para distribuição opcional e, opcionalmente, um site estático de
+documentação em hospedagem gratuita.
 
-## Consequences
+## Consequências
 
-- Distribution is by copying files: npm, GitHub Releases and Git are optional channels, never runtime dependencies ([ADR-0008](0008-git-and-filesystem-no-database.md)).
-- `vernaculo eject` must always be able to materialize a self-contained persona.
-- The compiler must be local and deterministic ([ADR-0011](0011-deterministic-llm-free-compilation.md)).
-- Evals run locally or in the user's CI with the user's credentials; there is no hosted eval service.
-- Any future feature that needs a network service must be optional, off by default, and replaceable by a local alternative. Such a feature requires a new ADR.
-- Enforcement: `packages/core/test/architecture.test.ts` fails if any package imports a network module, calls `fetch`, or depends on a provider SDK; `packages/compiler/test/compile.test.ts` runs the full pipeline with `fetch` disabled.
+- A distribuição é por cópia de arquivos: npm, GitHub Releases e Git são canais opcionais, nunca dependências de runtime ([ADR-0008](0008-git-and-filesystem-no-database.md)).
+- `vernaculo eject` precisa sempre conseguir materializar uma persona autocontida.
+- O compilador precisa ser local e determinístico ([ADR-0011](0011-deterministic-llm-free-compilation.md)).
+- Evals rodam localmente ou no CI do usuário, com as credenciais do usuário; não existe serviço de eval hospedado.
+- Qualquer recurso futuro que precise de um serviço de rede deve ser opcional, desligado por padrão e substituível por uma alternativa local. Um recurso assim exige um ADR novo.
+- Verificação automática: `packages/core/test/architecture.test.ts` falha se algum pacote importar um módulo de rede, chamar `fetch` ou depender de um SDK de provedor; `packages/compiler/test/compile.test.ts` executa o pipeline completo com `fetch` desativado.
 
-## Alternatives considered
+## Alternativas consideradas
 
-- **Hosted "persona API" or MCP server run by the project** — rejected: cost scales with adoption, adds lock-in and privacy exposure.
-- **Optional telemetry on by default** — rejected: violates the invariant and user trust.
-- **Proprietary registry for packs** — rejected: Git, npm and GitHub Releases already provide free, mirrorable distribution.
+- **"API de personas" ou servidor MCP hospedado pelo projeto** — rejeitado: o custo cresce com a adoção, cria lock-in e expõe a privacidade dos usuários.
+- **Telemetria opcional ligada por padrão** — rejeitado: viola o invariante e a confiança dos usuários.
+- **Registry proprietário de packs** — rejeitado: Git, npm e GitHub Releases já oferecem distribuição gratuita e espelhável.

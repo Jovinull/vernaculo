@@ -1,31 +1,31 @@
-# ADR-0007: Agent Skills is an early export target, not the canonical representation
+# ADR-0007: Agent Skills é um target de exportação inicial, não a representação canônica
 
-- Status: Accepted
-- Date: 2026-09-29
-- Origin: `ideia.txt` ("Skills fazem bem mais sentido como formato de exportação"; later: "Agent Skills deve entrar já no MVP — isso eu mudaria em relação ao que falamos anteriormente")
+- Status: Aceito
+- Data: 2026-09-29
+- Origem: `ideia.txt` ("Skills fazem bem mais sentido como formato de exportação"; depois: "Agent Skills deve entrar já no MVP — isso eu mudaria em relação ao que falamos anteriormente")
 
-## Context
+## Contexto
 
-The Agent Skills open standard defines a skill as a directory with a `SKILL.md`
-(YAML frontmatter + Markdown) and optional `scripts/`, `references/` and
-`assets/`. Many agents load skills. A persona exported as a skill can be dropped
-into an agent without installing any Vernáculo package. The conversation first
-placed skills among later adapters, then explicitly moved the skill exporter into
-the first release.
+O padrão aberto Agent Skills define uma skill como um diretório com um `SKILL.md`
+(frontmatter YAML + Markdown) e, opcionalmente, `scripts/`, `references/` e
+`assets/`. Muitos agentes carregam skills. Uma persona exportada como skill pode
+ser colocada em um agente sem instalar nenhum pacote do Vernáculo. A conversa
+primeiro colocou as skills entre os adapters futuros e depois moveu
+explicitamente o exportador de skills para o primeiro release.
 
-## Decision
+## Decisão
 
-- The **Agent Skill exporter is part of the first release** (`@vernaculo/skills`, `vernaculo export <persona> --target skill`).
-- `SKILL.md` is an **output**, never the source of truth. Persona packs are authored as `persona.yaml` ([ADR-0003](0003-yaml-markdown-json-schema-format.md)); skills are regenerated from them.
-- Exported skills follow the Agent Skills specification (verified 2026-09-29): `name` ≤ 64 chars of `a-z0-9-`, matching the directory; `description` ≤ 1024 chars; `metadata` as string→string map; `SKILL.md` under 500 lines; reference files one level deep.
-- In v1alpha1 the intensity is **baked in at export time** (recorded in `metadata.vernaculo-intensity`). Letting the host agent pick the intensity at runtime is an [open question](../roadmap/open-questions.md).
+- O **exportador de Agent Skills faz parte do primeiro release** (`@vernaculo/skills`, `vernaculo export <persona> --target skill`).
+- `SKILL.md` é uma **saída**, nunca a fonte da verdade. Os packs são escritos como `persona.yaml` ([ADR-0003](0003-yaml-markdown-json-schema-format.md)); as skills são regeneradas a partir deles.
+- As skills exportadas seguem a especificação Agent Skills (verificada em 2026-09-29): `name` com até 64 caracteres de `a-z0-9-`, igual ao nome do diretório; `description` com até 1024 caracteres; `metadata` como mapa string→string; `SKILL.md` com menos de 500 linhas; arquivos de referência a um nível de profundidade.
+- Na v1alpha1 a intensidade é **fixada no momento da exportação** (registrada em `metadata.vernaculo-intensity`). Deixar o agente hospedeiro escolher a intensidade em runtime é uma [questão em aberto](../roadmap/open-questions.md).
 
-## Consequences
+## Consequências
 
-- A skill contains only features selected for its intensity (the IR); hypotheses and above-intensity features never leak into it.
-- Output layout: `SKILL.md` plus `references/{vocabulary,discourse,pragmatics,examples,sources}.md` (empty references are omitted; `sources.md` is always present).
+- Uma skill contém apenas os traços selecionados para sua intensidade (a IR); hipóteses e traços acima da intensidade nunca vazam para ela.
+- Estrutura gerada: `SKILL.md` mais `references/{vocabulary,discourse,pragmatics,examples,sources}.md` (referências vazias são omitidas; `sources.md` está sempre presente).
 
-## Alternatives considered
+## Alternativas consideradas
 
-- **Author packs directly as `SKILL.md`** — rejected: not validatable, cannot be gated by intensity, ties the format to one ecosystem.
-- **Postpone skills with MCP** — rejected by the later decision in the conversation: skills are the cheapest zero-install distribution path.
+- **Escrever os packs diretamente como `SKILL.md`** — rejeitado: não é validável, não pode ser filtrado por intensidade e amarra o formato a um ecossistema.
+- **Adiar as skills junto com o MCP** — rejeitado pela decisão posterior da conversa: skills são o caminho de distribuição sem instalação mais barato.

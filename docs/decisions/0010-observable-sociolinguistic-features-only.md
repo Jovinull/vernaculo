@@ -1,41 +1,42 @@
-# ADR-0010: Model observable sociolinguistic features only; no regional personality
+# ADR-0010: Modelar apenas traços sociolinguísticos observáveis; nenhuma personalidade regional
 
-- Status: Accepted
-- Date: 2026-09-29
-- Origin: `ideia.txt` ("O erro que eu evitaria desde o primeiro commit"; the `baiano: relaxed/humorous/likes_to_talk` counter-example)
+- Status: Aceito
+- Data: 2026-09-29
+- Origem: `ideia.txt` ("O erro que eu evitaria desde o primeiro commit"; o contraexemplo `baiano: relaxed/humorous/likes_to_talk`)
 
-## Context
+## Contexto
 
-A naive design encodes stereotypes as data:
+Um design ingênuo codifica estereótipos como dados:
 
 ```yaml
-baiano:          # ← what Vernáculo must never do
+baiano:          # ← o que o Vernáculo nunca deve fazer
   relaxed: true
   humorous: true
   likes_to_talk: true
 ```
 
-That quickly becomes caricature and attributes psychological or social traits to
-people because of where they are from. Labels such as *baiano*, *sergipano*,
-*pernambucano* or *paulista* are also too coarse to be treated as homogeneous
-linguistic units: dialectology (e.g. the ALiB atlas) documents multidimensional
-variation within states and continuities across state borders.
+Isso vira caricatura rapidamente e atribui traços psicológicos ou sociais às
+pessoas por causa de onde elas vêm. Rótulos como *baiano*, *sergipano*,
+*pernambucano* ou *paulista* também são grossos demais para serem tratados como
+unidades linguísticas homogêneas: a dialetologia (por exemplo, o atlas ALiB)
+documenta variação multidimensional dentro dos estados e continuidades que
+atravessam fronteiras estaduais.
 
-## Decision
+## Decisão
 
-- Personas describe **observable, defensible language phenomena** only: lexicon and regionalisms, forms of address, discourse markers, pragmatic conventions, morphosyntactic constructions, register, frequency/markedness (via intensity), orthography policy, and positive/negative examples.
-- Personas never encode **personality, humor, intelligence, aggressiveness, friendliness, education, income, profession, religion, political views or behavior**. The format has no field for them (unknown fields are rejected; see the `personality-traits-rejected` conformance fixture).
-- Every compiled output carries ground rules forbidding stereotype performance, regional-origin claims, invented regionalisms and (by default) phonetic/eye-dialect spelling ([anti-caricature.md](../linguistic/anti-caricature.md)).
-- Granularity is progressive and evidence-driven (`pt-BR` → `pt-BR/ba` → `pt-BR/ba/salvador`, or varieties that do not follow administrative borders). No region is invented without evidence.
-- Every feature declares its **evidence** level; `hypothesis` is never rendered and `synthetic` is allowed only in fixtures.
-- Nothing is called "validated", "representative", "natural" or "stereotype-free" without evidence from human review and evals.
+- Personas descrevem apenas **fenômenos de linguagem observáveis e defensáveis**: léxico e regionalismos, formas de tratamento, marcadores discursivos, convenções pragmáticas, construções morfossintáticas, registro, frequência/marcação (via intensidade), política de ortografia e exemplos positivos e negativos.
+- Personas nunca codificam **personalidade, humor, inteligência, agressividade, simpatia, escolaridade, renda, profissão, religião, visão política ou comportamento**. O formato não tem campo para isso (campos desconhecidos são rejeitados; veja o fixture de conformidade `personality-traits-rejected`).
+- Toda saída compilada carrega regras de base que proíbem encenar estereótipos, afirmar origem regional, inventar regionalismos e (por padrão) usar grafia fonética/"eye dialect" ([anti-caricature.md](../linguistic/anti-caricature.md)).
+- A granularidade é progressiva e guiada por evidência (`pt-BR` → `pt-BR/ba` → `pt-BR/ba/salvador`, ou variedades que não seguem fronteiras administrativas). Nenhuma região é inventada sem evidência.
+- Todo traço declara seu nível de **evidência**; `hypothesis` nunca é renderizado e `synthetic` só é permitido em fixtures.
+- Nada é chamado de "validado", "representativo", "natural" ou "livre de estereótipos" sem evidência de revisão humana e evals.
 
-## Consequences
+## Consequências
 
-- If personality ever becomes a concern, it belongs to a different layer and a new ADR — not to regional packs.
-- Human review by speakers of each variety is part of the methodology ([human-review.md](../linguistic/human-review.md)).
+- Se um dia personalidade virar uma preocupação, ela pertence a outra camada e a um ADR novo — nunca aos packs regionais.
+- A revisão humana por falantes de cada variedade faz parte da metodologia, sempre recomendada ([human-review.md](../linguistic/human-review.md)).
 
-## Alternatives considered
+## Alternativas consideradas
 
-- **Free-form "style" traits per region** — rejected: indistinguishable from stereotypes.
-- **State-level packs only** — rejected: too coarse; the id scheme supports finer, evidence-based varieties.
+- **"Traços de estilo" livres por região** — rejeitado: impossível de distinguir de estereótipos.
+- **Apenas packs por estado** — rejeitado: grosso demais; o esquema de ids suporta variedades mais finas, baseadas em evidência.

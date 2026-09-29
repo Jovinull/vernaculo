@@ -1,33 +1,33 @@
-# ADR-0012: Apache-2.0 for code; third-party linguistic material licensed separately
+# ADR-0012: Apache-2.0 para o código; material linguístico de terceiros licenciado à parte
 
-- Status: Accepted (pack content license decided by [ADR-0014](0014-apache-2-0-persona-content.md))
-- Date: 2026-09-29
-- Origin: `ideia.txt` ("Apache-2.0 para código seria minha preferência; permissiva e adequada para adoção empresarial"; "cada fonte precisaria ter sua licença verificada")
+- Status: Aceito (licença do conteúdo dos packs decidida pelo [ADR-0014](0014-apache-2-0-persona-content.md))
+- Data: 2026-09-29
+- Origem: `ideia.txt` ("Apache-2.0 para código seria minha preferência; permissiva e adequada para adoção empresarial"; "cada fonte precisaria ter sua licença verificada")
 
-## Context
+## Contexto
 
-The goal is adoption, including by companies that ship localized agents. The
-project also depends on linguistic research whose licenses vary widely — for
-example the MuPe-Diversidades corpus is CC BY-NC-ND 4.0 (non-commercial, no
-derivatives), which forbids redistributing derived material in a permissive
-project.
+O objetivo é adoção, inclusive por empresas que colocam agentes localizados em
+produção. O projeto também depende de pesquisa linguística com licenças muito
+variadas — por exemplo, o corpus MuPe-Diversidades é CC BY-NC-ND 4.0 (não
+comercial, sem derivados), o que proíbe redistribuir material derivado em um
+projeto permissivo.
 
-## Decision
+## Decisão
 
-- **Code** in this repository is licensed under **Apache-2.0** (permissive, explicit patent grant, common in enterprise). The full text is in `LICENSE`.
-- The code license **does not** grant rights over third-party material. Each external source is recorded with its license and one of three usage levels:
-  - `consulted` — read to inform research; nothing copied;
-  - `cited` — referenced/quoted briefly with attribution;
-  - `redistributed` — material copied into a pack; only allowed when the source license permits it for this project's distribution terms.
-- Corpora and datasets are **never** copied into the repository merely because they are publicly accessible.
-- Each persona declares the license of its own content in `metadata.license`. Which license the official packs will use (Apache-2.0, CC-BY-4.0, CC0, ...) is an open question → resolved: Apache-2.0 ([ADR-0014](0014-apache-2-0-persona-content.md)).
+- O **código** deste repositório é licenciado sob **Apache-2.0** (permissiva, com concessão explícita de patentes, comum em empresas). O texto completo está em `LICENSE`.
+- A licença do código **não** concede direitos sobre material de terceiros. Cada fonte externa é registrada com sua licença e um de três níveis de uso:
+  - `consulted` — lida para embasar a pesquisa; nada é copiado;
+  - `cited` — referenciada ou citada brevemente, com atribuição;
+  - `redistributed` — material copiado para dentro de um pack; só permitido quando a licença da fonte autoriza isso nos termos de distribuição deste projeto.
+- Corpora e datasets **nunca** são copiados para o repositório só porque estão publicamente acessíveis.
+- Cada persona declara a licença do próprio conteúdo em `metadata.license`. Qual licença os packs oficiais usariam (Apache-2.0, CC-BY-4.0, CC0, ...) era uma questão em aberto → resolvida: Apache-2.0 ([ADR-0014](0014-apache-2-0-persona-content.md)).
 
-## Consequences
+## Consequências
 
-- Pack reviews must check `provenance.sources[].usage` against each source's license ([provenance.md](../specification/provenance.md), [sources.md](../linguistic/sources.md)).
-- Contribution terms (DCO, NOTICE file, copyright line) are open questions; Apache-2.0 section 5 already makes contributions inbound = outbound.
+- Revisões de packs precisam conferir `provenance.sources[].usage` contra a licença de cada fonte ([provenance.md](../specification/provenance.md), [sources.md](../linguistic/sources.md)).
+- Termos de contribuição (DCO, arquivo NOTICE, linha de copyright) são questões em aberto; a seção 5 da Apache-2.0 já faz com que as contribuições entrem sob a mesma licença (inbound = outbound).
 
-## Alternatives considered
+## Alternativas consideradas
 
-- **MIT** — acceptable but lacks Apache-2.0's explicit patent grant.
-- **Copyleft (GPL/AGPL)** — rejected: conflicts with the goal of embedding packs in commercial agents.
+- **MIT** — aceitável, mas não tem a concessão explícita de patentes da Apache-2.0.
+- **Copyleft (GPL/AGPL)** — rejeitado: conflita com o objetivo de embutir packs em agentes comerciais.

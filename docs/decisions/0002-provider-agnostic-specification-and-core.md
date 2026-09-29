@@ -1,36 +1,37 @@
-# ADR-0002: Provider-agnostic specification and core
+# ADR-0002: Especificação e core independentes de provedor
 
-- Status: Accepted
-- Date: 2026-09-29
-- Origin: `ideia.txt` ("o core completamente independente da OpenAI", "o produto principal não é `@vernaculo/openai`"); bootstrap
+- Status: Aceito
+- Data: 2026-09-29
+- Origem: `ideia.txt` ("o core completamente independente da OpenAI", "o produto principal não é `@vernaculo/openai`"); bootstrap
 
-## Context
+## Contexto
 
-The first integration target is OpenAI, but the agent ecosystem changes fast
-(APIs are deprecated within months; see [external facts](../reference/external-facts.md)).
-The project's lasting value is the open persona specification, the public persona
-library, the compiler and the evals — not any single provider integration.
+O primeiro alvo de integração é a OpenAI, mas o ecossistema de agentes muda rápido
+(APIs são descontinuadas em meses; veja os [fatos externos](../reference/external-facts.md)).
+O valor duradouro do projeto está na especificação aberta de personas, na
+biblioteca pública de personas, no compilador e nos evals — não em uma integração
+específica com um provedor.
 
-## Decision
+## Decisão
 
-1. The **Vernáculo Persona Specification** is independent of OpenAI, Anthropic, Google, MCP, Agent Skills and any agent framework.
-2. The implementation is a layered pipeline, and provider knowledge exists only at the last layer:
+1. A **Vernáculo Persona Specification** é independente de OpenAI, Anthropic, Google, MCP, Agent Skills e de qualquer framework de agentes.
+2. A implementação é um pipeline em camadas, e o conhecimento sobre provedores existe apenas na última camada:
 
    ```text
-   Persona files ─► Parser/Validator ─► Resolver (inheritance) ─► IR (intensity applied) ─► Compiler ─► Target / Adapter
-   (YAML)            @vernaculo/core     @vernaculo/core           @vernaculo/core            @vernaculo/compiler   @vernaculo/openai, @vernaculo/skills, ...
+   Arquivos de persona ─► Parser/Validador ─► Resolvedor (herança) ─► IR (intensidade aplicada) ─► Compilador ─► Target / Adapter
+   (YAML)                 @vernaculo/core     @vernaculo/core           @vernaculo/core              @vernaculo/compiler   @vernaculo/openai, @vernaculo/skills, ...
    ```
 
-3. `@vernaculo/schema`, `@vernaculo/core` and `@vernaculo/compiler` never import provider SDKs or provider types. Adapters depend on the compiler, never the reverse.
-4. OpenAI is the *first official adapter*, not the owner of the design ([ADR-0005](0005-openai-responses-first-adapter.md)).
+3. `@vernaculo/schema`, `@vernaculo/core` e `@vernaculo/compiler` nunca importam SDKs ou tipos de provedores. Adapters dependem do compilador, nunca o contrário.
+4. A OpenAI é o *primeiro adapter oficial*, não a dona do design ([ADR-0005](0005-openai-responses-first-adapter.md)).
 
-## Consequences
+## Consequências
 
-- New providers (Anthropic, Gemini, local models via Ollama, etc.) are added as new adapter packages without touching the core.
-- Provider-specific facts (request shapes, multi-turn behavior, caching) are documented in [provider-adapters.md](../architecture/provider-adapters.md), not in the specification.
-- Enforcement: the architecture test forbids provider SDK imports and dependencies in every package and checks the allowed dependency direction (`schema ← core ← compiler ← adapters ← cli`).
+- Novos provedores (Anthropic, Gemini, modelos locais via Ollama etc.) entram como novos pacotes de adapter, sem tocar no core.
+- Fatos específicos de provedores (formato de requisições, comportamento multi-turno, cache) ficam documentados em [provider-adapters.md](../architecture/provider-adapters.md), não na especificação.
+- Verificação automática: o teste de arquitetura proíbe imports e dependências de SDKs de provedores em todos os pacotes e confere a direção de dependências permitida (`schema ← core ← compiler ← adapters ← cli`).
 
-## Alternatives considered
+## Alternativas consideradas
 
-- **Build directly on the OpenAI Agents SDK** — rejected as the foundation: it would leak framework types into the domain. An `@vernaculo/openai-agents` adapter remains possible.
-- **One "universal prompt" string as the product** — rejected: the specification is data; the compiler decides how to phrase it per target.
+- **Construir direto sobre o OpenAI Agents SDK** — rejeitado como fundação: vazaria tipos do framework para o domínio. Um adapter `@vernaculo/openai-agents` continua possível.
+- **Uma única string de "prompt universal" como produto** — rejeitado: a especificação é dado; o compilador decide como formular o texto para cada target.

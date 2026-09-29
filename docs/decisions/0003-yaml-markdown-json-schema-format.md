@@ -1,34 +1,34 @@
-# ADR-0003: YAML + Markdown with a normative JSON Schema
+# ADR-0003: YAML + Markdown com JSON Schema normativo
 
-- Status: Accepted
-- Date: 2026-09-29
-- Origin: `ideia.txt` ("o formato das personas não pertence ao TypeScript nem a nenhum provedor. Ele será composto de YAML + Markdown + JSON Schema"); bootstrap
+- Status: Aceito
+- Data: 2026-09-29
+- Origem: `ideia.txt` ("o formato das personas não pertence ao TypeScript nem a nenhum provedor. Ele será composto de YAML + Markdown + JSON Schema"); bootstrap
 
-## Context
+## Contexto
 
-Personas must be readable and reviewable by linguists and speakers (not only
-programmers), diffable in Git, and implementable by third parties in Python,
-Rust, Go, Java, C# or anything else. The meaning of a persona must not depend on
-reading TypeScript code.
+Personas precisam ser legíveis e revisáveis por linguistas e falantes (não só por
+programadores), comparáveis em diffs do Git e implementáveis por terceiros em
+Python, Rust, Go, Java, C# ou qualquer outra linguagem. O significado de uma
+persona não pode depender da leitura de código TypeScript.
 
-## Decision
+## Decisão
 
-- Persona documents are **YAML 1.2 files restricted to the JSON data model** (no `.nan`, `.inf`, binary or custom tags; duplicate keys are errors).
-- Long-form human text (documentation, research notes, generated skills) is **Markdown**.
-- The structural contract is a **hand-written JSON Schema (draft 2020-12)** at `schemas/<version>/persona.schema.json`. It is normative.
-- Semantic rules that JSON Schema cannot express (language consistency, unique keys, source references, inheritance) are specified in prose in [persona-format.md](../specification/persona-format.md) with stable issue codes.
-- A **language-neutral conformance suite** (`schemas/conformance/`) contains valid documents, structurally invalid documents, semantically invalid documents (with the expected issue code) and multi-file resolution cases (with the expected flattened output). Any implementation can run it.
-- The TypeScript implementation mirrors the JSON Schema with Zod 4 for typed runtime validation. Drift is caught by a differential test (Ajv on the JSON Schema vs Zod on every conformance file) and a structural parity test (the JSON Schema generated from Zod must carry the same constraints as the canonical one).
-- The first published version is `vernaculo.dev/v1alpha1`: alpha, may change incompatibly. `vernaculo.dev` is a namespace identifier and is never fetched.
+- Documentos de persona são **arquivos YAML 1.2 restritos ao modelo de dados JSON** (sem `.nan`, `.inf`, binários ou tags customizadas; chaves duplicadas são erro).
+- Texto longo para pessoas (documentação, notas de pesquisa, skills geradas) é **Markdown**.
+- O contrato estrutural é um **JSON Schema (draft 2020-12) escrito à mão**, em `schemas/<versão>/persona.schema.json`. Ele é normativo.
+- Regras semânticas que o JSON Schema não expressa (consistência de idioma, chaves únicas, referências a fontes, herança) são especificadas em prosa em [persona-format.md](../specification/persona-format.md), com códigos de issue estáveis.
+- Uma **suíte de conformidade neutra de linguagem** (`schemas/conformance/`) contém documentos válidos, estruturalmente inválidos, semanticamente inválidos (com o código de issue esperado) e casos de resolução com vários arquivos (com a saída achatada esperada). Qualquer implementação pode executá-la.
+- A implementação em TypeScript espelha o JSON Schema com Zod 4 para validação tipada em runtime. Divergências são detectadas por um teste diferencial (Ajv sobre o JSON Schema versus Zod em cada arquivo de conformidade) e por um teste de paridade estrutural (o JSON Schema gerado a partir do Zod precisa ter exatamente as mesmas restrições do canônico).
+- A primeira versão publicada é `vernaculo.dev/v1alpha1`: alfa, pode mudar de forma incompatível. `vernaculo.dev` é um identificador de namespace e nunca é buscado na rede.
 
-## Consequences
+## Consequências
 
-- Changing the format means changing, in the same change: the JSON Schema, the Zod mirror, conformance fixtures, the specification docs and, if needed, the `apiVersion`.
-- Strings that YAML 1.1 parsers misread (dates, `yes`/`no`) are quoted when Vernáculo writes YAML, so files stay portable across YAML libraries.
-- `SKILL.md`, MCP resources or provider prompts are *outputs*, never the source of truth ([ADR-0006](0006-mcp-future-adapter-not-canonical.md), [ADR-0007](0007-agent-skills-early-export-target.md)).
+- Mudar o formato significa mudar, na mesma alteração: o JSON Schema, o espelho Zod, os fixtures de conformidade, a documentação da especificação e, se necessário, o `apiVersion`.
+- Strings que parsers YAML 1.1 interpretam errado (datas, `yes`/`no`) são colocadas entre aspas quando o Vernáculo escreve YAML, para que os arquivos continuem portáveis entre bibliotecas.
+- `SKILL.md`, recursos MCP ou prompts de provedores são *saídas*, nunca a fonte da verdade ([ADR-0006](0006-mcp-future-adapter-not-canonical.md), [ADR-0007](0007-agent-skills-early-export-target.md)).
 
-## Alternatives considered
+## Alternativas consideradas
 
-- **Zod as the source, JSON Schema generated from it** — rejected: it would make TypeScript the de facto definition of the format. Zod is kept as a checked mirror.
-- **`SKILL.md` or Markdown-only personas** — rejected: not machine-validatable, hard to compose and to gate by intensity.
-- **JSON files** — rejected for authoring ergonomics (comments, multi-line text); YAML maps 1:1 to JSON anyway.
+- **Zod como fonte, com JSON Schema gerado a partir dele** — rejeitado: faria do TypeScript a definição de fato do formato. O Zod fica como espelho verificado.
+- **Personas em `SKILL.md` ou só em Markdown** — rejeitado: não são validáveis por máquina e são difíceis de compor e de filtrar por intensidade.
+- **Arquivos JSON** — rejeitado pela ergonomia de autoria (comentários, texto em várias linhas); YAML mapeia 1:1 para JSON de qualquer forma.

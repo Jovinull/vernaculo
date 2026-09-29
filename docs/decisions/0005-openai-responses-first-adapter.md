@@ -1,32 +1,33 @@
-# ADR-0005: OpenAI Responses API as the first official adapter
+# ADR-0005: OpenAI Responses API como primeiro adapter oficial
 
-- Status: Accepted
-- Date: 2026-09-29
-- Origin: `ideia.txt` ("E começaria pela OpenAI? Sim."); bootstrap
+- Status: Aceito
+- Data: 2026-09-29
+- Origem: `ideia.txt` ("E começaria pela OpenAI? Sim."); bootstrap
 
-## Context
+## Contexto
 
-A first real integration is needed to prove the thesis end to end. OpenAI's
-Responses API places behavior and style in `instructions` (or developer
-messages), which maps directly onto a compiled persona layer. The adapter must
-not become a coupling point ([ADR-0002](0002-provider-agnostic-specification-and-core.md)).
+É preciso uma primeira integração real para provar a tese de ponta a ponta. A
+Responses API da OpenAI coloca comportamento e estilo em `instructions` (ou em
+mensagens de developer), o que se encaixa diretamente em uma camada de persona
+compilada. O adapter não pode virar um ponto de acoplamento
+([ADR-0002](0002-provider-agnostic-specification-and-core.md)).
 
-## Decision
+## Decisão
 
-- `@vernaculo/openai` targets the **Responses API** and is deliberately thin:
-  - it has **no dependency on any OpenAI SDK** (structural types only) and performs **no request**;
-  - `withPersona(params, persona)` returns a copy of the request params with the agent's instructions first and the persona layer after them;
-  - `composeInstructions()` and `developerMessage()` cover other call shapes.
-- The adapter documents and handles a verified API behavior: with `previous_response_id`, **`instructions` from the previous response are not carried over** — the persona must be applied on every request (`withPersona` is idempotent per request for this reason).
-- The user's own client, API key (`OPENAI_API_KEY`) and model are always used. Vernáculo never chooses a model; examples read it from `OPENAI_MODEL`.
-- An adapter for the OpenAI **Agents SDK** (`@vernaculo/openai-agents`) is a separate, future package. `@openai/agents` never enters the core.
+- `@vernaculo/openai` tem como alvo a **Responses API** e é deliberadamente fino:
+  - **não depende de nenhum SDK da OpenAI** (só tipos estruturais) e **não faz nenhuma requisição**;
+  - `withPersona(params, persona)` devolve uma cópia dos parâmetros da requisição com as instruções do agente primeiro e a camada de persona depois;
+  - `composeInstructions()` e `developerMessage()` cobrem outros formatos de chamada.
+- O adapter documenta e trata um comportamento verificado da API: com `previous_response_id`, **as `instructions` da resposta anterior não são reaplicadas** — a persona precisa ser enviada em toda requisição (por isso `withPersona` é idempotente por requisição).
+- Sempre são usados o cliente, a API key (`OPENAI_API_KEY`) e o modelo do próprio usuário. O Vernáculo nunca escolhe modelo; os exemplos leem o modelo de `OPENAI_MODEL`.
+- Um adapter para o **Agents SDK** da OpenAI (`@vernaculo/openai-agents`) é um pacote separado e futuro. `@openai/agents` nunca entra no core.
 
-## Consequences
+## Consequências
 
-- Other providers follow the same shape: an adapter is a formatting/composition layer over the compiler output.
-- Provider facts are recorded with their verification date in [external-facts.md](../reference/external-facts.md).
+- Outros provedores seguem o mesmo formato: um adapter é uma camada de formatação e composição sobre a saída do compilador.
+- Fatos sobre provedores ficam registrados com a data de verificação em [external-facts.md](../reference/external-facts.md).
 
-## Alternatives considered
+## Alternativas consideradas
 
-- **Wrap the OpenAI SDK client** — rejected: forces a dependency and version coupling, and hides the request from the user.
-- **Start with the Agents SDK** — deferred: the Responses API is the lower-level, more stable surface; the Agents SDK accepts plain instructions anyway.
+- **Encapsular o cliente do SDK da OpenAI** — rejeitado: força uma dependência e acoplamento de versões, e esconde a requisição do usuário.
+- **Começar pelo Agents SDK** — adiado: a Responses API é a superfície mais baixa e mais estável; o Agents SDK aceita instruções em texto de qualquer forma.

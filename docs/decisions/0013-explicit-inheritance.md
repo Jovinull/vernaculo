@@ -1,32 +1,32 @@
-# ADR-0013: Explicit `extends` inheritance; ids never imply inheritance
+# ADR-0013: Herança explícita com `extends`; ids nunca implicam herança
 
-- Status: Accepted
-- Date: 2026-09-29
-- Origin: bootstrap (derived from `ideia.txt`: `extends: pt-BR/ba/salvador`, the granularity discussion and the ALiB argument)
+- Status: Aceito
+- Data: 2026-09-29
+- Origem: bootstrap (derivado de `ideia.txt`: `extends: pt-BR/ba/salvador`, a discussão de granularidade e o argumento do ALiB)
 
-## Context
+## Contexto
 
-Persona ids are hierarchical (`pt-BR/ba/salvador`). A tempting shortcut is to make
-`pt-BR/ba/salvador` automatically inherit from `pt-BR/ba` and `pt-BR`. But
-administrative containment is not linguistic inheritance: a city variety may
-share features with a neighboring state's variety and not with its own state's
-interior; a "state pack" may not exist at all because the state is not a
-linguistic unit.
+Os ids de persona são hierárquicos (`pt-BR/ba/salvador`). Um atalho tentador seria
+fazer `pt-BR/ba/salvador` herdar automaticamente de `pt-BR/ba` e de `pt-BR`. Mas
+contenção administrativa não é herança linguística: a variedade de uma cidade pode
+compartilhar traços com a de um estado vizinho e não com o interior do próprio
+estado; um "pack estadual" pode nem existir, porque o estado não é uma unidade
+linguística.
 
-## Decision
+## Decisão
 
-- Ids are **names**: `<BCP 47 language tag>/<slug>/<slug>...`, slugs being lowercase ASCII (`a-z0-9` and single hyphens). They carry no inheritance meaning.
-- Inheritance is **explicit** and **single-parent**: `extends: <persona id>`. Multiple inheritance is not supported in v1alpha1.
-- A lineage has a single language; cycles and lineages deeper than 32 are errors.
-- Merge semantics are normative and documented in [inheritance-and-composition.md](../specification/inheritance-and-composition.md), including lineage-ordered cancellation between discouraged and used forms.
-- Slugs are ASCII for filesystem and URL portability (the conversation already used `sao-paulo`); display names with diacritics go in `metadata.name` (e.g. `reconcavo` / "Recôncavo").
+- Ids são **nomes**: `<tag de idioma BCP 47>/<slug>/<slug>...`, com slugs em ASCII minúsculo (`a-z0-9` e hífens simples). Eles não carregam significado de herança.
+- A herança é **explícita** e de **pai único**: `extends: <id da persona>`. Herança múltipla não é suportada na v1alpha1.
+- Uma linhagem tem um único idioma; ciclos e linhagens com mais de 32 níveis são erro.
+- A semântica de merge é normativa e está documentada em [inheritance-and-composition.md](../specification/inheritance-and-composition.md), incluindo o cancelamento, na ordem da linhagem, entre formas desencorajadas e formas usadas.
+- Slugs são ASCII para portabilidade em sistemas de arquivos e URLs (a conversa já usava `sao-paulo`); nomes de exibição com diacríticos ficam em `metadata.name` (por exemplo, `reconcavo` / "Recôncavo").
 
-## Consequences
+## Consequências
 
-- A company persona file (`acme-salvador.yaml`) extends a library persona without living inside the library.
-- Private or non-geographic segments conventionally start with `x-` (e.g. `pt-BR/x-fixture`, `pt-BR/x-acme/...`), mirroring BCP 47's private-use convention.
+- O arquivo de persona de uma empresa (`acme-salvador.yaml`) estende uma persona da biblioteca sem precisar estar dentro da biblioteca.
+- Segmentos privados ou não geográficos começam, por convenção, com `x-` (por exemplo, `pt-BR/x-fixture`, `pt-BR/x-acme/...`), espelhando a convenção de uso privado do BCP 47.
 
-## Alternatives considered
+## Alternativas consideradas
 
-- **Implicit path inheritance** — rejected (see context).
-- **Multiple `extends`** — deferred: merge conflicts between unrelated parents need a clear use case first.
+- **Herança implícita pelo caminho** — rejeitado (veja o contexto).
+- **Vários `extends`** — adiado: conflitos de merge entre pais não relacionados precisam de um caso de uso claro primeiro.
