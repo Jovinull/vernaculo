@@ -1,17 +1,17 @@
-# Repository structure
+# Estrutura do repositório
 
 ```text
 vernaculo/
-├── CLAUDE.md                  # always-loaded instructions for Claude Code (short)
+├── CLAUDE.md                  # instruções sempre carregadas pelo Claude Code (curtas)
 ├── .claude/
-│   ├── rules/                 # path-scoped engineering rules for Claude Code
-│   └── skills/                # project skills (procedures, loaded when relevant)
-├── .changeset/                # Changesets config
-├── .github/workflows/ci.yml   # CI: pnpm check on Node 22/24, Linux + Windows
-├── docs/                      # canonical documentation (source of truth)
+│   ├── rules/                 # regras de engenharia por caminho, para o Claude Code
+│   └── skills/                # skills do projeto (procedimentos, carregados quando relevantes)
+├── .changeset/                # configuração do Changesets
+├── .github/workflows/ci.yml   # CI: pnpm check no Node 22/24, Linux + Windows
+├── docs/                      # documentação canônica (fonte da verdade)
 ├── schemas/
-│   ├── v1alpha1/persona.schema.json   # normative JSON Schema
-│   └── conformance/v1alpha1/          # language-neutral conformance suite
+│   ├── v1alpha1/persona.schema.json   # JSON Schema normativo
+│   └── conformance/v1alpha1/          # suíte de conformidade neutra de linguagem
 ├── packages/
 │   ├── schema/                # @vernaculo/schema
 │   ├── core/                  # @vernaculo/core (+ /node)
@@ -19,33 +19,36 @@ vernaculo/
 │   ├── openai/                # @vernaculo/openai
 │   ├── skills/                # @vernaculo/skills
 │   └── cli/                   # vernaculo (CLI)
-├── personas/                  # the public persona library (empty: no real pack yet)
-├── fixtures/personas/         # SYNTHETIC personas for tests and examples
-├── examples/                  # runnable examples (use fixtures)
-├── ideia.txt                  # founding conversation (historical record; not a source of truth)
+├── personas/                  # a biblioteca pública de personas (vazia: ainda não há pack real)
+├── fixtures/personas/         # personas SINTÉTICAS para testes e exemplos
+├── examples/                  # exemplos executáveis (usam fixtures)
+├── ideia.txt                  # conversa de concepção (registro histórico; não é fonte da verdade)
 ├── LICENSE                    # Apache-2.0
 └── package.json, pnpm-workspace.yaml, tsconfig*.json, tsdown.base.ts, vitest.config.ts, biome.json
 ```
 
-Each package: `src/` (with `index.ts`), `test/`, `package.json`, `tsconfig.json`,
-`tsdown.config.ts`. Built output goes to `dist/` (git-ignored).
+Cada pacote tem: `src/` (com `index.ts`), `test/`, `package.json`, `tsconfig.json` e
+`tsdown.config.ts`. A saída do build vai para `dist/` (ignorado pelo Git).
 
-## Deviations from the layout sketched in the conversation
+## Diferenças em relação à estrutura esboçada na conversa
 
-| Sketch | Now | Reason |
+| Esboço | Agora | Motivo |
 | --- | --- | --- |
-| `schemas/persona.schema.json` (early: `spec/persona.schema.json`) | `schemas/v1alpha1/persona.schema.json` | one directory per spec version, with its conformance suite |
-| `personas/pt-BR/{base,ba/salvador,se/aracaju,pe/recife,sp/sao-paulo}` | `personas/README.md` only | no pack is researched yet; no placeholder packs |
-| `packages/mcp` "posteriormente" | not created | future work; documented instead of scaffolded |
-| `packages/eval` (early sketch) | not created | no eval runner yet; strategy documented |
-| `evals/` | not created | created with the first real eval suite |
-| `examples/{openai, openai-agents, raw-prompt, skill}` | `examples/openai`, `examples/project-persona`, commands in `examples/README.md` | only runnable examples; raw prompt and skill are single CLI commands |
-| — | `fixtures/personas` | shared synthetic data, kept apart from the library so it can never be mistaken for real packs |
-| — | `schemas/conformance/` | makes the specification implementable in other languages |
+| `schemas/persona.schema.json` (antes: `spec/persona.schema.json`) | `schemas/v1alpha1/persona.schema.json` | um diretório por versão da especificação, com a sua suíte de conformidade |
+| `personas/pt-BR/{base,ba/salvador,se/aracaju,pe/recife,sp/sao-paulo}` | só `personas/README.md` | nenhum pack foi pesquisado ainda; nada de packs placeholder |
+| `packages/mcp` "posteriormente" | não criado | trabalho futuro; documentado em vez de criado como esqueleto |
+| `packages/eval` (esboço inicial) | não criado | ainda não há executor de evals; a estratégia está documentada |
+| `evals/` | não criado | será criado com a primeira suíte de evals real |
+| `examples/{openai, openai-agents, raw-prompt, skill}` | `examples/openai`, `examples/project-persona` e comandos em `examples/README.md` | só exemplos executáveis; prompt simples e skill são um único comando da CLI |
+| — | `fixtures/personas` | dados sintéticos compartilhados, separados da biblioteca para nunca serem confundidos com packs reais |
+| — | `schemas/conformance/` | torna a especificação implementável em outras linguagens |
 
-## Documentation language
+## Idioma
 
-Repository documentation and code are in **English** (international open source
-audience; the conversation's proposed README definition was in English).
-Reviewer-facing material for a variety (e.g. review labels) uses that variety's
-language. This is a bootstrap convention; changing it is a maintainer decision.
+A documentação e os metadados do projeto são escritos em **português brasileiro**
+([ADR-0016](../decisions/0016-documentation-in-portuguese.md)). Continuam em inglês:
+identificadores, comentários de código e nomes de testes; mensagens da CLI; o texto
+de enquadramento das instruções compiladas (lido pelo modelo); códigos estáveis
+(issue codes, valores de enums, `apiVersion`); os nomes dos campos do formato de
+persona; e os nomes de arquivos e diretórios. O conteúdo de cada persona fica no
+idioma da variedade que ela descreve.

@@ -1,26 +1,26 @@
-# Contributing a persona pack
+# Contribuindo com um pack de persona
 
-Read first: [methodology](../linguistic/methodology.md),
-[anti-caricature policy](../linguistic/anti-caricature.md),
-[format](../specification/persona-format.md),
-[provenance](../specification/provenance.md).
+Leia antes: [metodologia](../linguistic/methodology.md),
+[política anti-caricatura](../linguistic/anti-caricature.md),
+[formato](../specification/persona-format.md),
+[proveniência](../specification/provenance.md).
 
-## Before you start
+## Antes de começar
 
-- Check [regional-packs.md](../linguistic/regional-packs.md) and open issues: someone may already be researching the variety.
-- Confirm you can cite sources whose licenses allow the intended use ([sources.md](../linguistic/sources.md)).
-- Plan a review by people familiar with the variety: always recommended, never required ([human-review.md](../linguistic/human-review.md)).
-- Library packs are licensed under Apache-2.0: set `metadata.license: Apache-2.0`; by contributing you license your content under it ([ADR-0014](../decisions/0014-apache-2-0-persona-content.md)).
+- Confira [regional-packs.md](../linguistic/regional-packs.md) e as issues abertas: alguém pode já estar pesquisando a variedade.
+- Confirme que você pode citar fontes cujas licenças permitem o uso pretendido ([sources.md](../linguistic/sources.md)).
+- Planeje uma revisão por pessoas familiarizadas com a variedade: sempre recomendada, nunca obrigatória ([human-review.md](../linguistic/human-review.md)).
+- Os packs da biblioteca são licenciados sob Apache-2.0: defina `metadata.license: Apache-2.0`; ao contribuir, você licencia o seu conteúdo sob ela ([ADR-0014](../decisions/0014-apache-2-0-persona-content.md)).
 
-## Steps
+## Passos
 
-1. Create `personas/<language>/<slug>/.../persona.yaml` with `maturity: draft` and `license: Apache-2.0`. The directory path must equal `metadata.id`.
-2. Add sources to `provenance.sources` with `license`, `usage` and `accessed`.
-3. Add features. Each one needs `evidence`; `attested`/`reported` need `sources`. Keep unconfirmed forms as `hypothesis` (never rendered).
-4. Set `minIntensity` on marked features; set `regionality.defaultIntensity` for the pack's typical use (usually subtle).
-5. Add positive `examples` (with `neutral`, `text`, `intensity`) for realistic situations, starting with customer service.
-6. Add `antiPatterns`: overuse, eye dialect, stereotyped attitudes, forms from other regions.
-7. Validate and look at the output:
+1. Crie `personas/<idioma>/<slug>/.../persona.yaml` com `maturity: draft` e `license: Apache-2.0`. O caminho do diretório precisa ser igual a `metadata.id`.
+2. Acrescente as fontes em `provenance.sources` com `license`, `usage` e `accessed`.
+3. Acrescente os traços. Cada um precisa de `evidence`; `attested`/`reported` precisam de `sources`. Mantenha formas não confirmadas como `hypothesis` (nunca renderizadas).
+4. Defina `minIntensity` nos traços marcados; defina `regionality.defaultIntensity` para o uso típico do pack (geralmente sutil).
+5. Acrescente `examples` positivos (com `neutral`, `text` e `intensity`) em situações realistas, começando pelo atendimento.
+6. Acrescente `antiPatterns`: excesso, grafia fonética, atitudes estereotipadas, formas de outras regiões.
+7. Valide e observe a saída:
 
    ```bash
    pnpm build
@@ -30,21 +30,22 @@ Read first: [methodology](../linguistic/methodology.md),
    pnpm vernaculo compile pt-BR/<...> --intensity 1
    ```
 
-8. Open a pull request describing sources, evidence gaps and known risks.
+8. Abra um pull request descrevendo as fontes, as lacunas de evidência e os riscos conhecidos.
 
-## Review checklist
+## Checklist de revisão
 
-- [ ] No personality, attitude, humor, class, education, profession, religion, politics or behavior — anywhere, including examples and notes.
-- [ ] Every rendered feature has evidence; `attested`/`reported` cite sources; no `synthetic` content.
-- [ ] Source usage matches each license; nothing copied that may not be redistributed.
-- [ ] Granularity is justified by evidence (not "the whole state" by default).
-- [ ] Output at intensity 1 is still not caricature; intensity 0 is neutral.
-- [ ] Examples are realistic and at the stated intensity; anti-patterns cover the main risks.
-- [ ] `metadata.license` is `Apache-2.0`.
-- [ ] `maturity` is `draft` unless a human review actually took place (then cite it; a record is recommended). If not reviewed yet, the PR recommends review.
-- [ ] Documentation updated if the pack required new conventions.
+- [ ] Nenhuma personalidade, atitude, humor, classe, escolaridade, profissão, religião, política ou comportamento — em lugar nenhum, incluindo exemplos e notas.
+- [ ] Todo traço renderizado tem evidência; `attested`/`reported` citam fontes; nenhum conteúdo `synthetic`.
+- [ ] O uso de cada fonte bate com a licença dela; nada copiado que não possa ser redistribuído.
+- [ ] A granularidade é justificada por evidência (e não "o estado inteiro" por padrão).
+- [ ] A saída na intensidade 1 ainda não é caricatura; a intensidade 0 é neutra.
+- [ ] Os exemplos são realistas e estão na intensidade declarada; os antipadrões cobrem os principais riscos.
+- [ ] `metadata.license` é `Apache-2.0`.
+- [ ] `maturity` é `draft`, a menos que uma revisão humana tenha realmente acontecido (nesse caso, cite-a; um registro é recomendado). Se ainda não houve revisão, o PR recomenda uma.
+- [ ] A documentação foi atualizada se o pack exigiu convenções novas.
 
-## Company or project personas
+## Personas de empresas ou projetos
 
-Do not modify library packs for company preferences. Keep a derived persona in
-your own repository with `extends` ([inheritance-and-composition.md](../specification/inheritance-and-composition.md)).
+Não modifique packs da biblioteca por preferências de uma empresa. Mantenha uma
+persona derivada no seu próprio repositório, com `extends`
+([inheritance-and-composition.md](../specification/inheritance-and-composition.md)).

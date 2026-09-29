@@ -1,23 +1,24 @@
-# Releasing
+# Releases
 
-Nothing has been published yet. All packages are at `0.0.0`.
+Nada foi publicado ainda. Todos os pacotes estão em `0.0.0`.
 
-## Rules
+## Regras
 
-- Publishing to npm, creating GitHub Releases, pushing tags and any other outward action is a **manual maintainer decision**. Automation and AI assistants never publish without an explicit instruction for that specific release.
-- All published packages (`vernaculo`, `@vernaculo/*`) share one version (Changesets `fixed` group). Private workspace packages (examples) are never versioned or published.
-- The persona **specification** version (`apiVersion`) and **pack** versions (`metadata.version`) are independent of package versions.
+- Publicar no npm, criar GitHub Releases, enviar tags e qualquer outra ação externa é **decisão manual do mantenedor**. Automações e assistentes de IA nunca publicam sem uma instrução explícita para aquele release específico.
+- Todos os pacotes publicados (`vernaculo`, `@vernaculo/*`) compartilham uma única versão (grupo `fixed` do Changesets). Pacotes privados do workspace (exemplos) nunca são versionados nem publicados.
+- A versão da **especificação** de persona (`apiVersion`) e as versões dos **packs** (`metadata.version`) são independentes das versões dos pacotes.
+- Commits seguem Conventional Commits em português, só com a linha de assunto (veja o [guia de contribuição](../../CONTRIBUTING.md)).
 
-## Flow
+## Fluxo
 
-1. Every change to public behavior includes a changeset: `pnpm changeset`.
-2. Before a release: `pnpm check` must pass; docs updated; `docs/roadmap/roadmap.md` status updated; the `release-quality` project skill checklist completed.
-3. `pnpm changeset version` to apply versions and changelogs; review the diff.
-4. `pnpm build`, then publish manually (e.g. `pnpm changeset publish`) — maintainer only.
-5. Optionally attach build artifacts or pack archives to a GitHub Release.
+1. Toda mudança de comportamento público inclui um changeset: `pnpm changeset`.
+2. Antes de um release: `pnpm check` precisa passar; a documentação precisa estar atualizada; o status em `docs/roadmap/roadmap.md` precisa estar atualizado; o checklist da skill de projeto `release-quality` precisa estar completo.
+3. `pnpm changeset version` para aplicar versões e changelogs; revise o diff.
+4. `pnpm build` e depois publique manualmente (por exemplo, `pnpm changeset publish`) — só o mantenedor.
+5. Opcionalmente, anexe artefatos de build ou arquivos de packs a um GitHub Release.
 
-## Pre-release gates for the first public release
+## Pré-requisitos do primeiro release público
 
-- npm scope `@vernaculo` and package name `vernaculo` claimed by the maintainer (both were unregistered on 2026-09-29 — see open questions).
-- Repository URL decided and added to every `package.json` (`repository`, `homepage`, `bugs`).
-- At least one real pack, or the release clearly labeled as tooling-only with fixtures.
+- Escopo `@vernaculo` e nome de pacote `vernaculo` registrados pelo mantenedor no npm (os dois estavam livres em 2026-09-29 — veja as questões em aberto).
+- URL do repositório (https://github.com/Jovinull/vernaculo) adicionada a todo `package.json` (`repository`, `homepage`, `bugs`).
+- Pelo menos um pack real, ou o release claramente identificado como só de ferramentas, com fixtures.

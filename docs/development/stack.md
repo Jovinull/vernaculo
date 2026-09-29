@@ -1,67 +1,68 @@
-# Technical stack
+# Stack técnica
 
-Versions were checked against the npm registry and official sources on
-**2026-09-29**. Do not copy versions from `ideia.txt`; re-check before upgrading.
+As versões foram conferidas no registry do npm e em fontes oficiais em
+**2026-09-29**. Não copie versões de `ideia.txt`; confira de novo antes de atualizar.
 
-## Runtime and language
+## Runtime e linguagem
 
-| Choice | Version | Notes |
+| Escolha | Versão | Observações |
 | --- | --- | --- |
-| Node.js (development) | 24 LTS "Krypton" (`.node-version`) | Node 22 "Jod" is maintenance LTS; Node 26 is "Current" until it becomes LTS |
-| Node.js (published packages) | ≥ 22.12 (`engines`) | Commander 15 requires ≥ 22.12; tsdown needs ≥ 22.18 for *building* only |
-| TypeScript | 7.0.2 | the native (Go) compiler. Strict by default; no programmatic compiler API until 7.1 — see below |
-| Module format | ESM only, `.mjs` + `.d.mts` outputs | `"type": "module"` everywhere |
+| Node.js (desenvolvimento) | 24 LTS "Krypton" (`.node-version`) | o Node 22 "Jod" é LTS de manutenção; o Node 26 é "Current" até virar LTS |
+| Node.js (pacotes publicados) | ≥ 22.12 (`engines`) | o Commander 15 exige ≥ 22.12; o tsdown precisa de ≥ 22.18 só para o *build* |
+| TypeScript | 7.0.2 | o compilador nativo (em Go). Strict por padrão; sem API programática do compilador até a 7.1 — veja abaixo |
+| Formato de módulos | apenas ESM, saídas `.mjs` + `.d.mts` | `"type": "module"` em todo lugar |
 
-TypeScript settings (`tsconfig.base.json`): `strict`, `noUncheckedIndexedAccess`,
+Configurações do TypeScript (`tsconfig.base.json`): `strict`, `noUncheckedIndexedAccess`,
 `isolatedDeclarations`, `verbatimModuleSyntax`, `erasableSyntaxOnly`,
 `module: preserve` + `moduleResolution: bundler`, `allowImportingTsExtensions`
-(imports use `.ts` extensions), `customConditions: ["@vernaculo/source"]`.
+(os imports usam extensão `.ts`), `customConditions: ["@vernaculo/source"]`.
 
-Why `isolatedDeclarations`: TS 7 has no JS compiler API, so declaration bundling
-uses Oxc (fast, stable) instead of the experimental tsgo path; it also forces
-explicit types on every export, which keeps public APIs deliberate.
+Por que `isolatedDeclarations`: o TS 7 não tem API do compilador em JS, então o
+empacotamento das declarações usa o Oxc (rápido e estável) em vez do caminho
+experimental do tsgo; além disso, ele obriga tipos explícitos em todo export, o que
+mantém as APIs públicas deliberadas.
 
-Why `erasableSyntaxOnly` + `.ts` imports: source files stay directly runnable by
-Node's type stripping (e.g. `examples/openai`).
+Por que `erasableSyntaxOnly` + imports `.ts`: os arquivos-fonte continuam executáveis
+diretamente pela remoção de tipos do Node (por exemplo, `examples/openai`).
 
-## Tooling
+## Ferramentas
 
-| Tool | Version | Role |
+| Ferramenta | Versão | Papel |
 | --- | --- | --- |
-| pnpm | 12.8.1 (`packageManager`) | workspaces; its default supply-chain policy rejects releases younger than its minimum release age — do not add exclusions casually |
-| tsdown | 0.23.0 | builds each package (Rolldown + Oxc declarations); shared config in `tsdown.base.ts` |
-| Vitest | 5.0.2 (+ Vite 8.3.1 peer) | tests, run against sources via the `@vernaculo/source` condition |
-| Biome | 2.5.14 | lint + format (`biome.json`) |
-| Changesets | CLI 3.0.3 | versioning; `fixed` group for all published packages |
-| Ajv | 8.20.0 (dev only) | validates conformance fixtures against the canonical JSON Schema (draft 2020-12) |
+| pnpm | 12.8.1 (`packageManager`) | workspaces; a política padrão de supply chain rejeita releases mais novos que a idade mínima configurada — não adicione exceções sem motivo |
+| tsdown | 0.23.0 | build de cada pacote (Rolldown + declarações via Oxc); configuração compartilhada em `tsdown.base.ts` |
+| Vitest | 5.0.2 (+ Vite 8.3.1 como peer) | testes, executados sobre os fontes pela condição `@vernaculo/source` |
+| Biome | 2.5.14 | lint + formatação (`biome.json`) |
+| Changesets | CLI 3.0.3 | versionamento; grupo `fixed` para todos os pacotes publicados |
+| Ajv | 8.20.0 (só em dev) | valida os fixtures de conformidade contra o JSON Schema canônico (draft 2020-12) |
 | GitHub Actions | checkout v7, setup-node v7, pnpm/action-setup v6 | CI (`.github/workflows/ci.yml`) |
 
-## Runtime dependencies of published packages
+## Dependências de runtime dos pacotes publicados
 
-| Package | Dependency | Why |
+| Pacote | Dependência | Por quê |
 | --- | --- | --- |
-| `@vernaculo/schema` | `zod` ^4.6.5 | typed runtime validation mirroring the JSON Schema |
-| `@vernaculo/core`, `@vernaculo/skills` | `yaml` ^2.9.1 | YAML 1.2 parsing with duplicate-key detection; YAML 1.1-safe serialization |
-| `vernaculo` (CLI) | `commander` ^15.0.0 | command parsing |
+| `@vernaculo/schema` | `zod` ^4.6.5 | validação tipada em runtime espelhando o JSON Schema |
+| `@vernaculo/core`, `@vernaculo/skills` | `yaml` ^2.9.1 | parse de YAML 1.2 com detecção de chaves duplicadas; serialização segura para YAML 1.1 |
+| `vernaculo` (CLI) | `commander` ^15.0.0 | parse de comandos |
 
-Deliberately **not** used (yet):
+Deliberadamente **não** usados (ainda):
 
-- `@clack/prompts` (1.8.1 available): part of the intended stack for interactive CLI flows; no current command is interactive, so it is not installed. Add it with the first interactive command (e.g. `add`).
-- `openai` SDK: only the example depends on it (pinned 7.23.0); `@vernaculo/openai` uses structural types.
-- `@openai/agents` (0.18.0), `@modelcontextprotocol/server` (MCP SDK v2): future adapters only.
-- Any web framework (Next.js etc.), database or Rust toolchain ([ADR-0004](../decisions/0004-typescript-reference-implementation.md), [ADR-0008](../decisions/0008-git-and-filesystem-no-database.md)).
+- `@clack/prompts` (1.8.1 disponível): faz parte da stack pretendida para fluxos interativos na CLI; nenhum comando atual é interativo, então não está instalado. Entra com o primeiro comando interativo (por exemplo, `add`).
+- SDK `openai`: só o exemplo depende dele (fixado na 7.23.0); `@vernaculo/openai` usa tipos estruturais.
+- `@openai/agents` (0.18.0), `@modelcontextprotocol/server` (MCP SDK v2): apenas para adapters futuros.
+- Qualquer framework web (Next.js etc.), banco de dados ou toolchain de Rust ([ADR-0004](../decisions/0004-typescript-reference-implementation.md), [ADR-0008](../decisions/0008-git-and-filesystem-no-database.md)).
 
-## Stack as decided in the conversation vs. now
+## A stack decidida na conversa vs. agora
 
-| Conversation | Now |
+| Conversa | Agora |
 | --- | --- |
-| TypeScript, Node LTS, pnpm workspaces | same |
-| YAML + Markdown personas, JSON Schema | same; JSON Schema is hand-written and normative |
-| Zod 4 | same (mirror of the JSON Schema) |
-| TypeScript + Commander + @clack/prompts CLI | Commander now; Clack when interactive commands arrive |
-| Vitest, Biome, tsdown | same |
-| GitHub Actions; Changesets + npm + GitHub Releases | CI configured; Changesets configured; publishing manual and not yet done |
-| OpenAI Responses API / Agents SDK first | Responses adapter done; Agents SDK adapter is an idea |
-| Agent Skills (`SKILL.md`) | exporter done |
-| MCP TypeScript SDK v2, later | later |
-| No infrastructure, no database, no backend | same (enforced by tests) |
+| TypeScript, Node LTS, pnpm workspaces | igual |
+| Personas em YAML + Markdown, JSON Schema | igual; o JSON Schema é escrito à mão e normativo |
+| Zod 4 | igual (espelho do JSON Schema) |
+| CLI com TypeScript + Commander + @clack/prompts | Commander agora; Clack quando surgirem comandos interativos |
+| Vitest, Biome, tsdown | igual |
+| GitHub Actions; Changesets + npm + GitHub Releases | CI configurado; Changesets configurado; publicação manual e ainda não feita |
+| OpenAI Responses API / Agents SDK primeiro | adapter da Responses feito; adapter do Agents SDK é uma ideia |
+| Agent Skills (`SKILL.md`) | exportador feito |
+| MCP TypeScript SDK v2, depois | depois |
+| Sem infraestrutura, sem banco, sem backend | igual (verificado por testes) |

@@ -1,36 +1,37 @@
-# Testing
+# Testes
 
 ```bash
-pnpm test            # all tests (sources, no build needed)
+pnpm test            # todos os testes (sobre os fontes, sem build)
 pnpm test:watch
-pnpm check           # lint + typecheck + tests + build + data validation (what CI runs)
+pnpm check           # lint + typecheck + testes + build + validação de dados (o que o CI roda)
 ```
 
-Tests import package sources through the `@vernaculo/source` export condition
-(`vitest.config.ts`), so they never test stale builds.
+Os testes importam os fontes dos pacotes pela condição de export
+`@vernaculo/source` (`vitest.config.ts`), então nunca testam builds desatualizados.
 
-## What is tested, and where
+## O que é testado, e onde
 
-| Area | File | Guarantees |
+| Área | Arquivo | Garantias |
 | --- | --- | --- |
-| Specification conformance (structure) | `packages/schema/test/conformance.test.ts` | every conformance file gets the same verdict from Ajv (canonical JSON Schema) and Zod |
-| Schema parity | `packages/schema/test/schema-parity.test.ts` | the JSON Schema generated from Zod carries exactly the canonical constraints, node by node |
-| Specification conformance (semantics, resolution) | `packages/core/test/conformance.test.ts` | semantic fixtures fail with their expected code; resolution cases produce the expected lineage and flattened document (including key order) |
-| Parsing | `packages/core/test/parse.test.ts` | YAML errors, duplicate keys, non-JSON values, issue paths, all document issues reported at once |
-| Resolution | `packages/core/test/resolve.test.ts` | lineage, cancellation, scalar inheritance, determinism, root shadowing, project files, path-safe ids, depth bound, listing order |
-| Intensity / IR | `packages/core/test/ir.test.ts` | bounds, neutral at 0, gating, hypotheses never rendered, examples gating, frozen IR, no mutation |
-| Serialization | `packages/core/test/serialize.test.ts` | round trip; YAML 1.1-safe quoting |
-| Architecture invariants | `packages/core/test/architecture.test.ts` | no provider SDK/network imports or deps; dependency direction; runtime-agnostic entries; every library persona is Apache-2.0 (ADR-0014) |
-| Compiler | `packages/compiler/test/compile.test.ts` | golden outputs per intensity; ground rules at every intensity; maturity notice; determinism; escaping; works with network disabled |
-| OpenAI adapter | `packages/openai/test/openai.test.ts` | composition order, immutability, per-request idempotence, no SDK dependency |
-| Skill exporter | `packages/skills/test/skills.test.ts` | Agent Skills spec constraints, layout, gating, determinism |
-| CLI | `packages/cli/test/cli.test.ts` | every command, exit codes, overwrite protection, eject round trip (ejected persona compiles to identical instructions), review recommendations for drafts and license notes in ejected files (ADR-0015) |
+| Conformidade com a especificação (estrutura) | `packages/schema/test/conformance.test.ts` | todo arquivo de conformidade recebe o mesmo veredito do Ajv (JSON Schema canônico) e do Zod |
+| Paridade de schemas | `packages/schema/test/schema-parity.test.ts` | o JSON Schema gerado a partir do Zod tem exatamente as restrições canônicas, nó a nó |
+| Conformidade com a especificação (semântica, resolução) | `packages/core/test/conformance.test.ts` | fixtures semânticos falham com o código esperado; casos de resolução produzem a linhagem e o documento achatado esperados (incluindo a ordem das chaves) |
+| Parse | `packages/core/test/parse.test.ts` | erros de YAML, chaves duplicadas, valores fora do modelo JSON, caminhos dos issues, todos os issues do documento reportados de uma vez |
+| Resolução | `packages/core/test/resolve.test.ts` | linhagem, cancelamento, herança de escalares, determinismo, sombreamento entre raízes, arquivos de projeto, ids seguros para caminhos, limite de profundidade, ordem da listagem |
+| Intensidade / IR | `packages/core/test/ir.test.ts` | limites, neutralidade no 0, filtragem, hipóteses nunca renderizadas, filtragem de exemplos, IR congelada, sem mutação |
+| Serialização | `packages/core/test/serialize.test.ts` | ida e volta; aspas seguras para YAML 1.1 |
+| Invariantes de arquitetura | `packages/core/test/architecture.test.ts` | nenhum import ou dependência de SDK de provedor/rede; direção de dependências; pontos de entrada independentes de runtime; toda persona da biblioteca é Apache-2.0 (ADR-0014) |
+| Compilador | `packages/compiler/test/compile.test.ts` | saídas golden por intensidade; regras de base em toda intensidade; aviso de maturidade; determinismo; escape; funciona com a rede desativada |
+| Adapter da OpenAI | `packages/openai/test/openai.test.ts` | ordem da composição, imutabilidade, idempotência por requisição, sem dependência de SDK |
+| Exportador de skills | `packages/skills/test/skills.test.ts` | restrições da especificação Agent Skills, estrutura, filtragem, determinismo |
+| CLI | `packages/cli/test/cli.test.ts` | todos os comandos, códigos de saída, proteção contra sobrescrita, ida e volta do eject (a persona ejetada compila para instruções idênticas), recomendação de revisão para rascunhos e notas de licença nos arquivos ejetados (ADR-0015) |
 
-## Conventions
+## Convenções
 
-- Test behavior and invariants, not implementation details; no tests written just for coverage.
-- Use `fixtures/personas` (synthetic) or inline synthetic YAML. Never put real regional claims in tests.
-- Temporary files go to `os.tmpdir()` and are removed in `afterAll`.
-- Golden files (`__golden__/*.md`) change only on purpose: run `pnpm vitest run <path> -u`, review the diff, and explain the wording change.
-- When the specification changes, add conformance fixtures first (valid and invalid), then update both validators.
-- A mutation check is a good habit for invariant tests: break the rule on purpose once and confirm the test fails.
+- Teste comportamento e invariantes, não detalhes de implementação; nada de testes escritos só para aumentar cobertura.
+- Use `fixtures/personas` (sintético) ou YAML sintético inline. Nunca coloque afirmações regionais reais nos testes.
+- Arquivos temporários vão para `os.tmpdir()` e são removidos em `afterAll`.
+- Golden files (`__golden__/*.md`) só mudam de propósito: rode `pnpm vitest run <caminho> -u`, revise o diff e explique a mudança de redação.
+- Quando a especificação mudar, acrescente primeiro os fixtures de conformidade (válidos e inválidos) e depois atualize os dois validadores.
+- Checagem por mutação é um bom hábito para testes de invariantes: quebre a regra de propósito uma vez e confirme que o teste falha.
+- Nomes de testes e mensagens de asserção ficam em inglês, como o resto do código ([ADR-0016](../decisions/0016-documentation-in-portuguese.md)).
