@@ -27,6 +27,8 @@ agents: `business agent + persona layer = localized agent`. Early bootstrap: spe
 - **The format is language-neutral**: the JSON Schema in `schemas/` is normative; Zod mirrors it. Format meaning must never depend on TypeScript code.
 - **Language layer only**: personas never encode personality, humor, intelligence, education, income, profession, religion, politics or behavior; rendered output always carries the ground rules (`docs/linguistic/anti-caricature.md`).
 - **Evidence before claims**: never call a pack/output validated, natural, representative, stereotype-free or production-ready without human review + eval evidence. Never invent regionalisms or real regional content; synthetic data only in `fixtures/` with `maturity: fixture`.
+- **Review is recommended, never mandatory** (ADR-0015): no review gates or thresholds; always recommend review by speakers for `draft` packs (docs, PRs, CLI hints). `reviewed` only when a review really happened.
+- **One open license**: code, docs, schemas and persona content are Apache-2.0 (ADR-0014); library packs declare `metadata.license: Apache-2.0`. Third-party material keeps its own license.
 - **No lock-in**: personas are portable files; `eject` must keep producing self-contained output.
 
 ## Documentation rule

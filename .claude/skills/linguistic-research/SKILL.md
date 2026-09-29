@@ -21,7 +21,8 @@ description: Create, extend or review a Vernáculo regional persona pack (e.g. p
 4. **Primary sources first**: universities, institutional pages, peer-reviewed articles, official repositories. Verify with web access; if unavailable, record the point as pending verification — never claim confirmation you don't have.
 5. **Granularity follows evidence**: city-level by default; no state-wide or non-administrative variety without evidence; share features via explicit `extends`.
 6. **Language only**: no personality, humor, class, education, profession, religion, politics or behavior — in features, examples, notes or anti-pattern explanations.
-7. **Maturity honesty**: new work is `draft`. Only maintainers set `reviewed`, after a human review round per `docs/linguistic/human-review.md`. Never describe a pack as validated, natural or representative without that evidence.
+7. **Maturity honesty**: new work is `draft`. Human review by speakers is always recommended and never mandatory (ADR-0015): always recommend it, never block on it. Set `reviewed` only when a review really took place (`docs/linguistic/human-review.md`) and cite it. Never describe a pack as validated, natural or representative without evidence.
+8. **License**: library packs are Apache-2.0 (`metadata.license: Apache-2.0`, ADR-0014).
 
 ## Procedure
 
