@@ -1,92 +1,93 @@
-# Vernáculo Persona Specification — overview
+# Vernáculo Persona Specification — visão geral
 
-- Current version: **`vernaculo.dev/v1alpha1`** (alpha: may change incompatibly)
-- Normative artifacts: [`schemas/v1alpha1/persona.schema.json`](../../schemas/v1alpha1/persona.schema.json) and the rules in this directory
-- Conformance suite: [`schemas/conformance/v1alpha1/`](../../schemas/conformance/v1alpha1/)
+- Versão atual: **`vernaculo.dev/v1alpha1`** (alfa: pode mudar de forma incompatível)
+- Artefatos normativos: [`schemas/v1alpha1/persona.schema.json`](../../schemas/v1alpha1/persona.schema.json) e as regras deste diretório
+- Suíte de conformidade: [`schemas/conformance/v1alpha1/`](../../schemas/conformance/v1alpha1/)
 
-The key words MUST, MUST NOT, SHOULD and MAY are to be interpreted as in RFC 2119.
+As palavras DEVE, NÃO DEVE, DEVERIA e PODE devem ser interpretadas como MUST, MUST
+NOT, SHOULD e MAY da RFC 2119.
 
-## Purpose
+## Propósito
 
-A persona is a **declarative description of observable features of a language
-variety**, designed to be layered onto an existing AI agent. It is data, not a
-prompt: implementations compile it into instructions for a target
-([compilation](../architecture/compilation.md)). The specification is independent
-of any programming language, provider or agent framework
+Uma persona é uma **descrição declarativa de traços observáveis de uma variedade
+linguística**, feita para ser aplicada em camada sobre um agente de IA existente. É
+dado, não prompt: as implementações a compilam em instruções para um target
+([compilação](../architecture/compilation.md)). A especificação é independente de
+qualquer linguagem de programação, provedor ou framework de agentes
 ([ADR-0002](../decisions/0002-provider-agnostic-specification-and-core.md),
 [ADR-0003](../decisions/0003-yaml-markdown-json-schema-format.md)).
 
-## Documents
+## Documentos
 
-1. A persona document is a YAML 1.2 file restricted to the **JSON data model**: implementations MUST reject non-finite numbers (`.nan`, `.inf`), binary or custom-tagged values, and duplicate mapping keys. A file MUST contain exactly one document.
-2. Writers SHOULD quote strings that YAML 1.1 parsers would misread (dates, `yes`/`no`/`on`/`off`), so files stay portable across parsers.
-3. A document MUST validate against the JSON Schema of its `apiVersion` and MUST satisfy the semantic rules in [persona-format.md](persona-format.md).
+1. Um documento de persona é um arquivo YAML 1.2 restrito ao **modelo de dados JSON**: as implementações DEVEM rejeitar números não finitos (`.nan`, `.inf`), valores binários ou com tags customizadas e chaves de mapeamento duplicadas. Um arquivo DEVE conter exatamente um documento.
+2. Quem escreve arquivos DEVERIA colocar entre aspas as strings que parsers YAML 1.1 interpretam errado (datas, `yes`/`no`/`on`/`off`), para que os arquivos continuem portáveis entre parsers.
+3. Um documento DEVE ser válido segundo o JSON Schema do seu `apiVersion` e DEVE satisfazer as regras semânticas de [persona-format.md](persona-format.md).
 
-## Identifiers
+## Identificadores
 
-`metadata.id` = `<language tag>/<slug>/<slug>...`
+`metadata.id` = `<tag de idioma>/<slug>/<slug>...`
 
-- The first segment is a BCP 47 language tag (simplified syntax), e.g. `pt-BR`, `es-419`.
-- Following segments are slugs: lowercase ASCII letters and digits separated by single hyphens (e.g. `sao-paulo`, `reconcavo`). Display names with diacritics belong in `metadata.name`.
-- Segments name progressively narrower varieties, which MAY follow administrative divisions (`pt-BR/ba/salvador`) or not (a future `pt-BR/<variety>` supported by evidence).
-- Ids carry **no inheritance**; only `extends` does ([ADR-0013](../decisions/0013-explicit-inheritance.md)).
-- Segments starting with `x-` are, by convention, private or synthetic (`pt-BR/x-fixture`, `pt-BR/x-acme/...`).
-- The id syntax excludes `.`, `\` and empty segments, so ids are safe to map to paths.
+- O primeiro segmento é uma tag de idioma BCP 47 (sintaxe simplificada), por exemplo `pt-BR`, `es-419`.
+- Os segmentos seguintes são slugs: letras ASCII minúsculas e dígitos separados por hífens simples (por exemplo `sao-paulo`, `reconcavo`). Nomes de exibição com diacríticos ficam em `metadata.name`.
+- Os segmentos nomeiam variedades progressivamente mais estreitas, que PODEM seguir divisões administrativas (`pt-BR/ba/salvador`) ou não (um futuro `pt-BR/<variedade>` sustentado por evidência).
+- Ids **não** carregam herança; só `extends` carrega ([ADR-0013](../decisions/0013-explicit-inheritance.md)).
+- Segmentos que começam com `x-` são, por convenção, privados ou sintéticos (`pt-BR/x-fixture`, `pt-BR/x-acme/...`).
+- A sintaxe de id exclui `.`, `\` e segmentos vazios, então ids podem ser mapeados para caminhos com segurança.
 
-## Persona roots
+## Raízes de personas
 
-A persona root is a directory in which the persona with id `I` is stored at
-`<root>/I/persona.yaml` (segments as nested directories). A document found at
-that location MUST declare `metadata.id` equal to `I` (`id-mismatch` otherwise).
-Implementations resolving ids against several roots MUST search them in order
-and use the first match.
+Uma raiz de personas é um diretório em que a persona com id `I` fica em
+`<raiz>/I/persona.yaml` (segmentos como diretórios aninhados). Um documento
+encontrado nesse local DEVE declarar `metadata.id` igual a `I` (senão, `id-mismatch`).
+Implementações que resolvem ids em várias raízes DEVEM buscá-las em ordem e usar a
+primeira correspondência.
 
-## Processing model
+## Modelo de processamento
 
-1. **Parse** each document (JSON data model restrictions).
-2. **Validate** its structure (JSON Schema) and document-level semantic rules.
-3. **Resolve** the lineage through `extends`, check lineage rules, and **flatten** it ([inheritance-and-composition.md](inheritance-and-composition.md)).
-4. Check resolved-level semantic rules.
-5. **Select** features for an intensity ([regional-intensity.md](regional-intensity.md)).
-6. **Render** for a target. Rendering is implementation-defined, but every rendering MUST convey the ground rules listed in [anti-caricature.md](../linguistic/anti-caricature.md) and the effective maturity when it is not `reviewed`.
+1. **Parse** de cada documento (restrições do modelo de dados JSON).
+2. **Validação** da estrutura (JSON Schema) e das regras semânticas do documento.
+3. **Resolução** da linhagem via `extends`, verificação das regras de linhagem e **achatamento** ([inheritance-and-composition.md](inheritance-and-composition.md)).
+4. Verificação das regras semânticas sobre a persona resolvida.
+5. **Seleção** dos traços para uma intensidade ([regional-intensity.md](regional-intensity.md)).
+6. **Renderização** para um target. A renderização é definida pela implementação, mas toda renderização DEVE transmitir as regras de base listadas em [anti-caricature.md](../linguistic/anti-caricature.md) e a maturidade efetiva quando ela não for `reviewed`.
 
-Implementations MUST NOT require network access for any of these steps.
+As implementações NÃO DEVEM exigir acesso à rede em nenhuma dessas etapas.
 
-## Versioning
+## Versionamento
 
-- `apiVersion` identifies the specification version. `vernaculo.dev` is a namespace identifier; implementations MUST NOT dereference it.
-- Alpha versions (`v1alpha1`, `v1alpha2`, ...) may change incompatibly. A stable `v1` will be declared only after real packs, human review and evals have exercised the format.
-- Each version has its own schema directory and conformance suite.
+- `apiVersion` identifica a versão da especificação. `vernaculo.dev` é um identificador de namespace; as implementações NÃO DEVEM tentar acessá-lo.
+- Versões alfa (`v1alpha1`, `v1alpha2`, ...) podem mudar de forma incompatível. Uma `v1` estável só será declarada depois que packs reais, revisão humana e evals tiverem exercitado o formato.
+- Cada versão tem o próprio diretório de schema e a própria suíte de conformidade.
 
-## Conformance
+## Conformidade
 
-An implementation conforms to `v1alpha1` when, on the suite in
+Uma implementação está em conformidade com a `v1alpha1` quando, na suíte em
 `schemas/conformance/v1alpha1/`:
 
-| Directory | Expected behavior |
+| Diretório | Comportamento esperado |
 | --- | --- |
-| `valid/` | parses, validates and resolves (each file as a lone persona) |
-| `invalid-schema/` | rejected by structural validation |
-| `invalid-semantic/` | structurally valid; rejected with the issue code in the file's `# expect:` header |
-| `resolution/<case>/` | resolving `case.yaml` `resolve` against the case's `personas/` root yields `expect.lineage` and `expect.document` (the flattened document, including key order), or fails with `expect.error` |
+| `valid/` | faz parse, valida e resolve (cada arquivo como persona isolada) |
+| `invalid-schema/` | é rejeitado pela validação estrutural |
+| `invalid-semantic/` | é estruturalmente válido; é rejeitado com o código de issue do cabeçalho `# expect:` do arquivo |
+| `resolution/<caso>/` | resolver o `resolve` de `case.yaml` na raiz `personas/` do caso produz `expect.lineage` e `expect.document` (o documento achatado, incluindo a ordem das chaves), ou falha com `expect.error` |
 
-The TypeScript reference implementation runs this suite in
-`packages/schema/test/conformance.test.ts` and `packages/core/test/conformance.test.ts`.
+A implementação de referência em TypeScript executa essa suíte em
+`packages/schema/test/conformance.test.ts` e `packages/core/test/conformance.test.ts`.
 
-## Issue codes
+## Códigos de issue
 
-Stable, machine-readable codes shared by implementations:
+Códigos estáveis, legíveis por máquina, compartilhados entre implementações:
 
-| Stage | Codes |
+| Etapa | Códigos |
 | --- | --- |
-| Parsing | `yaml-syntax`, `non-json-value`, `schema-violation` |
-| Document rules | `language-mismatch`, `duplicate-key`, `conflicting-forms`, `evidence-without-source` |
-| Resolution | `invalid-id`, `persona-not-found`, `parent-not-found`, `id-mismatch`, `inheritance-cycle`, `inheritance-too-deep`, `lineage-language-mismatch`, `unknown-source`, `synthetic-outside-fixture`, `missing-default-intensity` |
-| Options | `invalid-intensity` |
+| Parse | `yaml-syntax`, `non-json-value`, `schema-violation` |
+| Regras do documento | `language-mismatch`, `duplicate-key`, `conflicting-forms`, `evidence-without-source` |
+| Resolução | `invalid-id`, `persona-not-found`, `parent-not-found`, `id-mismatch`, `inheritance-cycle`, `inheritance-too-deep`, `lineage-language-mismatch`, `unknown-source`, `synthetic-outside-fixture`, `missing-default-intensity` |
+| Opções | `invalid-intensity` |
 
-## Related
+## Relacionados
 
-- Field reference and semantic rules: [persona-format.md](persona-format.md)
-- Inheritance and composition: [inheritance-and-composition.md](inheritance-and-composition.md)
-- Intensity: [regional-intensity.md](regional-intensity.md)
-- Evidence, sources, maturity, licensing: [provenance.md](provenance.md)
+- Referência de campos e regras semânticas: [persona-format.md](persona-format.md)
+- Herança e composição: [inheritance-and-composition.md](inheritance-and-composition.md)
+- Intensidade: [regional-intensity.md](regional-intensity.md)
+- Evidência, fontes, maturidade e licenciamento: [provenance.md](provenance.md)

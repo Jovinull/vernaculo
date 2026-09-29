@@ -1,25 +1,25 @@
-# Persona format (`vernaculo.dev/v1alpha1`)
+# Formato de persona (`vernaculo.dev/v1alpha1`)
 
-Normative structure: [`schemas/v1alpha1/persona.schema.json`](../../schemas/v1alpha1/persona.schema.json).
-This page explains the fields and specifies the semantic rules the schema cannot
-express. Every object is closed: **unknown fields are errors** (this is what keeps
-personality traits out of the format — see the `personality-traits-rejected`
-conformance fixture).
+Estrutura normativa: [`schemas/v1alpha1/persona.schema.json`](../../schemas/v1alpha1/persona.schema.json).
+Esta página explica os campos e especifica as regras semânticas que o schema não
+consegue expressar. Todo objeto é fechado: **campos desconhecidos são erro** (é isso
+que mantém traços de personalidade fora do formato — veja o fixture de conformidade
+`personality-traits-rejected`).
 
-## Example (synthetic)
+## Exemplo (sintético)
 
 ```yaml
 apiVersion: vernaculo.dev/v1alpha1
 kind: Persona
-extends: pt-BR/x-fixture              # optional, explicit parent
+extends: pt-BR/x-fixture              # opcional, pai explícito
 metadata:
   id: pt-BR/x-fixture/cidade-a
   name: Fixture — Cidade A
   description: Synthetic locality A.
-  language: pt-BR                     # = first segment of id
-  version: 0.1.0                      # semver of this persona
+  language: pt-BR                     # = primeiro segmento do id
+  version: 0.1.0                      # semver desta persona
   maturity: fixture                   # fixture | draft | reviewed
-  license: Apache-2.0                 # license of this persona's content
+  license: Apache-2.0                 # licença do conteúdo desta persona
   region: { country: BR, subdivision: BA, locality: Synthetic locality }
 regionality:
   defaultIntensity: 0.25
@@ -39,114 +39,115 @@ linguistics:
     disagreements: [...]
     closings: [...]
   orthography:
-    phoneticSpelling: avoid           # avoid (default) | allow
+    phoneticSpelling: avoid           # avoid (padrão) | allow
 examples:
   - { id: saudacao, situation: ..., neutral: "Olá! Como posso ajudar?", text: ..., intensity: 0.25 }
 antiPatterns:
   - { id: excesso, text: ..., category: overuse, explanation: ... }
 provenance:
   sources:
-    - { id: some-atlas, type: atlas, title: ..., url: https://..., license: ..., usage: consulted, accessed: "2026-09-29" }
+    - { id: algum-atlas, type: atlas, title: ..., url: https://..., license: ..., usage: consulted, accessed: "2026-09-29" }
   notes: ...
 ```
 
-Real examples live in [`fixtures/personas`](../../fixtures/personas) (synthetic) and
-[`schemas/conformance/v1alpha1/valid/complete.yaml`](../../schemas/conformance/v1alpha1/valid/complete.yaml).
+Exemplos reais ficam em [`fixtures/personas`](../../fixtures/personas) (sintéticos) e
+em [`schemas/conformance/v1alpha1/valid/complete.yaml`](../../schemas/conformance/v1alpha1/valid/complete.yaml).
 
-## Fields
+## Campos
 
-### Top level
+### Nível superior
 
-| Field | Req. | Meaning |
+| Campo | Obrig. | Significado |
 | --- | --- | --- |
-| `apiVersion` | yes | `vernaculo.dev/v1alpha1` |
-| `kind` | yes | `Persona` |
-| `metadata` | yes | identity, version, maturity |
-| `extends` | no | parent persona id ([inheritance](inheritance-and-composition.md)) |
-| `regionality.defaultIntensity` | lineage | intensity used when the caller does not choose one; required somewhere in the lineage |
-| `linguistics` | no | the features |
-| `examples` | no | positive examples |
-| `antiPatterns` | no | negative examples |
-| `provenance` | no | sources and notes |
+| `apiVersion` | sim | `vernaculo.dev/v1alpha1` |
+| `kind` | sim | `Persona` |
+| `metadata` | sim | identidade, versão, maturidade |
+| `extends` | não | id da persona pai ([herança](inheritance-and-composition.md)) |
+| `regionality.defaultIntensity` | na linhagem | intensidade usada quando quem chama não escolhe uma; obrigatória em algum ponto da linhagem |
+| `linguistics` | não | os traços |
+| `examples` | não | exemplos positivos |
+| `antiPatterns` | não | exemplos negativos |
+| `provenance` | não | fontes e notas |
 
 ### `metadata`
 
-`id`, `name` (≤ 200), `language`, `version` (semver), `maturity` are required.
-`description` (≤ 2000), `license` and `region` are optional and **not inherited**.
-`region` (`country` ISO 3166-1 alpha-2, `subdivision` ISO 3166-2 code without
-country prefix, `locality`, `note`) is informational only: it never drives
-inheritance or selection.
+`id`, `name` (≤ 200), `language`, `version` (semver) e `maturity` são obrigatórios.
+`description` (≤ 2000), `license` e `region` são opcionais e **não são herdados**.
+`region` (`country` ISO 3166-1 alfa-2, `subdivision` código ISO 3166-2 sem o prefixo
+do país, `locality`, `note`) é apenas informativo: nunca guia a herança nem a
+seleção.
 
-### Features
+### Traços
 
-Every rendered feature has `evidence` (required), and optionally `sources`
-(≥ 1 source id), `notes` (for researchers; not sent to models) and `minIntensity`.
+Todo traço renderizado tem `evidence` (obrigatório) e, opcionalmente, `sources`
+(≥ 1 id de fonte), `notes` (para pesquisadores; não são enviadas aos modelos) e
+`minIntensity`.
 
-| List | Key | Specific fields | What it describes |
+| Lista | Chave | Campos específicos | O que descreve |
 | --- | --- | --- | --- |
-| `linguistics.vocabulary.preferred` | `term` | `meaning` | lexical items used where they fit |
-| `linguistics.vocabulary.contextual` | `term` | `context` (req.), `meaning` | items used only in a stated context |
-| `linguistics.vocabulary.discouraged` | `term` | `reason` (no `evidence`/`minIntensity`) | forms to avoid; always rendered |
-| `linguistics.discourse.markers` | `form` | `function` (req.) | discourse markers and their function |
-| `linguistics.morphosyntax.patterns` | `id` | `description` (req.), `example` | morphosyntactic constructions |
-| `linguistics.pragmatics.addressForms` / `greetings` / `acknowledgements` / `disagreements` / `closings` | `form` | `usage` | forms of address and conversational conventions |
-| `examples` | `id` | `situation`, `neutral`, `text` (req.), `intensity` | positive examples |
-| `antiPatterns` | `id` | `text`, `category`, `explanation` (all req.) | outputs that must never be produced |
-| `provenance.sources` | `id` | `type`, `title`, `usage` (req.); `url`, `citation`, `license`, `accessed` | where evidence comes from |
+| `linguistics.vocabulary.preferred` | `term` | `meaning` | itens lexicais usados onde cabem |
+| `linguistics.vocabulary.contextual` | `term` | `context` (obrig.), `meaning` | itens usados apenas em um contexto declarado |
+| `linguistics.vocabulary.discouraged` | `term` | `reason` (sem `evidence`/`minIntensity`) | formas a evitar; sempre renderizadas |
+| `linguistics.discourse.markers` | `form` | `function` (obrig.) | marcadores discursivos e sua função |
+| `linguistics.morphosyntax.patterns` | `id` | `description` (obrig.), `example` | construções morfossintáticas |
+| `linguistics.pragmatics.addressForms` / `greetings` / `acknowledgements` / `disagreements` / `closings` | `form` | `usage` | formas de tratamento e convenções conversacionais |
+| `examples` | `id` | `situation`, `neutral`, `text` (obrig.), `intensity` | exemplos positivos |
+| `antiPatterns` | `id` | `text`, `category`, `explanation` (todos obrig.) | saídas que nunca devem ser produzidas |
+| `provenance.sources` | `id` | `type`, `title`, `usage` (obrig.); `url`, `citation`, `license`, `accessed` | de onde vem a evidência |
 
-`evidence`: `attested` | `reported` | `hypothesis` | `synthetic` — see [provenance.md](provenance.md).
-Anti-pattern `category`: `caricature`, `stereotype`, `overuse`, `phonetic-spelling`,
+`evidence`: `attested` | `reported` | `hypothesis` | `synthetic` — veja [provenance.md](provenance.md).
+`category` dos antipadrões: `caricature`, `stereotype`, `overuse`, `phonetic-spelling`,
 `invented-regionalism`, `wrong-region`, `register-mismatch`, `other`.
 
-**Surface forms.** Items of `preferred`, `contextual`, `markers` and the five
-pragmatics lists are *used* surface forms; `discouraged` items are *avoided*
-surface forms. Keys compare after Unicode NFC normalization and lowercasing
-(`Termo` = `termo`).
+**Formas de superfície.** Os itens de `preferred`, `contextual`, `markers` e das cinco
+listas de pragmática são formas de superfície *usadas*; os itens de `discouraged` são
+formas de superfície *evitadas*. As chaves são comparadas depois de normalização
+Unicode NFC e conversão para minúsculas (`Termo` = `termo`).
 
-## Semantic rules
+## Regras semânticas
 
-Document-level (checked on each document):
+No nível do documento (verificadas em cada documento):
 
-| Code | Rule |
+| Código | Regra |
 | --- | --- |
-| `language-mismatch` | `metadata.language` MUST equal the first segment of `metadata.id`. |
-| `duplicate-key` | Keys MUST be unique within each list. |
-| `conflicting-forms` | Within one document, a form MUST NOT be both used (any used-form list) and discouraged. |
-| `evidence-without-source` | `attested` and `reported` features MUST cite at least one source. |
+| `language-mismatch` | `metadata.language` DEVE ser igual ao primeiro segmento de `metadata.id`. |
+| `duplicate-key` | As chaves DEVEM ser únicas dentro de cada lista. |
+| `conflicting-forms` | Dentro de um documento, uma forma NÃO DEVE ser ao mesmo tempo usada (em qualquer lista de formas usadas) e desencorajada. |
+| `evidence-without-source` | Traços `attested` e `reported` DEVEM citar pelo menos uma fonte. |
 
-Lineage and resolved-level (checked during resolution):
+Na linhagem e na persona resolvida (verificadas durante a resolução):
 
-| Code | Rule |
+| Código | Regra |
 | --- | --- |
-| `invalid-id` | Every id used (requested or in `extends`) MUST match the id syntax. |
-| `persona-not-found` / `parent-not-found` | The requested persona and every parent MUST exist in the roots. |
-| `id-mismatch` | A document stored for id `I` MUST declare `metadata.id: I`. |
-| `inheritance-cycle` | A lineage MUST NOT contain a cycle (including self-extension). |
-| `inheritance-too-deep` | A lineage MUST NOT exceed 32 documents. |
-| `lineage-language-mismatch` | All documents of a lineage MUST share `metadata.language`. |
-| `unknown-source` | Every source reference MUST resolve to a source of the flattened persona. |
-| `synthetic-outside-fixture` | `synthetic` evidence is allowed only when the effective maturity is `fixture`. |
-| `missing-default-intensity` | The flattened persona MUST define `regionality.defaultIntensity`. |
+| `invalid-id` | Todo id usado (pedido ou em `extends`) DEVE seguir a sintaxe de id. |
+| `persona-not-found` / `parent-not-found` | A persona pedida e todo pai DEVEM existir nas raízes. |
+| `id-mismatch` | Um documento armazenado para o id `I` DEVE declarar `metadata.id: I`. |
+| `inheritance-cycle` | Uma linhagem NÃO DEVE conter ciclo (incluindo uma persona que estende a si mesma). |
+| `inheritance-too-deep` | Uma linhagem NÃO DEVE passar de 32 documentos. |
+| `lineage-language-mismatch` | Todos os documentos de uma linhagem DEVEM ter o mesmo `metadata.language`. |
+| `unknown-source` | Toda referência a fonte DEVE apontar para uma fonte da persona achatada. |
+| `synthetic-outside-fixture` | Evidência `synthetic` só é permitida quando a maturidade efetiva é `fixture`. |
+| `missing-default-intensity` | A persona achatada DEVE definir `regionality.defaultIntensity`. |
 
-## History of the format (from the founding conversation)
+## Histórico do formato (da conversa de concepção)
 
-Two drafts preceded `v1alpha1`:
+Dois rascunhos antecederam a `v1alpha1`:
 
-1. `apiVersion: regionalpersona.dev/v1`, `kind: RegionalPersona`, id `br.ba.salvador`, snake_case (`default_intensity`, `discourse_markers`, `phonetic_spelling`), with `scope.register`, a `style` block (`rhythm`, `verbosity`, `regional_marker_frequency`), boolean `constraints` and `review.native_review_required`.
-2. `apiVersion: vernaculo.dev/v1`, `kind: Persona`, id `pt-BR/ba/salvador`, camelCase, `regionality.defaultIntensity`, `linguistics.{vocabulary, discourse.markers, morphosyntax.patterns, pragmatics}`, boolean `constraints` (`avoidCaricature`, `avoidStereotypes`, `preserveParentRole`, `preserveTaskAccuracy`) and `provenance.sources`.
+1. `apiVersion: regionalpersona.dev/v1`, `kind: RegionalPersona`, id `br.ba.salvador`, snake_case (`default_intensity`, `discourse_markers`, `phonetic_spelling`), com `scope.register`, um bloco `style` (`rhythm`, `verbosity`, `regional_marker_frequency`), `constraints` booleanas e `review.native_review_required`.
+2. `apiVersion: vernaculo.dev/v1`, `kind: Persona`, id `pt-BR/ba/salvador`, camelCase, `regionality.defaultIntensity`, `linguistics.{vocabulary, discourse.markers, morphosyntax.patterns, pragmatics}`, `constraints` booleanas (`avoidCaricature`, `avoidStereotypes`, `preserveParentRole`, `preserveTaskAccuracy`) e `provenance.sources`.
 
-`v1alpha1` is based on draft 2, with these bootstrap decisions:
+A `v1alpha1` se baseia no rascunho 2, com estas decisões do bootstrap:
 
-| Draft element | In v1alpha1 | Reason |
+| Elemento do rascunho | Na v1alpha1 | Motivo |
 | --- | --- | --- |
-| `vernaculo.dev/v1` | `vernaculo.dev/v1alpha1` | honest maturity; no real pack has exercised the format |
-| `country`/`state`/`locality` in metadata | `metadata.region.{country, subdivision, locality, note}` | informational, not identity |
-| boolean `constraints` | removed; the invariants are normative and always rendered | a pack must not be able to switch off anti-caricature rules |
-| `override:` block | removed; same fields merge by normative rules | one shape for all documents ([inheritance](inheritance-and-composition.md)) |
-| `review.native_review_required` | `metadata.maturity` + human-review process | review status must be visible and ordered |
-| `examples` with `neutral`/`regionalized` (draft 1) | `examples` with `neutral`/`text`, plus `antiPatterns` | positive and negative examples |
-| `orthography.phonetic_spelling: avoid` (draft 1) | `linguistics.orthography.phoneticSpelling` | kept |
-| draft 1 `disagreement_patterns` | `pragmatics.disagreements` | kept |
-| draft 1 `style` (rhythm, verbosity, marker frequency) | not adopted | marker frequency is intensity; rhythm/verbosity need evidence-based modeling ([open questions](../roadmap/open-questions.md)) |
-| draft 1 `scope.register` | not adopted | register modeling is an open question |
-| per-feature `evidence`, `sources`, `minIntensity` | new | evidence vs hypothesis separation; intensity gating |
+| `vernaculo.dev/v1` | `vernaculo.dev/v1alpha1` | maturidade honesta; nenhum pack real exercitou o formato |
+| `country`/`state`/`locality` em metadata | `metadata.region.{country, subdivision, locality, note}` | informativo, não identidade |
+| `constraints` booleanas | removidas; os invariantes são normativos e sempre renderizados | um pack não pode conseguir desligar as regras anti-caricatura |
+| bloco `override:` | removido; os mesmos campos são mesclados por regras normativas | um único formato para todos os documentos ([herança](inheritance-and-composition.md)) |
+| `review.native_review_required` | `metadata.maturity` + processo de revisão humana | o status de revisão precisa ser visível e ordenado |
+| `examples` com `neutral`/`regionalized` (rascunho 1) | `examples` com `neutral`/`text`, mais `antiPatterns` | exemplos positivos e negativos |
+| `orthography.phonetic_spelling: avoid` (rascunho 1) | `linguistics.orthography.phoneticSpelling` | mantido |
+| `disagreement_patterns` (rascunho 1) | `pragmatics.disagreements` | mantido |
+| `style` do rascunho 1 (ritmo, verbosidade, frequência de marcadores) | não adotado | frequência de marcadores é intensidade; ritmo/verbosidade exigem modelagem baseada em evidência ([questões em aberto](../roadmap/open-questions.md)) |
+| `scope.register` do rascunho 1 | não adotado | a modelagem de registro é uma questão em aberto |
+| `evidence`, `sources` e `minIntensity` por traço | novos | separação entre evidência e hipótese; filtragem por intensidade |

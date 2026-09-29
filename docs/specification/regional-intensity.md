@@ -1,64 +1,64 @@
-# Regional intensity
+# Intensidade regional
 
-Intensity is a first-class concept: how strongly the regional layer marks the
-output, from neutral language to strongly marked.
+A intensidade é um conceito de primeira classe: quão fortemente a camada regional
+marca a saída, de linguagem neutra a fortemente marcada.
 
 ```text
 0.0 ──────────────────────────────── 1.0
-neutral language                 strongly marked variety
+linguagem neutra                 variedade fortemente marcada
 ```
 
-## Contract (normative)
+## Contrato (normativo)
 
-- Intensity is a JSON number in **[0, 1]**. Values outside the range, non-numbers, `NaN` and infinities are errors (`invalid-intensity`). Implementations MUST NOT clamp silently.
-- The intensity used for a compilation is the caller's choice, or else the flattened persona's `regionality.defaultIntensity`.
-- **Selection rules** (applied once, in the IR):
-  1. At intensity **0**, no used-form feature and no example is rendered: the output is neutral language plus restrictions.
-  2. Features with `evidence: hypothesis` are **never** rendered, at any intensity.
-  3. A feature is rendered when intensity > 0 and its `minIntensity` (default 0) ≤ intensity.
-  4. An example is rendered when intensity > 0 and its `intensity` (default 0) ≤ intensity.
-  5. Discouraged forms and anti-patterns are **always** rendered.
-- Every rendering MUST convey the selected intensity to the model and MUST keep the anti-caricature ground rules at every intensity. **High intensity never relaxes naturalness or anti-caricature rules.**
+- A intensidade é um número JSON em **[0, 1]**. Valores fora do intervalo, não numéricos, `NaN` e infinitos são erro (`invalid-intensity`). As implementações NÃO DEVEM ajustar o valor silenciosamente para dentro do intervalo.
+- A intensidade usada em uma compilação é a escolhida por quem chama ou, na falta dela, o `regionality.defaultIntensity` da persona achatada.
+- **Regras de seleção** (aplicadas uma única vez, na IR):
+  1. Na intensidade **0**, nenhum traço de forma usada e nenhum exemplo é renderizado: a saída é linguagem neutra mais restrições.
+  2. Traços com `evidence: hypothesis` **nunca** são renderizados, em nenhuma intensidade.
+  3. Um traço é renderizado quando intensidade > 0 e seu `minIntensity` (padrão 0) ≤ intensidade.
+  4. Um exemplo é renderizado quando intensidade > 0 e sua `intensity` (padrão 0) ≤ intensidade.
+  5. Formas desencorajadas e antipadrões são **sempre** renderizados.
+- Toda renderização DEVE transmitir ao modelo a intensidade selecionada e DEVE manter as regras de base anti-caricatura em qualquer intensidade. **Intensidade alta nunca afrouxa as regras de naturalidade ou anti-caricatura.**
 
-## What intensity is not
+## O que a intensidade não é
 
-Intensity is **not a multiplier of slang** ("more *oxente*"). The conversation was
-explicit: raising intensity should adjust, in a linguistically grounded way, the
-frequency and markedness of:
+A intensidade **não é um multiplicador de gírias** ("mais *oxente*"). A conversa foi
+explícita: aumentar a intensidade deve ajustar, de forma linguisticamente
+fundamentada, a frequência e a marcação de:
 
-- lexicon and regionalisms,
-- discourse markers,
-- forms of address,
-- pragmatic conventions,
-- syntactic constructions,
-- register choices and textual rhythm.
+- léxico e regionalismos,
+- marcadores discursivos,
+- formas de tratamento,
+- convenções pragmáticas,
+- construções sintáticas,
+- escolhas de registro e ritmo textual.
 
-In v1alpha1 this is expressed through two mechanisms only:
+Na v1alpha1 isso é expresso apenas por dois mecanismos:
 
-1. **Gating by markedness** — authors set `minIntensity` on more marked features, based on evidence, so they appear only at higher intensities.
-2. **Qualitative guidance** — the compiler tells the model how sparingly to use the selected features (see the provisional bands in [compilation.md](../architecture/compilation.md#intensity-wording-non-normative-provisional)).
+1. **Filtragem por marcação** — os autores definem `minIntensity` nos traços mais marcados, com base em evidência, para que apareçam apenas em intensidades mais altas.
+2. **Orientação qualitativa** — o compilador diz ao modelo com que parcimônia usar os traços selecionados (veja as faixas provisórias em [compilation.md](../architecture/compilation.md#redação-da-intensidade-não-normativa-provisória)).
 
-No mathematical formula (e.g. "features per sentence = k × intensity") is part of
-the specification. Such calibration must come from eval evidence first — see
-[open questions](../roadmap/open-questions.md).
+Nenhuma fórmula matemática (por exemplo, "traços por frase = k × intensidade") faz
+parte da especificação. Uma calibração desse tipo precisa vir antes de evidência de
+evals — veja as [questões em aberto](../roadmap/open-questions.md).
 
-## Guidance for choosing an intensity
+## Orientação para escolher uma intensidade
 
-From the founding conversation (provisional, to be checked by evals):
+Da conversa de concepção (provisória, a ser verificada com evals):
 
-| Use | Range |
+| Uso | Faixa |
 | --- | --- |
-| Commercial customer service | 0.15–0.35 |
-| Game characters | 0.40–0.70 |
-| Linguistic experiments | 0.80+ |
+| Atendimento comercial | 0.15–0.35 |
+| Personagens de jogos | 0.40–0.70 |
+| Experimentos linguísticos | 0.80+ |
 
-The conversation's first sketch used labels (*leve / moderada / forte*); the
-numeric scale superseded them. Labels survive only as non-normative wording
-bands in the compiler.
+O primeiro esboço da conversa usava rótulos (*leve / moderada / forte*); a escala
+numérica os substituiu. Os rótulos sobrevivem apenas como faixas de redação não
+normativas no compilador.
 
-## Guidance for pack authors
+## Orientação para autores de packs
 
-- Set `defaultIntensity` for the most common intended use of the pack (usually subtle).
-- Leave `minIntensity` unset (0) for features that are unmarked or broadly shared in the variety; raise it for features speakers perceive as strongly marked. Record the evidence for that perception.
-- Give examples an `intensity` so each one illustrates the level it belongs to.
-- Review outputs at several intensities (e.g. 0, default, 0.7, 1) with speakers; "exaggerated" at 1 is still a defect.
+- Defina `defaultIntensity` para o uso mais comum pretendido do pack (geralmente sutil).
+- Deixe `minIntensity` sem definir (0) para traços não marcados ou amplamente compartilhados na variedade; aumente-o para traços que os falantes percebem como fortemente marcados. Registre a evidência dessa percepção.
+- Dê uma `intensity` aos exemplos, para que cada um ilustre o nível a que pertence.
+- Revise as saídas em várias intensidades (por exemplo, 0, a padrão, 0.7 e 1) com falantes; "exagerado" na intensidade 1 continua sendo um defeito.
