@@ -1,29 +1,29 @@
-# Open questions
+# Questões em aberto
 
-Decisions not yet taken. Each should end as an ADR, a specification change or a
-documented convention. Remove an entry when it is resolved (Git keeps history);
-ids are never reused.
+Decisões ainda não tomadas. Cada uma deve terminar como um ADR, uma mudança na
+especificação ou uma convenção documentada. Remova uma entrada quando ela for
+resolvida (o Git guarda o histórico); os ids nunca são reutilizados.
 
-Resolved so far: OQ-01 pack content license → Apache-2.0
-([ADR-0014](../decisions/0014-apache-2-0-persona-content.md)); OQ-02 criteria for
-`reviewed` → none mandatory, review always recommended
-([ADR-0015](../decisions/0015-human-review-recommended-not-mandatory.md)).
+Resolvidas até agora:
 
-| ID | Question | Context / options | Blocking |
+- OQ-01, licença do conteúdo dos packs → Apache-2.0 ([ADR-0014](../decisions/0014-apache-2-0-persona-content.md)).
+- OQ-02, critérios para `reviewed` → nenhum obrigatório; revisão sempre recomendada ([ADR-0015](../decisions/0015-human-review-recommended-not-mandatory.md)).
+- OQ-14, hospedagem do repositório → https://github.com/Jovinull/vernaculo (público), com os campos `repository`, `homepage` e `bugs` nos `package.json`.
+
+| ID | Questão | Contexto / opções | Bloqueia |
 | --- | --- | --- | --- |
-| OQ-03 | **Eval runner** | Generate Promptfoo configs from Vernáculo scenario files vs. a small in-repo runner; scenario file format; how results are stored. | model-based evals |
-| OQ-04 | **Catalog distribution for `add` / `search` / `update`** | Bundle packs in the CLI package; publish an `@vernaculo/personas` npm package (the conversation mentioned `pnpm update @vernaculo/personas`); GitHub Releases tarballs; or Git sparse checkout. Must remain install-time only. | `add` command |
-| OQ-05 | **Register modeling** | Compile option, per-feature applicability, or sub-personas (`pt-BR/ba/salvador/customer-service`, as sketched in the conversation). The conversation's compile API also had `register: "customer-service"`. | — |
-| OQ-06 | **Multi-file packs** | Keep one `persona.yaml`, or allow `knowledge/*.yaml`, `examples/*.yaml`, `evals/*.yaml`, `SOURCES.md` (conversation layout) with defined include semantics. | — |
-| OQ-07 | **Runtime-selectable intensity in skills** | Today intensity is baked at export. The conversation's `AGENT.md` sketch set "Regional intensity: 0.30" in the host agent; a skill could carry gated sections and let the host choose, at the cost of relying on the model for gating. | — |
-| OQ-08 | **Localized instruction framing** | Framing text is English with persona content in the target language. Should framing be localized per language? Should renderings differ per provider (only with eval evidence)? | — |
-| OQ-09 | **A `pt-BR` base persona?** | The conversation's layout had `personas/pt-BR/base/`. What could a base legitimately contain without over-generalizing (maybe only discouraged forms and anti-patterns)? Or should each locality stand alone? | first real packs |
-| OQ-10 | **Removing inherited non-surface-form items** | v1alpha1 can cancel surface forms (discourage/re-enable) but cannot remove an inherited morphosyntax pattern, example or anti-pattern. Options: an explicit `exclude` list; per-item `remove: true`. | — |
-| OQ-11 | **Intensity calibration** | Per-feature frequency hints? Evidence-based band limits? Keep gating-only? Needs eval data ("não congelar fórmula prematuramente"). | after evals |
-| OQ-12 | **Rhythm, verbosity and other stylistic dimensions** | Draft 1 had a `style` block (rhythm, verbosity). Modeling them needs linguistic evidence and must not become personality. | — |
-| OQ-13 | **Names and namespaces** | npm scope `@vernaculo` and package `vernaculo` were unregistered on 2026-09-29; the `vernaculo.dev` domain status is unknown (it is only an identifier in `apiVersion`). Claiming them is a maintainer action. | first publication |
-| OQ-14 | **Repository hosting** | GitHub organization/URL; `repository`/`homepage` fields in `package.json`. | first publication |
-| OQ-15 | **Contribution terms** | Apache-2.0 section 5 already makes contributions inbound = outbound (no CLA needed). Still open: DCO sign-off or not; NOTICE file and copyright line; code of conduct; security policy. | first external contributions |
-| OQ-16 | **Other-language implementations** | Priority of a Python implementation (the conversation mentioned PyPI); conformance suite is ready for it. | — |
-| OQ-17 | **Non-administrative variety names** | Naming conventions for varieties that do not follow administrative borders (e.g. `reconcavo`) and how to document their extent. | when evidence supports one |
-| OQ-18 | **Voice** | Scope and timing of speech/voice regionalization; which datasets (licenses) could support it. | — |
+| OQ-03 | **Executor de evals** | Gerar configurações do Promptfoo a partir de arquivos de cenário do Vernáculo vs. um executor pequeno no repositório; formato dos arquivos de cenário; como os resultados são guardados. | evals com modelos |
+| OQ-04 | **Distribuição do catálogo para `add` / `search` / `update`** | Embutir os packs no pacote da CLI; publicar um pacote npm `@vernaculo/personas` (a conversa citou `pnpm update @vernaculo/personas`); tarballs no GitHub Releases; ou sparse checkout do Git. Tem de continuar sendo só no momento da instalação. | comando `add` |
+| OQ-05 | **Modelagem de registro** | Opção de compilação, aplicabilidade por traço ou subpersonas (`pt-BR/ba/salvador/customer-service`, como esboçado na conversa). A API de compilação da conversa também tinha `register: "customer-service"`. | — |
+| OQ-06 | **Packs com vários arquivos** | Manter um único `persona.yaml` ou permitir `knowledge/*.yaml`, `examples/*.yaml`, `evals/*.yaml`, `SOURCES.md` (estrutura da conversa), com semântica de inclusão definida. | — |
+| OQ-07 | **Intensidade escolhida em runtime nas skills** | Hoje a intensidade é fixada na exportação. O esboço de `AGENT.md` da conversa definia "Regional intensity: 0.30" no agente hospedeiro; uma skill poderia levar seções filtradas e deixar o hospedeiro escolher, ao custo de depender do modelo para a filtragem. | — |
+| OQ-08 | **Enquadramento das instruções localizado** | O texto de enquadramento é em inglês, com o conteúdo da persona no idioma da variedade. O enquadramento deveria ser localizado por idioma? As renderizações deveriam variar por provedor (só com evidência de evals)? | — |
+| OQ-09 | **Uma persona base `pt-BR`?** | A estrutura da conversa tinha `personas/pt-BR/base/`. O que uma base poderia conter de forma legítima sem generalizar demais (talvez só formas desencorajadas e antipadrões)? Ou cada localidade deveria ser independente? | primeiros packs reais |
+| OQ-10 | **Remover itens herdados que não são formas de superfície** | A v1alpha1 consegue cancelar formas de superfície (desencorajar/reativar), mas não remover um padrão morfossintático, exemplo ou antipadrão herdado. Opções: uma lista `exclude` explícita; `remove: true` por item. | — |
+| OQ-11 | **Calibração da intensidade** | Dicas de frequência por traço? Limites de faixa baseados em evidência? Manter só a filtragem? Precisa de dados de evals ("não congelar fórmula prematuramente"). | depois dos evals |
+| OQ-12 | **Ritmo, verbosidade e outras dimensões de estilo** | O rascunho 1 tinha um bloco `style` (ritmo, verbosidade). Modelá-los exige evidência linguística e não pode virar personalidade. | — |
+| OQ-13 | **Nomes e namespaces** | O escopo npm `@vernaculo` e o pacote `vernaculo` estavam livres em 2026-09-29; a situação do domínio `vernaculo.dev` é desconhecida (ele é só um identificador no `apiVersion`). Registrá-los é uma ação do mantenedor. | primeira publicação |
+| OQ-15 | **Termos de contribuição** | A seção 5 da Apache-2.0 já faz as contribuições entrarem sob a mesma licença (sem CLA). Ainda em aberto: exigir DCO ou não; arquivo NOTICE e linha de copyright; código de conduta; política de segurança. | primeiras contribuições externas |
+| OQ-16 | **Implementações em outras linguagens** | Prioridade de uma implementação em Python (a conversa citou o PyPI); a suíte de conformidade já está pronta para isso. | — |
+| OQ-17 | **Nomes de variedades não administrativas** | Convenções de nome para variedades que não seguem fronteiras administrativas (por exemplo, `reconcavo`) e como documentar a extensão delas. | quando houver evidência para uma |
+| OQ-18 | **Voz** | Escopo e momento da regionalização de fala/voz; quais datasets (e licenças) poderiam sustentá-la. | — |

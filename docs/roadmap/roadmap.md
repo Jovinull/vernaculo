@@ -1,50 +1,52 @@
 # Roadmap
 
-Status as of 2026-09-29. Update this page whenever status changes.
-Legend: ✅ done · 🔜 next · 📋 planned · 💡 idea (not a commitment).
+Status em 2026-09-29. Atualize esta página sempre que um status mudar.
+Legenda: ✅ feito · 🔜 próximo · 📋 planejado · 💡 ideia (não é compromisso).
 
-## v0.1 — prove the thesis
+## v0.1 — provar a tese
 
 | Item | Status |
 | --- | --- |
-| Specification `v1alpha1`: JSON Schema, semantic rules, inheritance, intensity, provenance, conformance suite | ✅ |
+| Especificação `v1alpha1`: JSON Schema, regras semânticas, herança, intensidade, proveniência, suíte de conformidade | ✅ |
 | `@vernaculo/schema`, `@vernaculo/core`, `@vernaculo/compiler` | ✅ |
 | `@vernaculo/openai` (Responses API) | ✅ |
-| `@vernaculo/skills` (Agent Skill exporter) | ✅ |
+| `@vernaculo/skills` (exportador de Agent Skills) | ✅ |
 | CLI: `list`, `inspect`, `validate`, `compile` (markdown, openai), `export --target skill`, `eject` | ✅ |
 | CI, Changesets, Apache-2.0 | ✅ |
-| Documentation, ADRs, Claude Code project setup | ✅ |
-| Pack content license: Apache-2.0, one license for the whole repository (ADR-0014) | ✅ |
-| Review policy: human review always recommended, never mandatory; CLI recommends it for drafts (ADR-0015) | ✅ |
-| Settle remaining open questions: eval runner, catalog distribution | 🔜 |
-| Research + draft `pt-BR/ba/salvador`, `pt-BR/se/aracaju`, `pt-BR/pe/recife`, `pt-BR/sp/sao-paulo` | 🔜 |
-| Shared scenario set and model-based eval runner (local, user credentials) | 📋 |
-| First human review rounds (recommended, not a gate); review record schema | 📋 |
-| CLI `add`, `search`, `update` (after the catalog decision); `@clack/prompts` for interactive flows | 📋 |
-| First npm / GitHub Releases publication (manual) | 📋 |
-| Library releases include pre-built artifacts per pack (exported skill + compiled `instructions.md`), so consumers need no Node/Python | 📋 |
+| Documentação, ADRs, configuração do Claude Code no projeto | ✅ |
+| Licença do conteúdo dos packs: Apache-2.0, uma única licença para todo o repositório (ADR-0014) | ✅ |
+| Política de revisão: revisão humana sempre recomendada, nunca obrigatória; a CLI a recomenda para rascunhos (ADR-0015) | ✅ |
+| Repositório público no GitHub (https://github.com/Jovinull/vernaculo) | ✅ |
+| Documentação e metadados em português (ADR-0016) | ✅ |
+| Resolver as questões em aberto restantes: executor de evals, distribuição do catálogo | 🔜 |
+| Pesquisar e escrever o rascunho de `pt-BR/ba/salvador`, `pt-BR/se/aracaju`, `pt-BR/pe/recife`, `pt-BR/sp/sao-paulo` | 🔜 |
+| Conjunto compartilhado de cenários e executor de evals com modelos (local, credenciais do usuário) | 📋 |
+| Primeiras rodadas de revisão humana (recomendadas, não um portão); schema dos registros de revisão | 📋 |
+| CLI `add`, `search`, `update` (depois da decisão sobre o catálogo); `@clack/prompts` para fluxos interativos | 📋 |
+| Primeira publicação no npm / GitHub Releases (manual) | 📋 |
+| Releases da biblioteca com artefatos prontos por pack (skill exportada + `instructions.md` compilado), para quem consome não precisar de Node/Python | 📋 |
 
 ## v0.2 – v0.3
 
 | Item | Status |
 | --- | --- |
-| `@vernaculo/mcp`: local stdio server exposing personas (MCP TS SDK v2) | 📋 |
-| Adapters: Anthropic, Gemini, local models (Ollama) | 📋 |
-| Cross-provider eval reports per pack | 📋 |
-| Register modeling (customer service / casual / formal) | 💡 (open question) |
-| Multi-file packs, per-pack eval files | 💡 (open question) |
-| `@vernaculo/openai-agents` convenience adapter | 💡 |
-| Runtime-selectable intensity in exported skills | 💡 (open question) |
+| `@vernaculo/mcp`: servidor stdio local que expõe personas (MCP TS SDK v2) | 📋 |
+| Adapters: Anthropic, Gemini, modelos locais (Ollama) | 📋 |
+| Relatórios de evals entre provedores por pack | 📋 |
+| Modelagem de registro (atendimento / casual / formal) | 💡 (questão em aberto) |
+| Packs com vários arquivos, arquivos de eval por pack | 💡 (questão em aberto) |
+| Adapter de conveniência `@vernaculo/openai-agents` | 💡 |
+| Intensidade escolhida em runtime nas skills exportadas | 💡 (questão em aberto) |
 
-## Later
+## Depois
 
 | Item | Status |
 | --- | --- |
-| More Brazilian varieties, evidence permitting (e.g. Recôncavo, southern Bahia, Sergipe interior) | 💡 |
-| Other languages (`pt-PT`, `es-AR`, `es-MX`, `en-US`, `en-GB`) | 💡 |
-| Static docs/catalog site (e.g. Astro + Starlight, free hosting) | 💡 |
-| Python implementation (PyPI) using the conformance suite | 💡 |
-| Voice/speech regionalization (e.g. datasets of regional voices) | 💡 |
-| Rust core or standalone binary — only with a concrete need | 💡 |
-| Public dataset of reviewer feedback | 💡 |
-| Stable `vernaculo.dev/v1` specification | 📋 after real packs, reviews and evals |
+| Mais variedades brasileiras, se houver evidência (por exemplo, Recôncavo, sul da Bahia, interior de Sergipe) | 💡 |
+| Outros idiomas (`pt-PT`, `es-AR`, `es-MX`, `en-US`, `en-GB`) | 💡 |
+| Site estático de documentação/catálogo (por exemplo, Astro + Starlight, hospedagem gratuita) | 💡 |
+| Implementação em Python (PyPI) usando a suíte de conformidade | 💡 |
+| Regionalização de voz/fala (por exemplo, datasets de vozes regionais) | 💡 |
+| Core em Rust ou binário standalone — só com necessidade concreta | 💡 |
+| Dataset público de feedback de revisores | 💡 |
+| Especificação estável `vernaculo.dev/v1` | 📋 depois de packs reais, revisões e evals |
