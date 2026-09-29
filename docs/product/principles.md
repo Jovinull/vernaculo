@@ -1,79 +1,90 @@
-# Principles and invariants
+# Princípios e invariantes
 
-These are the non-negotiable rules of the project. Each links to the decision
-that establishes it. Changing one requires a new ADR.
+Estas são as regras inegociáveis do projeto. Cada uma aponta para a decisão que a
+estabelece. Mudar qualquer uma exige um ADR novo.
 
-## 1. Zero Vernáculo infrastructure at runtime
+## 1. Nenhuma infraestrutura do Vernáculo em runtime
 
-> An application that uses Vernáculo must not depend on Vernáculo infrastructure at runtime.
+> Uma aplicação que utiliza Vernáculo não deve depender da infraestrutura do Vernáculo em runtime.
 
-No API, backend, database, account, proxy, telemetry, paid tokens or inference on
-the maintainer's side. Maintainer cost stays ≈ zero at any adoption level.
+Nenhuma API, backend, banco de dados, conta, proxy, telemetria, token pago ou
+inferência do lado do mantenedor. O custo do mantenedor continua ≈ zero em qualquer
+nível de adoção.
 [ADR-0001](../decisions/0001-no-vernaculo-infrastructure-at-runtime.md) ·
 [zero-infrastructure.md](../architecture/zero-infrastructure.md)
 
-## 2. Provider independence
+## 2. Independência de provedor
 
-The specification and core know nothing about OpenAI, Anthropic, Google, MCP,
-Agent Skills or any framework. Providers are adapters at the edge.
+A especificação e o core não sabem nada sobre OpenAI, Anthropic, Google, MCP,
+Agent Skills ou qualquer framework. Provedores são adapters na borda.
 [ADR-0002](../decisions/0002-provider-agnostic-specification-and-core.md)
 
-## 3. The format is the product, and it is open
+## 3. O formato é o produto, e ele é aberto
 
-Personas are YAML + Markdown with a normative JSON Schema and a language-neutral
-conformance suite. Their meaning never depends on TypeScript code.
+Personas são YAML + Markdown com um JSON Schema normativo e uma suíte de
+conformidade neutra de linguagem. O significado delas nunca depende de código
+TypeScript.
 [ADR-0003](../decisions/0003-yaml-markdown-json-schema-format.md)
 
-## 4. Deterministic, local compilation
+## 4. Compilação determinística e local
 
-No model is called to build instructions. Same input ⇒ same bytes.
+Nenhum modelo é chamado para gerar instruções. Mesma entrada ⇒ mesmos bytes.
 [ADR-0011](../decisions/0011-deterministic-llm-free-compilation.md)
 
-## 5. Language layer, not a new agent
+## 5. Camada de linguagem, não um novo agente
 
-The persona adjusts language only; the host agent's role, rules, policies and
-facts always win. The agent never claims a regional origin.
+A persona ajusta apenas a linguagem; o papel, as regras, as políticas e os fatos do
+agente hospedeiro sempre vencem. O agente nunca afirma ter origem regional.
 [ADR-0009](../decisions/0009-regional-layer-separate-from-agent-role.md)
 
-## 6. Sociolinguistics, not caricature
+## 6. Sociolinguística, não caricatura
 
-Only observable language features. No personality, humor, intelligence,
-education, income, social class, profession, religion, politics or behavior attached to a
-region. No invented regionalisms. High intensity never relaxes these rules.
+Apenas traços de linguagem observáveis. Nenhuma personalidade, humor, inteligência,
+escolaridade, renda, classe social, profissão, religião, política ou comportamento
+associado a uma região. Nenhum regionalismo inventado. Intensidade alta nunca
+afrouxa essas regras.
 [ADR-0010](../decisions/0010-observable-sociolinguistic-features-only.md) ·
 [anti-caricature.md](../linguistic/anti-caricature.md)
 
-## 7. Evidence before claims
+## 7. Evidência antes de afirmações
 
-Every feature declares its evidence; hypotheses are never rendered; synthetic
-data only exists in fixtures. Nothing is called validated, natural,
-representative, stereotype-free or production-ready without evidence from human
-review and evals. Maturity (`fixture` / `draft` / `reviewed`) is visible in every
-output. [provenance.md](../specification/provenance.md)
+Todo traço declara sua evidência; hipóteses nunca são renderizadas; dados sintéticos
+só existem em fixtures. Nada é chamado de validado, natural, representativo, livre
+de estereótipos ou pronto para produção sem evidência de revisão humana e evals. A
+maturidade (`fixture` / `draft` / `reviewed`) é visível em toda saída.
+[provenance.md](../specification/provenance.md)
 
-## 8. Evals are part of the product
+## 8. Evals fazem parte do produto
 
-Packs ship with — and are judged by — local, reproducible evals. Human review by
-speakers of the variety is always recommended and never mandatory; tooling
-recommends it for every draft. [evals/strategy.md](../evals/strategy.md) ·
+Os packs são entregues com — e julgados por — evals locais e reproduzíveis. A
+revisão humana por falantes da variedade é sempre recomendada e nunca obrigatória;
+as ferramentas a recomendam para todo rascunho.
+[evals/strategy.md](../evals/strategy.md) ·
 [ADR-0015](../decisions/0015-human-review-recommended-not-mandatory.md)
 
-## 9. No lock-in
+## 9. Sem lock-in
 
-Personas are portable files. Users can copy, fork, override (`extends`) or eject
-them; if the project disappeared, installed packs keep working.
+Personas são arquivos portáveis. Os usuários podem copiar, fazer fork, sobrescrever
+(`extends`) ou ejetar; se o projeto desaparecesse, os packs instalados continuariam
+funcionando.
 [distribution.md](../architecture/distribution.md)
 
-## 10. Open license, respect for others' licenses
+## 10. Licença aberta e respeito às licenças alheias
 
-Everything in the repository (code, specification, documentation and persona
-content) is Apache-2.0. Third-party linguistic material keeps its own license and
-is consulted, cited or redistributed only as that license allows.
+Tudo no repositório (código, especificação, documentação e conteúdo das personas) é
+Apache-2.0. Material linguístico de terceiros mantém a própria licença e só é
+consultado, citado ou redistribuído como essa licença permite.
 [ADR-0012](../decisions/0012-apache-2-0-code-license.md) ·
 [ADR-0014](../decisions/0014-apache-2-0-persona-content.md)
 
-## 11. Small, correct, extensible
+## 11. Pequeno, correto e extensível
 
-Prefer a small, well-tested foundation over speculative abstractions; no
-placeholder packages or misleading stubs. Documentation, specification, code and
-evals evolve together — no important decision lives only in a conversation.
+Prefira uma fundação pequena e bem testada a abstrações especulativas; nada de
+pacotes placeholder ou stubs enganosos. Documentação, especificação, código e evals
+evoluem juntos — nenhuma decisão importante vive só em uma conversa.
+
+## 12. Documentação em português
+
+A documentação e os metadados do projeto são escritos em português brasileiro,
+para alcançar primeiro o público que vai usar, pesquisar e revisar os packs.
+[ADR-0016](../decisions/0016-documentation-in-portuguese.md)

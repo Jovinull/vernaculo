@@ -1,52 +1,53 @@
-# Scope
+# Escopo
 
-Status legend: **done** (implemented and tested), **planned** (committed
-direction, not implemented), **idea** (possible future, not a requirement),
-**rejected** (explicitly out).
+Legenda de status: **feito** (implementado e testado), **planejado** (direção
+assumida, não implementada), **ideia** (futuro possível, não é requisito),
+**rejeitado** (explicitamente fora).
 
-## In scope for the first release (v0.1)
-
-| Item | Status |
-| --- | --- |
-| Persona Specification `v1alpha1` (JSON Schema, semantic rules, conformance suite) | done |
-| `@vernaculo/schema`, `@vernaculo/core`, `@vernaculo/compiler` | done |
-| `@vernaculo/openai` (Responses API adapter) | done |
-| `@vernaculo/skills` (Agent Skill exporter) | done |
-| CLI: `list`, `inspect`, `validate`, `compile`, `export --target skill`, `eject` | done |
-| CLI: `add`, `search`, `update` | planned (depends on catalog distribution, see open questions) |
-| Four researched packs, human review recommended: `pt-BR/ba/salvador`, `pt-BR/se/aracaju`, `pt-BR/pe/recife`, `pt-BR/sp/sao-paulo` | planned (research not started) |
-| Content license (Apache-2.0) and review policy (recommended, not mandatory) | done (ADR-0014, ADR-0015) |
-| Eval methodology, dimensions and human-review labels | done (documented) |
-| Eval runner and per-pack eval suites | planned |
-| CI (GitHub Actions), Changesets | done |
-| npm / GitHub Releases publication | planned (manual, maintainer decision) |
-
-## Later
+## No escopo do primeiro release (v0.1)
 
 | Item | Status |
 | --- | --- |
-| `@vernaculo/mcp` (local stdio server exposing personas) | planned for v0.2/v0.3 |
-| `@vernaculo/openai-agents` adapter | idea |
-| Anthropic / Gemini / local-model (Ollama) adapters | planned (design supports them) |
-| Documentation/catalog site (static, e.g. Astro + Starlight on free hosting) | idea |
-| Other languages and varieties (`pt-PT`, `es-AR`, `es-MX`, `en-US`, `en-GB`...) | idea |
-| Register sub-personas (`.../customer-service`, `.../casual`, `.../formal`) | idea (open question) |
-| Python implementation (PyPI) | idea |
-| Rust core / standalone binary | idea (only with a concrete need, ADR-0004) |
-| Voice / speech regionalization | idea |
+| Persona Specification `v1alpha1` (JSON Schema, regras semânticas, suíte de conformidade) | feito |
+| `@vernaculo/schema`, `@vernaculo/core`, `@vernaculo/compiler` | feito |
+| `@vernaculo/openai` (adapter da Responses API) | feito |
+| `@vernaculo/skills` (exportador de Agent Skills) | feito |
+| CLI: `list`, `inspect`, `validate`, `compile`, `export --target skill`, `eject` | feito |
+| CLI: `add`, `search`, `update` | planejado (depende da distribuição do catálogo; veja as questões em aberto) |
+| Quatro packs pesquisados, com revisão humana recomendada: `pt-BR/ba/salvador`, `pt-BR/se/aracaju`, `pt-BR/pe/recife`, `pt-BR/sp/sao-paulo` | planejado (pesquisa não iniciada) |
+| Licença do conteúdo (Apache-2.0) e política de revisão (recomendada, não obrigatória) | feito (ADR-0014, ADR-0015) |
+| Metodologia de evals, dimensões e rótulos de revisão humana | feito (documentado) |
+| Executor de evals e suítes de eval por pack | planejado |
+| CI (GitHub Actions), Changesets | feito |
+| Documentação em português (ADR-0016) | feito |
+| Publicação no npm / GitHub Releases | planejado (manual, decisão do mantenedor) |
 
-## Non-goals and rejected directions
+## Depois
 
-| Item | Why |
+| Item | Status |
 | --- | --- |
-| Hosted API, SaaS, backend, proxy, accounts, keys | [ADR-0001](../decisions/0001-no-vernaculo-infrastructure-at-runtime.md) |
-| Mandatory telemetry | ADR-0001 |
-| Database, proprietary registry or marketplace | [ADR-0008](../decisions/0008-git-and-filesystem-no-database.md) |
-| MCP as the core/canonical format | [ADR-0006](../decisions/0006-mcp-future-adapter-not-canonical.md) |
-| `SKILL.md` as the canonical format | [ADR-0007](../decisions/0007-agent-skills-early-export-target.md) |
-| Regional personality/psychology traits | [ADR-0010](../decisions/0010-observable-sociolinguistic-features-only.md) |
-| Designing around fine-tuning | [ADR-0011](../decisions/0011-deterministic-llm-free-compilation.md) |
-| Calling an LLM to build or render personas in the core | ADR-0011 |
-| A general-purpose AI personality format | [vision.md](vision.md) |
-| Next.js or any web framework in the core | a future docs site is static and outside the runtime |
-| Covering all 27 Brazilian states at once | quality over coverage: four excellent packs first |
+| `@vernaculo/mcp` (servidor stdio local que expõe personas) | planejado para v0.2/v0.3 |
+| Adapter `@vernaculo/openai-agents` | ideia |
+| Adapters para Anthropic / Gemini / modelos locais (Ollama) | planejado (o design já suporta) |
+| Site de documentação/catálogo (estático, por exemplo Astro + Starlight em hospedagem gratuita) | ideia |
+| Outros idiomas e variedades (`pt-PT`, `es-AR`, `es-MX`, `en-US`, `en-GB`...) | ideia |
+| Subpersonas de registro (`.../customer-service`, `.../casual`, `.../formal`) | ideia (questão em aberto) |
+| Implementação em Python (PyPI) | ideia |
+| Core em Rust / binário standalone | ideia (só com necessidade concreta, ADR-0004) |
+| Regionalização de voz / fala | ideia |
+
+## Fora de escopo e direções rejeitadas
+
+| Item | Por quê |
+| --- | --- |
+| API hospedada, SaaS, backend, proxy, contas, chaves | [ADR-0001](../decisions/0001-no-vernaculo-infrastructure-at-runtime.md) |
+| Telemetria obrigatória | ADR-0001 |
+| Banco de dados, registry proprietário ou marketplace | [ADR-0008](../decisions/0008-git-and-filesystem-no-database.md) |
+| MCP como formato central/canônico | [ADR-0006](../decisions/0006-mcp-future-adapter-not-canonical.md) |
+| `SKILL.md` como formato canônico | [ADR-0007](../decisions/0007-agent-skills-early-export-target.md) |
+| Traços de personalidade/psicologia regional | [ADR-0010](../decisions/0010-observable-sociolinguistic-features-only.md) |
+| Projetar em torno de fine-tuning | [ADR-0011](../decisions/0011-deterministic-llm-free-compilation.md) |
+| Chamar um LLM para criar ou renderizar personas no core | ADR-0011 |
+| Um formato de personalidade de IA de uso geral | [vision.md](vision.md) |
+| Next.js ou qualquer framework web no core | um futuro site de documentação é estático e fica fora do runtime |
+| Cobrir os 27 estados brasileiros de uma vez | qualidade acima de cobertura: quatro packs excelentes primeiro |
