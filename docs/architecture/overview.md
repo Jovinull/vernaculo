@@ -1,69 +1,69 @@
-# Architecture overview
+# Visão geral da arquitetura
 
 ## Pipeline
 
 ```text
-                         (user's machine / CI / server — never Vernáculo's)
+                    (máquina / CI / servidor do usuário — nunca do Vernáculo)
 
-persona.yaml files ──► parse + validate ──► resolve lineage ──► IR ──► compile ──► target / adapter ──► user's provider
-(persona roots,         YAML 1.2 (JSON      explicit extends,    intensity   Markdown     OpenAI params,       or local model
- project files)         data model) +       flatten, semantic    applied,    instructions Agent Skill dir,
-                        schema + rules      rules                frozen                   plain prompt, ...
-└────────────── @vernaculo/core ────────────────────────────────┘ └─ compiler ┘ └─ @vernaculo/openai, @vernaculo/skills ─┘
+arquivos persona.yaml ──► parse + validação ──► resolução da linhagem ──► IR ──► compilação ──► target / adapter ──► provedor do usuário
+(raízes de personas,      YAML 1.2 (modelo      extends explícito,        intensidade  instruções      parâmetros OpenAI,     ou modelo local
+ arquivos do projeto)     de dados JSON) +      achatamento, regras       aplicada,    em Markdown     diretório de skill,
+                          schema + regras       semânticas                congelada                    prompt simples, ...
+└───────────────── @vernaculo/core ───────────────────────────────────┘ └─ compiler ─┘ └─ @vernaculo/openai, @vernaculo/skills ─┘
 ```
 
-Every arrow is a local, deterministic function call. No stage calls a model or
-the network ([ADR-0011](../decisions/0011-deterministic-llm-free-compilation.md)).
+Cada seta é uma chamada de função local e determinística. Nenhuma etapa chama um
+modelo ou a rede ([ADR-0011](../decisions/0011-deterministic-llm-free-compilation.md)).
 
-## Layers and responsibilities
+## Camadas e responsabilidades
 
-| Layer | Owns | Must not know about |
+| Camada | É dona de | Não deve saber sobre |
 | --- | --- | --- |
-| **Specification** (`schemas/`, `docs/specification/`) | the format, semantic rules, conformance suite | any implementation language, any provider |
-| **`@vernaculo/schema`** | JSON Schema bundle, TS types, Zod mirror | behavior, filesystem, providers |
-| **`@vernaculo/core`** | parsing, structural + semantic validation, lineage resolution, flattening, intensity selection (IR), canonical serialization; filesystem sources in `@vernaculo/core/node` | wording of instructions, providers |
-| **`@vernaculo/compiler`** | wording: turning the IR into provider-neutral Markdown instructions, ground rules, maturity notices | providers, filesystem |
-| **Adapters / targets** (`@vernaculo/openai`, `@vernaculo/skills`) | shaping compiled output for a destination (request params, skill directory) | persona semantics (they never re-select features) |
-| **CLI** (`vernaculo`) | user workflows: list, inspect, validate, compile, export, eject; writing files | — |
+| **Especificação** (`schemas/`, `docs/specification/`) | o formato, as regras semânticas, a suíte de conformidade | qualquer linguagem de implementação, qualquer provedor |
+| **`@vernaculo/schema`** | pacote do JSON Schema, tipos TS, espelho Zod | comportamento, sistema de arquivos, provedores |
+| **`@vernaculo/core`** | parse, validação estrutural e semântica, resolução da linhagem, achatamento, seleção por intensidade (IR), serialização canônica; fontes em sistema de arquivos em `@vernaculo/core/node` | redação das instruções, provedores |
+| **`@vernaculo/compiler`** | redação: transformar a IR em instruções Markdown neutras de provedor, regras de base, avisos de maturidade | provedores, sistema de arquivos |
+| **Adapters / targets** (`@vernaculo/openai`, `@vernaculo/skills`) | moldar a saída compilada para um destino (parâmetros de requisição, diretório de skill) | semântica de persona (nunca selecionam traços de novo) |
+| **CLI** (`vernaculo`) | fluxos do usuário: list, inspect, validate, compile, export, eject; escrita de arquivos | — |
 
-Dependency direction is one-way and enforced by
+A direção de dependências é única e verificada por
 `packages/core/test/architecture.test.ts`:
 
 ```text
 schema ◄── core ◄── compiler ◄── openai, skills ◄── cli
 ```
 
-## Conceptual layers of a localized agent
+## Camadas conceituais de um agente localizado
 
-From the founding conversation, a deployed agent combines independent concerns:
+Da conversa de concepção, um agente em produção combina preocupações independentes:
 
-| Concern | Example | Owned by |
+| Preocupação | Exemplo | Responsável |
 | --- | --- | --- |
-| Language | `pt-BR` | Vernáculo persona (id, `metadata.language`) |
-| Variety granularity | Nordeste → Bahia → Salvador (or a non-administrative variety) | Vernáculo persona id + `extends` |
-| Register | conversational, customer service | open question (not modeled in v1alpha1) |
-| Regional intensity | 0.0–1.0 | Vernáculo (option at compile/export time) |
-| Role | sales assistant | host agent |
-| Domain | automotive | host agent |
-| Brand | the dealership | host agent |
-| Company rules | financing, store policies | host agent |
+| Idioma | `pt-BR` | persona do Vernáculo (id, `metadata.language`) |
+| Granularidade da variedade | Nordeste → Bahia → Salvador (ou uma variedade não administrativa) | id da persona + `extends` |
+| Registro | conversacional, atendimento | questão em aberto (não modelado na v1alpha1) |
+| Intensidade regional | 0.0–1.0 | Vernáculo (opção no momento de compilar/exportar) |
+| Papel | assistente de vendas | agente hospedeiro |
+| Domínio | automotivo | agente hospedeiro |
+| Marca | a concessionária | agente hospedeiro |
+| Regras da empresa | financiamento, políticas da loja | agente hospedeiro |
 
-Vernáculo owns only language-related concerns
+O Vernáculo cuida apenas das preocupações de linguagem
 ([ADR-0009](../decisions/0009-regional-layer-separate-from-agent-role.md)).
 
-## Key design properties
+## Propriedades-chave do design
 
-- **Data, not prompts.** A persona is structured data; wording is a compiler concern and can improve without touching packs.
-- **Intermediate Representation.** The IR is the single place where intensity and evidence rules select features. Targets only format it ([compilation.md](compilation.md)).
-- **Runtime-agnostic core.** `@vernaculo/core`'s main entry has no `node:` imports; bundlers, browsers and edge runtimes can use `createMemorySource` with bundled YAML.
-- **Explicit inheritance.** Ids are names; `extends` is the only inheritance mechanism ([ADR-0013](../decisions/0013-explicit-inheritance.md)).
-- **Honest maturity.** Effective maturity (least mature in the lineage) travels into every output as a visible notice.
+- **Dado, não prompt.** Uma persona é dado estruturado; a redação é responsabilidade do compilador e pode melhorar sem mexer nos packs.
+- **Representação intermediária.** A IR é o único lugar onde as regras de intensidade e evidência selecionam traços. Os targets só a formatam ([compilation.md](compilation.md)).
+- **Core independente de runtime.** O ponto de entrada principal de `@vernaculo/core` não tem imports `node:`; bundlers, navegadores e edge runtimes podem usar `createMemorySource` com YAML embutido.
+- **Herança explícita.** Ids são nomes; `extends` é o único mecanismo de herança ([ADR-0013](../decisions/0013-explicit-inheritance.md)).
+- **Maturidade honesta.** A maturidade efetiva (a menos madura da linhagem) aparece como aviso visível em toda saída.
 
-## Where to go next
+## Para onde ir depois
 
-- Packages and public APIs: [packages.md](packages.md)
-- IR, compiler and targets: [compilation.md](compilation.md)
-- Provider specifics: [provider-adapters.md](provider-adapters.md)
-- Getting personas into projects: [distribution.md](distribution.md)
-- From research to release: [persona-lifecycle.md](persona-lifecycle.md)
-- The zero-infrastructure invariant: [zero-infrastructure.md](zero-infrastructure.md)
+- Pacotes e APIs públicas: [packages.md](packages.md)
+- IR, compilador e targets: [compilation.md](compilation.md)
+- Especificidades de provedores: [provider-adapters.md](provider-adapters.md)
+- Como as personas chegam aos projetos: [distribution.md](distribution.md)
+- Da pesquisa ao release: [persona-lifecycle.md](persona-lifecycle.md)
+- O invariante de infraestrutura zero: [zero-infrastructure.md](zero-infrastructure.md)

@@ -1,38 +1,38 @@
-# Distribution and zero lock-in
+# Distribuição e zero lock-in
 
-Distribution channels are conveniences. None of them is needed at runtime
+Canais de distribuição são conveniências. Nenhum deles é necessário em runtime
 ([ADR-0001](../decisions/0001-no-vernaculo-infrastructure-at-runtime.md),
 [ADR-0008](../decisions/0008-git-and-filesystem-no-database.md)).
 
 ```text
-                  GitHub (source of truth: specification + packs + code)
+                  GitHub (fonte da verdade: especificação + packs + código)
                          │
           ┌──────────────┼───────────────────┐
-     git clone     GitHub Releases          npm            (plain copy / curl also works)
+     git clone     GitHub Releases          npm            (cópia simples / curl também funciona)
           └──────────────┼───────────────────┘
                          ▼
-                 the user's project ──► the user's provider or local model
+                 projeto do usuário ──► provedor ou modelo local do usuário
 ```
 
-## Three consumption modes
+## Três modos de consumo
 
-| Mode | How | Runtime dependency on Vernáculo |
+| Modo | Como | Dependência do Vernáculo em runtime |
 | --- | --- | --- |
-| **Pack** | copy a persona (or an ejected, flattened copy) into the project | none |
-| **Skill** | `vernaculo export <persona> --target skill`, copy the directory into the agent | none |
-| **SDK** | `@vernaculo/core` + `@vernaculo/compiler` + adapter installed from npm | only packages the user installed and controls |
+| **Pack** | copiar uma persona (ou uma cópia ejetada e achatada) para o projeto | nenhuma |
+| **Skill** | `vernaculo export <persona> --target skill` e copiar o diretório para o agente | nenhuma |
+| **SDK** | `@vernaculo/core` + `@vernaculo/compiler` + adapter instalados pelo npm | só pacotes que o usuário instalou e controla |
 
-The conversation's requirement is that consuming a persona should not require
-Node, Python or any library. Today the Pack and Skill modes meet it once the
-files exist, but *producing* them (`export`, `eject`, `compile`) needs the
-Node CLI. **Planned:** releases of the persona library will ship pre-built
-artifacts per pack (an exported skill and compiled `instructions.md` at the
-default intensity), so consumers can download plain files and never run
-Vernáculo tooling.
+A conversa pedia que consumir uma persona não exigisse Node, Python nem qualquer
+biblioteca. Hoje os modos Pack e Skill atendem a isso depois que os arquivos
+existem, mas *produzi-los* (`export`, `eject`, `compile`) exige a CLI em Node.
+**Planejado:** os releases da biblioteca de personas trarão artefatos prontos por
+pack (uma skill exportada e o `instructions.md` compilado na intensidade padrão),
+para que quem consome possa baixar arquivos simples sem nunca rodar as ferramentas
+do Vernáculo.
 
-## Persona roots
+## Raízes de personas
 
-A persona root is a directory laid out as `<root>/<persona id>/persona.yaml`:
+Uma raiz de personas é um diretório organizado como `<raiz>/<id da persona>/persona.yaml`:
 
 ```text
 personas/
@@ -42,42 +42,42 @@ personas/
             └── persona.yaml
 ```
 
-Tools accept several roots (`--root a --root b`); the first root containing an id
-wins, which lets a project shadow a library persona locally. A project may also
-keep standalone files (`acme-salvador.yaml`) whose `extends` chain is resolved
-through the roots.
+As ferramentas aceitam várias raízes (`--root a --root b`); a primeira que contém
+um id vence, o que permite a um projeto sombrear localmente uma persona da
+biblioteca. Um projeto também pode manter arquivos avulsos (`acme-salvador.yaml`)
+cuja cadeia de `extends` é resolvida pelas raízes.
 
-In the conversation, a pack directory also held `SKILL.md`, `examples.yaml`,
-`evals.yaml`, `SOURCES.md`, `knowledge/*.yaml`... In v1alpha1 a pack's source is a
-single `persona.yaml`; `SKILL.md` is generated; splitting a pack into several
-files and bundling per-pack evals are [open questions](../roadmap/open-questions.md).
+Na conversa, o diretório de um pack também continha `SKILL.md`, `examples.yaml`,
+`evals.yaml`, `SOURCES.md`, `knowledge/*.yaml`... Na v1alpha1 a fonte de um pack é um
+único `persona.yaml`; o `SKILL.md` é gerado; dividir um pack em vários arquivos e
+incluir evals por pack são [questões em aberto](../roadmap/open-questions.md).
 
-## `eject` — leaving Vernáculo behind
+## `eject` — deixando o Vernáculo para trás
 
 ```bash
 vernaculo eject pt-BR/ba/salvador --intensity 0.3
 # → vernaculo/pt-BR/ba/salvador/{persona.yaml, instructions.md, README.md}
 ```
 
-- `persona.yaml` is **flattened**: the whole lineage resolved, `extends` removed, the lineage (ids, versions, maturity, licenses) recorded in a header comment. It is a valid standalone persona.
-- `instructions.md` is the compiled layer; the application can read it as plain text with no Vernáculo package installed.
-- Re-compiling the ejected `persona.yaml` produces byte-identical instructions (tested).
-- The ejected `README.md` lists the content licenses of the lineage (library packs are Apache-2.0: keep the notice and mark changes if you redistribute the files) and, for drafts, recommends human review.
-- The CLI does not edit the user's `package.json`; removing `@vernaculo/*` dependencies after ejecting is the user's decision.
+- O `persona.yaml` é **achatado**: toda a linhagem resolvida, `extends` removido e a linhagem (ids, versões, maturidade, licenças) registrada em um comentário de cabeçalho. É uma persona autônoma válida.
+- O `instructions.md` é a camada compilada; a aplicação pode lê-lo como texto simples sem nenhum pacote do Vernáculo instalado.
+- Recompilar o `persona.yaml` ejetado produz instruções idênticas byte a byte (testado).
+- O `README.md` ejetado lista as licenças de conteúdo da linhagem (packs da biblioteca são Apache-2.0: mantenha o aviso e marque as alterações se redistribuir os arquivos) e, para rascunhos, recomenda revisão humana.
+- A CLI não edita o `package.json` do usuário; remover as dependências `@vernaculo/*` depois do eject é decisão do usuário.
 
-## Planned: `add`, `search`, `update`
+## Planejado: `add`, `search`, `update`
 
-The conversation described `vernaculo search brasil`, `vernaculo add
-pt-BR/ba/salvador` (also `npx vernaculo add ...`) copying files into the project,
-and `vernaculo update` / `pnpm update @vernaculo/personas`. These depend on how
-the public catalog is delivered (bundled in the CLI, an `@vernaculo/personas` npm
-package, GitHub Releases tarballs, or Git) — an [open question](../roadmap/open-questions.md).
-Whatever the choice: files are copied into the project, and nothing is fetched at
-application runtime.
+A conversa descreveu `vernaculo search brasil`, `vernaculo add pt-BR/ba/salvador`
+(também `npx vernaculo add ...`) copiando arquivos para o projeto, e
+`vernaculo update` / `pnpm update @vernaculo/personas`. Isso depende de como o
+catálogo público será entregue (embutido na CLI, um pacote npm `@vernaculo/personas`,
+tarballs no GitHub Releases ou Git) — uma [questão em aberto](../roadmap/open-questions.md).
+Seja qual for a escolha: os arquivos são copiados para o projeto e nada é buscado
+em runtime da aplicação.
 
-## Publication
+## Publicação
 
-npm and GitHub Releases publication are manual maintainer actions
-([releasing.md](../development/releasing.md)); nothing is published automatically.
-A static documentation/catalog site (e.g. Astro + Starlight on GitHub Pages or
-Cloudflare Pages) is an idea; it would never be on the runtime path.
+Publicar no npm e no GitHub Releases são ações manuais do mantenedor
+([releasing.md](../development/releasing.md)); nada é publicado automaticamente. Um
+site estático de documentação/catálogo (por exemplo, Astro + Starlight no GitHub
+Pages ou no Cloudflare Pages) é uma ideia; ele nunca ficaria no caminho de runtime.

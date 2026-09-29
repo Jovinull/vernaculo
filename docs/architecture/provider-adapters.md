@@ -1,18 +1,18 @@
-# Provider adapters
+# Adapters de provedores
 
-An adapter shapes compiled persona output for one destination. Rules for every
+Um adapter molda a saída compilada da persona para um destino. Regras para todo
 adapter ([ADR-0002](../decisions/0002-provider-agnostic-specification-and-core.md)):
 
-- depends on `@vernaculo/compiler` (and core types), never the reverse;
-- consumes the IR/compiled output and never re-selects features;
-- performs no network request itself and never ships credentials; the user's client, key and model do the work;
-- avoids depending on provider SDKs when structural types suffice;
-- documents provider behavior with a verification date ([external-facts.md](../reference/external-facts.md)).
+- depende de `@vernaculo/compiler` (e dos tipos do core), nunca o contrário;
+- consome a IR/saída compilada e nunca seleciona traços de novo;
+- não faz nenhuma requisição de rede nem carrega credenciais; o cliente, a chave e o modelo do usuário fazem o trabalho;
+- evita depender de SDKs de provedores quando tipos estruturais bastam;
+- documenta o comportamento do provedor com data de verificação ([external-facts.md](../reference/external-facts.md)).
 
-## OpenAI Responses API — `@vernaculo/openai` (done)
+## OpenAI Responses API — `@vernaculo/openai` (feito)
 
 ```ts
-import OpenAI from "openai";                          // the user's own dependency
+import OpenAI from "openai";                          // dependência do próprio usuário
 import { compilePersona } from "@vernaculo/compiler";
 import { loadPersona } from "@vernaculo/core/node";
 import { withPersona } from "@vernaculo/openai";
@@ -20,56 +20,56 @@ import { withPersona } from "@vernaculo/openai";
 const persona = compilePersona(await loadPersona("pt-BR/ba/salvador"), { intensity: 0.25 });
 
 const response = await new OpenAI().responses.create(
-  withPersona({ model, instructions: dealershipAgentInstructions, input: customerMessage }, persona),
+  withPersona({ model, instructions: instrucoesDoAgenteDaConcessionaria, input: mensagemDoCliente }, persona),
 );
 ```
 
-(`pt-BR/ba/salvador` does not exist yet; see [`examples/openai`](../../examples/openai/)
-for a runnable version with fixtures.)
+(`pt-BR/ba/salvador` ainda não existe; veja [`examples/openai`](../../examples/openai/)
+para uma versão executável com fixtures.)
 
-Facts the adapter relies on (verified 2026-09-29):
+Fatos em que o adapter se apoia (verificados em 2026-09-29):
 
-- `instructions` is "a system (or developer) message inserted into the model's context". Behavior and style belong there.
-- **When using `previous_response_id`, the instructions from a previous response are not carried over.** The persona (and the agent's own instructions) must be sent on every request. `withPersona` is designed to be applied per request; it is pure and idempotent.
-- OpenAI now recommends keeping production prompts in application code, versioned and tested in Git (reusable prompt objects are deprecated; shutdown 2026-11-30). Vernáculo's persona-as-files design matches this.
-- Prompt caching depends on exact prefix matches; keep static content (agent instructions, then persona layer) first and dynamic content later.
+- `instructions` é "a system (or developer) message inserted into the model's context". Comportamento e estilo ficam ali.
+- **Com `previous_response_id`, as instructions da resposta anterior não são reaplicadas.** A persona (e as instruções do próprio agente) precisa ser enviada em toda requisição. `withPersona` foi feito para ser aplicado a cada requisição; é puro e idempotente.
+- A OpenAI agora recomenda manter os prompts de produção no código da aplicação, versionados e testados no Git (os reusable prompt objects foram descontinuados; desligamento em 2026-11-30). O design de personas como arquivos do Vernáculo segue exatamente isso.
+- O cache de prompt depende de prefixos idênticos; mantenha o conteúdo estático (instruções do agente, depois a camada de persona) primeiro e o dinâmico depois.
 
-Design choices:
+Escolhas de design:
 
-- **No SDK dependency**: `withPersona` is typed structurally (`{ instructions?: string | null }` plus the caller's own params type).
-- **Ordering**: agent instructions first, persona layer second. The persona text states that the agent's rules take precedence.
-- **Model**: never chosen by Vernáculo. Examples read `OPENAI_MODEL`; the conversation's sample model name was illustrative and is not used.
-- `developerMessage(persona)` supports flows that pass instructions as input items.
+- **Sem dependência de SDK**: `withPersona` é tipado estruturalmente (`{ instructions?: string | null }` mais o tipo de parâmetros do próprio chamador).
+- **Ordem**: instruções do agente primeiro, camada de persona depois. O texto da persona diz que as regras do agente têm precedência.
+- **Modelo**: nunca escolhido pelo Vernáculo. Os exemplos leem `OPENAI_MODEL`; o nome de modelo de exemplo da conversa era ilustrativo e não é usado.
+- `developerMessage(persona)` atende fluxos que passam instruções como itens de entrada.
 
-## OpenAI Agents SDK — `@vernaculo/openai-agents` (idea)
+## OpenAI Agents SDK — `@vernaculo/openai-agents` (ideia)
 
-The Agents SDK runs inside the developer's application and accepts plain
-`instructions`, so compiled output already works:
-`new Agent({ name, instructions: composeInstructions(agentInstructions, persona) })`.
-A dedicated package would only add convenience. `@openai/agents` must never be a
-dependency of the core. (The SDK's `Model`/`ModelProvider` abstraction, which lets
-it use non-OpenAI providers, was cited in the conversation; not re-verified.)
+O Agents SDK roda dentro da aplicação do desenvolvedor e aceita `instructions` em
+texto, então a saída compilada já funciona:
+`new Agent({ name, instructions: composeInstructions(instrucoesDoAgente, persona) })`.
+Um pacote dedicado só acrescentaria conveniência. `@openai/agents` nunca deve ser
+dependência do core. (A abstração `Model`/`ModelProvider` do SDK, que permite usar
+provedores que não são a OpenAI, foi citada na conversa; não foi verificada de novo.)
 
-## Agent Skills — `@vernaculo/skills` (done)
+## Agent Skills — `@vernaculo/skills` (feito)
 
-See [ADR-0007](../decisions/0007-agent-skills-early-export-target.md) and
-[compilation.md](compilation.md). The conversation noted that OpenAI supports
-Agent Skills compatible with the open standard (not re-verified in this
-bootstrap); the exporter targets the open specification, not a vendor variant.
+Veja o [ADR-0007](../decisions/0007-agent-skills-early-export-target.md) e
+[compilation.md](compilation.md). A conversa observou que a OpenAI suporta Agent
+Skills compatíveis com o padrão aberto (não verificado de novo neste bootstrap); o
+exportador segue a especificação aberta, não uma variante de fornecedor.
 
-## Plain Markdown / system prompt (done)
+## Markdown simples / system prompt (feito)
 
-`vernaculo compile <persona>` prints provider-neutral Markdown usable with any
-provider or local model.
+`vernaculo compile <persona>` imprime Markdown neutro de provedor, utilizável com
+qualquer provedor ou modelo local.
 
-## Planned adapters
+## Adapters planejados
 
-| Adapter | Notes |
+| Adapter | Observações |
 | --- | --- |
-| Anthropic (Claude) | system prompt composition; same rules |
-| Google (Gemini) | system instruction composition |
-| Local models (e.g. Ollama with Qwen, Llama, Gemma) | plain text; air-gapped deployments are a first-class use case |
-| MCP (`@vernaculo/mcp`) | local stdio server exposing `vernaculo://<persona id>` resources; MCP TypeScript SDK v2 (`@modelcontextprotocol/server`, spec 2026-07-28); see [ADR-0006](../decisions/0006-mcp-future-adapter-not-canonical.md). Would serve MCP-capable clients (the conversation listed Claude, Gemini, Codex, Cursor and the OpenAI Agents SDK, which can use local stdio MCP servers — not re-verified) |
+| Anthropic (Claude) | composição com o system prompt; mesmas regras |
+| Google (Gemini) | composição com a system instruction |
+| Modelos locais (por exemplo, Ollama com Qwen, Llama, Gemma) | texto simples; implantações isoladas da internet são um caso de uso de primeira classe |
+| MCP (`@vernaculo/mcp`) | servidor stdio local que expõe recursos `vernaculo://<id da persona>`; MCP TypeScript SDK v2 (`@modelcontextprotocol/server`, especificação 2026-07-28); veja o [ADR-0006](../decisions/0006-mcp-future-adapter-not-canonical.md). Atenderia clientes compatíveis com MCP (a conversa citou Claude, Gemini, Codex, Cursor e o OpenAI Agents SDK, que consegue usar servidores MCP locais via stdio — não verificado de novo) |
 
-Adding one: follow the `adapter-development` project skill
-(`.claude/skills/adapter-development/SKILL.md`) and update this page.
+Para adicionar um: siga a skill de projeto `adapter-development`
+(`.claude/skills/adapter-development/SKILL.md`) e atualize esta página.

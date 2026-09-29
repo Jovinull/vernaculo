@@ -1,68 +1,70 @@
-# Persona lifecycle
+# Ciclo de vida de uma persona
 
-From research to a user's agent. Everything is files in Git, reviewed through
-pull requests and checked in CI — the same discipline OpenAI now recommends for
-production prompts (see [external facts](../reference/external-facts.md)).
+Da pesquisa até o agente do usuário. Tudo são arquivos no Git, revisados por pull
+requests e verificados no CI — a mesma disciplina que a OpenAI agora recomenda para
+prompts de produção (veja os [fatos externos](../reference/external-facts.md)).
 
 ```text
-research ─► persona.yaml (draft) ─► PR ─► CI (schema, semantics, tests) ─► human review ─► evals ─► release x.y.z
-                                                                                                       │
-             user: add / copy / npm ─► extends in own repo (optional) ─► compile / export / eject ◄───┘
+pesquisa ─► persona.yaml (draft) ─► PR ─► CI (schema, semântica, testes) ─► revisão humana ─► evals ─► release x.y.z
+                                                                                                        │
+           usuário: add / cópia / npm ─► extends no próprio repositório (opcional) ─► compile / export / eject ◄─┘
 ```
 
-## 1. Research
+## 1. Pesquisa
 
-Collect evidence for each feature from sources whose license allows the intended
-use ([methodology.md](../linguistic/methodology.md), [sources.md](../linguistic/sources.md)).
-Unconfirmed ideas are recorded as `evidence: hypothesis` — kept for research,
-never rendered.
+Reúna evidências para cada traço a partir de fontes cuja licença permita o uso
+pretendido ([methodology.md](../linguistic/methodology.md), [sources.md](../linguistic/sources.md)).
+Ideias não confirmadas são registradas como `evidence: hypothesis` — mantidas para
+pesquisa, nunca renderizadas.
 
-## 2. Authoring (`maturity: draft`)
+## 2. Autoria (`maturity: draft`)
 
-Write `personas/<id>/persona.yaml` following the
-[format](../specification/persona-format.md) and the
-[contributing guide](../development/contributing-personas.md): features with
-evidence and sources, positive examples, anti-patterns, provenance with usage
-levels, a sensible `defaultIntensity`.
+Escreva `personas/<id>/persona.yaml` seguindo o
+[formato](../specification/persona-format.md) e o
+[guia de contribuição](../development/contributing-personas.md): traços com
+evidência e fontes, exemplos positivos, antipadrões, proveniência com níveis de
+uso e um `defaultIntensity` sensato.
 
-## 3. Automated checks (CI)
+## 3. Verificações automáticas (CI)
 
-`pnpm check` runs lint, typecheck, tests, build, and `vernaculo validate` over all
-persona roots: structure, semantic rules, lineage resolution.
+`pnpm check` executa lint, typecheck, testes, build e `vernaculo validate` em todas
+as raízes de personas: estrutura, regras semânticas e resolução da linhagem.
 
-## 4. Human review (recommended, not mandatory)
+## 4. Revisão humana (recomendada, não obrigatória)
 
-Speakers of the variety review compiled outputs at several intensities using the
-label set in [human-review.md](../linguistic/human-review.md). Findings change the
-pack (remove, re-scope, lower `minIntensity`, add anti-patterns). There is no
-mandatory criterion ([ADR-0015](../decisions/0015-human-review-recommended-not-mandatory.md)):
-a pack may be released as `draft`, and becomes `reviewed` once a review has actually
-taken place and is documented. Tooling keeps recommending review for drafts.
+Falantes da variedade revisam as saídas compiladas em várias intensidades usando o
+conjunto de rótulos de [human-review.md](../linguistic/human-review.md). As
+conclusões mudam o pack (remover, reduzir o escopo, subir `minIntensity`,
+acrescentar antipadrões). Não existe critério obrigatório
+([ADR-0015](../decisions/0015-human-review-recommended-not-mandatory.md)): um pack
+pode ser lançado como `draft` e passa a `reviewed` quando uma revisão realmente
+aconteceu e está documentada. As ferramentas continuam recomendando revisão para
+rascunhos.
 
 ## 5. Evals
 
-Local, reproducible evals run with the evaluator's own provider credentials or
-local models ([evals/strategy.md](../evals/strategy.md)). Results are recorded
-with the pack version.
+Evals locais e reproduzíveis rodam com as credenciais de provedor ou os modelos
+locais de quem avalia ([evals/strategy.md](../evals/strategy.md)). Os resultados
+são registrados junto com a versão do pack.
 
 ## 6. Release
 
-Semantic versioning in `metadata.version`:
+Versionamento semântico em `metadata.version`:
 
-- **patch** — corrections that do not change which features render (typos, notes, sources);
-- **minor** — new features, examples, anti-patterns, or evidence changes that alter rendering;
-- **major** — removals, re-scoping, id changes or changes that alter the character of the output.
+- **patch** — correções que não mudam quais traços são renderizados (erros de digitação, notas, fontes);
+- **minor** — traços, exemplos ou antipadrões novos, ou mudanças de evidência que alteram a renderização;
+- **major** — remoções, mudança de escopo, mudança de id ou alterações que mudam o caráter da saída.
 
-Package releases (npm, GitHub Releases) are manual ([releasing.md](../development/releasing.md)).
+Releases de pacotes (npm, GitHub Releases) são manuais ([releasing.md](../development/releasing.md)).
 
-## 7. Consumption
+## 7. Consumo
 
-Users copy or install packs, optionally derive their own persona with `extends`,
-then compile, export or eject ([distribution.md](distribution.md)). They pick
-the intensity for their product.
+Os usuários copiam ou instalam packs, opcionalmente derivam a própria persona com
+`extends` e então compilam, exportam ou ejetam ([distribution.md](distribution.md)).
+Eles escolhem a intensidade para o produto deles.
 
-## 8. Feedback loop
+## 8. Ciclo de feedback
 
-Feedback from users and reviewers ("exaggerated", "not from here", "we really say
-this") flows back as issues and review records — the dataset the conversation
-identified as one of the project's most valuable outcomes.
+O feedback de usuários e revisores ("exagerado", "isso não é daqui", "a gente fala
+isso mesmo") volta como issues e registros de revisão — o conjunto de dados que a
+conversa apontou como um dos resultados mais valiosos do projeto.

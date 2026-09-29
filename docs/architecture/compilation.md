@@ -1,85 +1,89 @@
-# Compilation: IR, compiler and targets
+# Compilação: IR, compilador e targets
 
-## Stages
+## Etapas
 
-1. **Resolve** (`@vernaculo/core`): load the lineage, validate every document, flatten it into one canonical document ([inheritance-and-composition.md](../specification/inheritance-and-composition.md)).
-2. **Select** (`buildIR`, `@vernaculo/core`): apply the intensity and evidence rules and produce the **Intermediate Representation** (IR).
-3. **Render** (`@vernaculo/compiler`): turn the IR into provider-neutral Markdown instructions.
-4. **Target** (adapters): shape the rendered output for a destination.
+1. **Resolver** (`@vernaculo/core`): carregar a linhagem, validar cada documento e achatá-la em um documento canônico ([inheritance-and-composition.md](../specification/inheritance-and-composition.md)).
+2. **Selecionar** (`buildIR`, `@vernaculo/core`): aplicar as regras de intensidade e evidência e produzir a **representação intermediária** (IR).
+3. **Renderizar** (`@vernaculo/compiler`): transformar a IR em instruções Markdown neutras de provedor.
+4. **Target** (adapters): moldar a saída renderizada para um destino.
 
 ```text
 ResolvedPersona ──buildIR({ intensity })──► PersonaIR ──compile()──► CompiledPersona ──► withPersona() / exportSkill() / stdout
 ```
 
-## The IR
+## A IR
 
-`PersonaIR` is the only representation targets consume. It contains:
+`PersonaIR` é a única representação que os targets consomem. Ela contém:
 
-- persona identity (id, name, language, version, **effective maturity**, license, lineage);
-- the selected `intensity` and the orthography policy (`phoneticSpelling`, default `avoid`);
-- the selected features: vocabulary (preferred, contextual), discourse markers, sentence patterns, conventions (address forms, greetings, acknowledgements, disagreements, closings), examples;
-- restrictions that are always present: discouraged forms and anti-patterns;
-- all declared sources;
-- counts of what was omitted (below intensity, hypotheses), for transparency.
+- a identidade da persona (id, nome, idioma, versão, **maturidade efetiva**, licença, linhagem);
+- a `intensity` selecionada e a política de ortografia (`phoneticSpelling`, padrão `avoid`);
+- os traços selecionados: vocabulário (preferido, contextual), marcadores discursivos, padrões de frase, convenções (formas de tratamento, saudações, confirmações, discordâncias, despedidas), exemplos;
+- restrições sempre presentes: formas desencorajadas e antipadrões;
+- todas as fontes declaradas;
+- contagens do que foi omitido (abaixo da intensidade, hipóteses), por transparência.
 
-Selection rules are normative ([regional-intensity.md](../specification/regional-intensity.md));
-the IR is deep-frozen and built from a clone, so compilation can never mutate the
-canonical representation.
+As regras de seleção são normativas ([regional-intensity.md](../specification/regional-intensity.md));
+a IR é congelada em profundidade e construída a partir de um clone, então a
+compilação nunca consegue alterar a representação canônica.
 
-**Why an IR:** feature selection lives in exactly one place. A new target cannot
-accidentally render a hypothesis or an above-intensity feature, and third parties
-can write their own renderer over the same selection semantics.
+**Por que uma IR:** a seleção de traços acontece em exatamente um lugar. Um target
+novo não consegue renderizar por acidente uma hipótese ou um traço acima da
+intensidade, e terceiros podem escrever o próprio renderizador sobre a mesma
+semântica de seleção.
 
-## The compiler's output
+## A saída do compilador
 
-`renderInstructions(ir)` emits Markdown, in this order:
+`renderInstructions(ir)` emite Markdown, nesta ordem:
 
-1. Title with persona name and id; a **maturity notice** for `fixture` and `draft`.
-2. A framing sentence: the layer adjusts only phrasing, not identity, knowledge or rules.
-3. **Ground rules** — always, at every intensity (they implement the invariants in [anti-caricature.md](../linguistic/anti-caricature.md)):
-   - keep the parent agent's role, rules, policies and facts; prefer neutral language when regional style would hurt clarity or accuracy;
-   - apply the layer only to language;
-   - no personality/humor/intelligence/education/income/social class/profession/religion/politics/behavior attribution; never imitate a stereotype;
-   - never claim a regional origin or background;
-   - use only listed forms; never invent regionalisms or borrow from other regions;
-   - do not force features into every sentence;
-   - standard orthography unless the persona allows phonetic spelling.
-4. **Intensity** guidance (see below).
-5. Selected features (sections omitted when empty), then **Avoid** and **Never produce output like this**.
+1. Título com o nome e o id da persona; um **aviso de maturidade** para `fixture` e `draft`.
+2. Uma frase de enquadramento: a camada ajusta apenas a formulação, não identidade, conhecimento ou regras.
+3. **Regras de base** — sempre, em qualquer intensidade (implementam os invariantes de [anti-caricature.md](../linguistic/anti-caricature.md)):
+   - manter o papel, as regras, as políticas e os fatos do agente pai; preferir linguagem neutra quando o estilo regional prejudicaria clareza ou precisão;
+   - aplicar a camada apenas à linguagem;
+   - não atribuir personalidade/humor/inteligência/escolaridade/renda/classe social/profissão/religião/política/comportamento; nunca imitar um estereótipo;
+   - nunca afirmar origem ou história regional;
+   - usar só as formas listadas; nunca inventar regionalismos nem emprestar de outras regiões;
+   - não forçar traços em toda frase;
+   - ortografia padrão, a menos que a persona permita grafia fonética.
+4. Orientação de **intensidade** (veja abaixo).
+5. Os traços selecionados (seções vazias são omitidas), depois **Avoid** e **Never produce output like this**.
 
-Framing text is English (models follow it reliably across languages); persona
-content (forms, examples) stays in the persona's language. Localizing the framing
-is an [open question](../roadmap/open-questions.md). Research notes (`notes`) and
-sources are not sent to the model — they appear in skill references.
+O texto de enquadramento é em inglês (os modelos o seguem de forma confiável em
+qualquer idioma); o conteúdo da persona (formas, exemplos) fica no idioma da
+persona. Localizar o enquadramento é uma [questão em aberto](../roadmap/open-questions.md)
+([ADR-0016](../decisions/0016-documentation-in-portuguese.md) mantém esse texto em
+inglês até haver evidência de evals). Notas de pesquisa (`notes`) e fontes não são
+enviadas ao modelo — elas aparecem nas referências da skill.
 
-### Intensity wording (non-normative, provisional)
+### Redação da intensidade (não normativa, provisória)
 
-| Intensity | Band | Guidance given to the model |
+| Intensidade | Faixa | Orientação dada ao modelo |
 | --- | --- | --- |
-| 0 | neutral | use no regional feature; only restrictions apply |
-| (0, 0.35] | subtle | use features sparingly; most sentences unmarked |
-| (0.35, 0.7] | moderate | use features where they fit naturally, without concentrating them |
-| (0.7, 1] | marked | features may appear more often, only where natural; ground rules take precedence |
+| 0 | neutra | não usar nenhum traço regional; só as restrições valem |
+| (0, 0.35] | sutil | usar traços com parcimônia; a maioria das frases sem marcação |
+| (0.35, 0.7] | moderada | usar traços onde cabem naturalmente, sem concentrá-los |
+| (0.7, 1] | marcada | traços podem aparecer com mais frequência, só onde forem naturais; as regras de base têm precedência |
 
-Band limits come from the conversation's use-case ranges and must be revisited
-with eval evidence. They are compiler wording, not part of the specification.
+Os limites das faixas vêm dos intervalos de uso citados na conversa e precisam ser
+revistos com evidência de evals. São redação do compilador, não parte da
+especificação.
 
-## Determinism and change control
+## Determinismo e controle de mudanças
 
-- Output is byte-identical for identical inputs; no timestamps or randomness.
-- Golden files in `packages/compiler/test/__golden__/` make every wording change a reviewed diff. Update them deliberately (`pnpm vitest run packages/compiler -u`) and explain why in the change.
-- Incompatible layout changes bump `INSTRUCTIONS_FORMAT`.
+- A saída é idêntica byte a byte para entradas idênticas; sem timestamps ou aleatoriedade.
+- Os golden files em `packages/compiler/test/__golden__/` transformam toda mudança de redação em um diff revisado. Atualize-os de propósito (`pnpm vitest run packages/compiler -u`) e explique o motivo na mudança.
+- Mudanças incompatíveis de layout incrementam `INSTRUCTIONS_FORMAT`.
 
 ## Targets
 
-| Target | Where | Output |
+| Target | Onde | Saída |
 | --- | --- | --- |
-| `markdown` (plain system prompt) | compiler / `vernaculo compile` | Markdown text |
-| `openai` | `@vernaculo/openai` / `vernaculo compile --target openai` | Responses API params fragment (`instructions`), optionally composed with agent instructions |
-| `skill` | `@vernaculo/skills` / `vernaculo export --target skill` | Agent Skill directory |
-| eject | `vernaculo eject` | flattened `persona.yaml` + `instructions.md` + `README.md` |
-| MCP resource, Claude, Gemini, local models | — | planned ([provider-adapters.md](provider-adapters.md)) |
+| `markdown` (system prompt simples) | compilador / `vernaculo compile` | texto Markdown |
+| `openai` | `@vernaculo/openai` / `vernaculo compile --target openai` | fragmento de parâmetros da Responses API (`instructions`), opcionalmente composto com as instruções do agente |
+| `skill` | `@vernaculo/skills` / `vernaculo export --target skill` | diretório de Agent Skill |
+| eject | `vernaculo eject` | `persona.yaml` achatado + `instructions.md` + `README.md` |
+| recurso MCP, Claude, Gemini, modelos locais | — | planejados ([provider-adapters.md](provider-adapters.md)) |
 
-Placement matters: compiled instructions go **after** the host agent's own
-instructions, and both are stable text — good for provider prompt caching, which
-rewards identical static prefixes.
+A posição importa: as instruções compiladas vão **depois** das instruções do
+próprio agente hospedeiro, e ambas são texto estável — bom para o cache de prompt
+dos provedores, que favorece prefixos estáticos idênticos.

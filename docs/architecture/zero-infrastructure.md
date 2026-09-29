@@ -1,50 +1,51 @@
-# Zero infrastructure
+# Infraestrutura zero
 
-> **An application that uses Vernáculo must not depend on Vernáculo infrastructure at runtime.**
+> **Uma aplicação que utiliza Vernáculo não deve depender da infraestrutura do Vernáculo em runtime.**
 >
-> *Uma aplicação que utiliza Vernáculo não deve depender da infraestrutura do Vernáculo em runtime.*
+> *An application that uses Vernáculo must not depend on Vernáculo infrastructure at runtime.*
 
-Decision record: [ADR-0001](../decisions/0001-no-vernaculo-infrastructure-at-runtime.md).
+Registro de decisão: [ADR-0001](../decisions/0001-no-vernaculo-infrastructure-at-runtime.md).
 
-## What this means
+## O que isso significa
 
 ```text
-Company
- ├── its system
- ├── its model (hosted provider with its own key, or local)
- └── the persona (files it owns)
+Empresa
+ ├── o sistema dela
+ ├── o modelo dela (provedor hospedado com a própria chave, ou local)
+ └── a persona (arquivos que ela possui)
 
-Vernáculo API: does not exist.
+API do Vernáculo: não existe.
 ```
 
-- No request passes through the maintainer. No Vernáculo API, database, server, authentication, account or key.
-- No inference or tokens paid by the maintainer; with a million installs, the maintainer's inference cost is still zero.
-- No mandatory telemetry.
-- GitHub and npm absorb normal open source distribution; whoever runs the software pays for their own infrastructure.
-- If the repository disappeared tomorrow, installed or ejected packs would keep working.
+- Nenhuma requisição passa pelo mantenedor. Nenhuma API, banco de dados, servidor, autenticação, conta ou chave do Vernáculo.
+- Nenhuma inferência ou token pago pelo mantenedor; com um milhão de instalações, o custo de inferência do mantenedor continua zero.
+- Nenhuma telemetria obrigatória.
+- GitHub e npm absorvem a distribuição normal de um projeto open source; quem executa o software arca com a própria infraestrutura.
+- Se o repositório desaparecesse amanhã, os packs instalados ou ejetados continuariam funcionando.
 
-## Checklist for any change
+## Checklist para qualquer mudança
 
-Before merging, a change must not:
+Antes do merge, uma mudança não pode:
 
-- [ ] add a network call (HTTP, sockets, `fetch`) to any package;
-- [ ] add a provider SDK or network client dependency to any package;
-- [ ] require an account, key or remote configuration to validate, resolve, compile or export;
-- [ ] fetch schemas, packs or "updates" implicitly (the `vernaculo.dev/...` `apiVersion` is an identifier, never a URL to load);
-- [ ] introduce telemetry;
-- [ ] make any hosted service (docs site, catalog) necessary for the software to work.
+- [ ] adicionar uma chamada de rede (HTTP, sockets, `fetch`) a qualquer pacote;
+- [ ] adicionar um SDK de provedor ou cliente de rede como dependência de qualquer pacote;
+- [ ] exigir conta, chave ou configuração remota para validar, resolver, compilar ou exportar;
+- [ ] buscar schemas, packs ou "atualizações" de forma implícita (o `apiVersion` `vernaculo.dev/...` é um identificador, nunca uma URL a carregar);
+- [ ] introduzir telemetria;
+- [ ] tornar qualquer serviço hospedado (site de documentação, catálogo) necessário para o software funcionar.
 
-Allowed: optional, explicit, user-initiated downloads through third-party free
-channels (npm, GitHub) at *install* time, never at application runtime.
+Permitido: downloads opcionais, explícitos e iniciados pelo usuário por canais
+gratuitos de terceiros (npm, GitHub) no momento da *instalação*, nunca em runtime
+da aplicação.
 
-## Automated enforcement
+## Verificação automática
 
-- `packages/core/test/architecture.test.ts`: forbids `http`, `https`, `http2`, `net`, `tls`, `dgram`, `undici`, `axios`, `node-fetch`, provider SDKs (`openai`, `@openai/*`, `@anthropic-ai/*`, `@google/*`, `@modelcontextprotocol/*`) and `fetch(` in every package's source and manifest.
-- `packages/compiler/test/compile.test.ts`: runs load → resolve → compile with `fetch` stubbed to throw.
-- `packages/openai/test/openai.test.ts`: the OpenAI adapter must not depend on an OpenAI SDK.
+- `packages/core/test/architecture.test.ts`: proíbe `http`, `https`, `http2`, `net`, `tls`, `dgram`, `undici`, `axios`, `node-fetch`, SDKs de provedores (`openai`, `@openai/*`, `@anthropic-ai/*`, `@google/*`, `@modelcontextprotocol/*`) e `fetch(` no código e no manifesto de todo pacote.
+- `packages/compiler/test/compile.test.ts`: executa carregar → resolver → compilar com `fetch` substituído por uma função que lança erro.
+- `packages/openai/test/openai.test.ts`: o adapter da OpenAI não pode depender de um SDK da OpenAI.
 
-## Local-first by design
+## Local por design
 
-Local LLMs (e.g. Ollama running Qwen, Llama or Gemma) are part of the design from
-the start: compiled instructions are plain text, so an air-gapped company can run
-the whole stack internally.
+Modelos de linguagem locais (por exemplo, Ollama rodando Qwen, Llama ou Gemma) fazem
+parte do design desde o início: as instruções compiladas são texto simples, então
+uma empresa isolada da internet pode rodar toda a pilha internamente.
