@@ -1,0 +1,35 @@
+{
+  "name": "vernaculo-monorepo",
+  "private": true,
+  "type": "module",
+  "description": "Vernáculo monorepo: open specification, reference implementation and regional persona packs for sociolinguistic localization of AI agents.",
+  "license": "Apache-2.0",
+  "packageManager": "pnpm@12.8.1",
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "scripts": {
+    "build": "pnpm --recursive --filter \"./packages/*\" run build",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "format": "biome format --write .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "vernaculo": "node packages/cli/dist/bin.mjs",
+    "validate:data": "node packages/cli/dist/bin.mjs validate --root fixtures/personas --root personas && node packages/cli/dist/bin.mjs validate examples/project-persona/acme-cidade-a.yaml --root fixtures/personas",
+    "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm build && pnpm validate:data",
+    "changeset": "changeset"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.5.14",
+    "@changesets/cli": "3.0.3",
+    "@types/node": "22.20.4",
+    "ajv": "8.20.0",
+    "tsdown": "0.23.0",
+    "typescript": "7.0.2",
+    "vite": "8.3.1",
+    "vitest": "5.0.2",
+    "yaml": "2.9.1"
+  }
+}
