@@ -3,15 +3,15 @@ paths:
   - "**/*.ts"
 ---
 
-# TypeScript conventions
+# Convenções de TypeScript
 
-- TypeScript 7 (native compiler), ESM only. Relative imports use the `.ts` extension (`import { x } from "./x.ts"`).
-- `isolatedDeclarations` is on: every exported function, const and class member needs an explicit type. Prefer declaring interfaces over exporting inferred types.
-- `erasableSyntaxOnly`: no `enum`, `namespace`, parameter properties or other non-erasable syntax. Use `as const` tuples + derived union types (see `packages/schema/src/types.ts`).
-- `strict` + `noUncheckedIndexedAccess`: handle `undefined` from indexing; avoid `!` non-null assertions.
-- No `any`; use `unknown` and narrow. Casts only at well-understood boundaries, with a comment when not obvious.
-- Public data types are `readonly`. Never mutate inputs; return new values.
-- Named exports only in library code (config files are the exception, with an explicit type annotation).
-- Keep public APIs small; export from `src/index.ts` deliberately.
-- Format/lint with Biome (`pnpm lint:fix`); don't hand-format against it.
-- Match the surrounding code's comment density: explain *why*, not *what*.
+- TypeScript 7 (compilador nativo), só ESM. Imports relativos usam a extensão `.ts` (`import { x } from "./x.ts"`).
+- `isolatedDeclarations` está ligado: toda função, constante e membro de classe exportado precisa de tipo explícito. Prefira declarar interfaces a exportar tipos inferidos.
+- `erasableSyntaxOnly`: nada de `enum`, `namespace`, parameter properties ou outra sintaxe não apagável. Use tuplas `as const` + tipos união derivados (veja `packages/schema/src/types.ts`).
+- `strict` + `noUncheckedIndexedAccess`: trate o `undefined` vindo de indexação; evite asserções não nulas `!`.
+- Nada de `any`; use `unknown` e estreite o tipo. Casts só em fronteiras bem entendidas, com comentário quando não for óbvio.
+- Tipos de dados públicos são `readonly`. Nunca altere entradas; devolva valores novos.
+- Só exports nomeados em código de biblioteca (arquivos de configuração são a exceção, com anotação de tipo explícita).
+- Mantenha as APIs públicas pequenas; exporte de `src/index.ts` de forma deliberada.
+- Formate e faça lint com o Biome (`pnpm lint:fix`); não formate à mão contra ele.
+- Identificadores, comentários e nomes de testes ficam em inglês (ADR-0016). Siga a densidade de comentários do código ao redor: explique o *porquê*, não o *quê*.

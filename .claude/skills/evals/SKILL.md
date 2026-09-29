@@ -1,37 +1,37 @@
 ---
 name: evals
-description: Design, implement or maintain Vernáculo evals for persona packs and adapters — naturalness, regional fidelity, task and parent-rule preservation, overuse, caricature, stereotype leakage, invented regionalisms, intensity behavior and cross-provider consistency — plus human review labels and records. Use when adding deterministic checks, scenario sets, an eval runner (e.g. Promptfoo integration), review rounds, or when judging whether a pack or compiler change is safe.
+description: Projeta, implementa ou mantém evals do Vernáculo para packs de persona e adapters — naturalidade, fidelidade regional, preservação da tarefa e das regras do agente pai, excesso, caricatura, vazamento de estereótipos, regionalismos inventados, comportamento por intensidade e consistência entre provedores — além de rótulos e registros de revisão humana. Use ao adicionar verificações determinísticas, conjuntos de cenários, um executor de evals (por exemplo, integração com Promptfoo), rodadas de revisão, ou ao julgar se uma mudança no compilador ou em um pack é segura.
 ---
 
 # Evals
 
-## Read first
+## Leia antes
 
-- `docs/evals/strategy.md` — constraints (local, reproducible, user's own credentials), the three layers, runner open question
-- `docs/evals/dimensions.md` — every dimension: question, measurement, what exists
+- `docs/evals/strategy.md` — restrições (local, reproduzível, credenciais do próprio usuário), as três camadas, questão em aberto do executor
+- `docs/evals/dimensions.md` — cada dimensão: pergunta, medida, o que já existe
 - `docs/evals/cross-provider.md`
-- `docs/linguistic/human-review.md` — labels, reviewers, privacy, record shape
+- `docs/linguistic/human-review.md` — rótulos, revisores, privacidade, formato de registro
 
-## Current state
+## Estado atual
 
-- Layer 1 (deterministic) exists: conformance, parity, resolution, IR gating, golden files, ground-rule presence at every intensity, architecture/no-network tests, `vernaculo validate` in CI.
-- Layer 2 (model-based) and Layer 3 (human rounds) are planned. The runner choice (Promptfoo-generated configs vs. in-repo runner) is open question OQ-03 — decide it with an ADR before building.
-- No `evals/` directory yet; create it with the first real suite, not before.
+- A camada 1 (determinística) existe: conformidade, paridade, resolução, filtragem da IR, golden files, presença das regras de base em toda intensidade, testes de arquitetura/sem rede, `vernaculo validate` no CI.
+- As camadas 2 (com modelos) e 3 (rodadas humanas) estão planejadas. A escolha do executor (configurações geradas para o Promptfoo vs. executor no repositório) é a questão em aberto OQ-03 — decida com um ADR antes de construir.
+- Ainda não existe diretório `evals/`; crie-o com a primeira suíte real, não antes.
 
-## Rules
+## Regras
 
-1. **No hosted eval service**, no project-owned credentials. Model-based evals use the evaluator's provider keys or local models and are optional in CI (never required for `pnpm check`).
-2. **Never hardcode model names**; read them from configuration and record them with results (provider, model, date, adapter version, parameters).
-3. **Every dimension needs a control**: intensity 0 and a neutral host prompt.
-4. **Adversarial scenarios are mandatory for stereotype leakage**: requests for jokes about a region, "where are you from?", "talk like a real <demonym>!".
-5. **Model judges are signals, not proof.** Maturity and claims rest on human review.
-6. **Tie results to versions**: persona `metadata.version`, `INSTRUCTIONS_FORMAT`, package version.
-7. **Human review privacy**: pseudonymous reviewer ids, coarse profile, consent; no personal data in the repo.
-8. Deterministic checks belong in package tests; keep them meaningful (mutation-check new invariant tests).
+1. **Nenhum serviço de eval hospedado**, nenhuma credencial do projeto. Evals com modelos usam as chaves de provedor ou os modelos locais de quem avalia e são opcionais no CI (nunca exigidos pelo `pnpm check`).
+2. **Nunca fixe nomes de modelos**; leia-os da configuração e registre-os junto com os resultados (provedor, modelo, data, versão do adapter, parâmetros).
+3. **Toda dimensão precisa de um controle**: intensidade 0 e um prompt de hospedeiro neutro.
+4. **Cenários adversariais são obrigatórios para vazamento de estereótipos**: pedidos de piada sobre uma região, "de onde você é?", "fala como um <gentílico> de verdade!".
+5. **Juízes com modelo são sinais, não provas.** A maturidade e as afirmações se apoiam em revisão humana — que é sempre recomendada, nunca obrigatória (ADR-0015).
+6. **Ligue os resultados às versões**: `metadata.version` da persona, `INSTRUCTIONS_FORMAT`, versão do pacote.
+7. **Privacidade na revisão humana**: ids pseudônimos de revisores, perfil genérico, consentimento; nenhum dado pessoal no repositório.
+8. Verificações determinísticas ficam nos testes dos pacotes; mantenha-as significativas (faça checagem por mutação nos testes de invariantes novos).
 
-## When changing the compiler or a pack
+## Ao mudar o compilador ou um pack
 
-- Re-run `pnpm check`; inspect golden diffs line by line.
-- Compile at 0 / default / 0.7 / 1 and look for overuse, missing ground rules, above-intensity features, hypothesis leakage.
-- Record the change's expected effect on each dimension in the PR description.
-- Update `docs/evals/*` if methods or dimensions change (`documentation-maintenance` skill).
+- Rode `pnpm check` de novo; inspecione os diffs dos golden files linha a linha.
+- Compile em 0 / padrão / 0.7 / 1 e procure excesso, regras de base faltando, traços acima da intensidade e vazamento de hipóteses.
+- Registre na descrição do PR o efeito esperado da mudança em cada dimensão.
+- Atualize `docs/evals/*` se métodos ou dimensões mudarem (skill `documentation-maintenance`).

@@ -1,33 +1,34 @@
 ---
 name: adapter-development
-description: Add or change a Vernáculo provider adapter or export target (OpenAI, OpenAI Agents SDK, Anthropic/Claude, Gemini, local models via Ollama, MCP server, Agent Skills, plain prompts) without coupling the core to any provider. Use when creating packages/<adapter>, adding a compile/export target to the CLI, or changing how compiled instructions are composed with a host agent.
+description: Adiciona ou altera um adapter de provedor ou target de exportação do Vernáculo (OpenAI, OpenAI Agents SDK, Anthropic/Claude, Gemini, modelos locais via Ollama, servidor MCP, Agent Skills, prompts simples) sem acoplar o core a nenhum provedor. Use ao criar packages/<adapter>, adicionar um target de compile/export na CLI ou mudar como as instruções compiladas são compostas com um agente hospedeiro.
 ---
 
-# Adapter and target development
+# Desenvolvimento de adapters e targets
 
-## Read first
+## Leia antes
 
-- `docs/architecture/provider-adapters.md` — rules and per-provider notes
-- `docs/architecture/compilation.md` — IR, compiler output, targets table
-- ADR-0002 (provider-agnostic), ADR-0005 (OpenAI thin adapter), ADR-0006 (MCP), ADR-0007 (Skills), ADR-0009 (composition)
-- `docs/reference/external-facts.md` — verified provider facts
+- `docs/architecture/provider-adapters.md` — regras e observações por provedor
+- `docs/architecture/compilation.md` — IR, saída do compilador, tabela de targets
+- ADR-0002 (independente de provedor), ADR-0005 (adapter fino da OpenAI), ADR-0006 (MCP), ADR-0007 (Skills), ADR-0009 (composição)
+- `docs/reference/external-facts.md` — fatos verificados sobre provedores
 
-## Rules
+## Regras
 
-1. Adapters depend on `@vernaculo/compiler` (and core types). Never make core/compiler/schema import an adapter or provider type.
-2. **No network and no credentials in the adapter.** It shapes data for the user's own client. Prefer structural types over provider SDK dependencies; if an SDK type is unavoidable, make it an optional peer dependency and justify it in an ADR. Update the architecture test's allowed list deliberately.
-3. **Consume the IR/compiled output only.** Never re-select features or reinterpret persona data; selection happens in `buildIR`.
-4. **Composition contract**: host agent instructions first, persona layer after; the persona is applied on every request where the provider does not persist instructions.
-5. **Verify provider facts** in official docs before encoding them; record them with URL and date in `external-facts.md`. Never hardcode model names.
-6. **Determinism**: same compiled persona ⇒ same adapter output.
-7. Provider-specific rendering differences are allowed only with eval evidence, and live in the adapter.
+1. Adapters dependem de `@vernaculo/compiler` (e dos tipos do core). Nunca faça core/compiler/schema importarem um adapter ou tipo de provedor.
+2. **Sem rede e sem credenciais no adapter.** Ele molda dados para o cliente do próprio usuário. Prefira tipos estruturais a dependências de SDKs de provedores; se um tipo de SDK for inevitável, faça dele uma peer dependency opcional e justifique em um ADR. Atualize de propósito a lista de permitidos do teste de arquitetura.
+3. **Consuma só a IR/saída compilada.** Nunca selecione traços de novo nem reinterprete dados da persona; a seleção acontece em `buildIR`.
+4. **Contrato de composição**: instruções do agente hospedeiro primeiro, camada de persona depois; a persona é aplicada em toda requisição quando o provedor não mantém as instruções.
+5. **Verifique os fatos do provedor** na documentação oficial antes de codificá-los; registre-os com URL e data em `external-facts.md`. Nunca fixe nomes de modelos.
+6. **Determinismo**: mesma persona compilada ⇒ mesma saída do adapter.
+7. Diferenças de renderização específicas de um provedor só são permitidas com evidência de evals, e ficam no adapter.
+8. Código, testes e mensagens em inglês; documentação em português (ADR-0016).
 
-## Procedure
+## Procedimento
 
-1. Confirm the item is on the roadmap; if it is a new kind of target or channel, write an ADR.
-2. Create `packages/<name>/` like `packages/openai`: `package.json` (ESM, `@vernaculo/source` export condition, `engines`, `publishConfig`), `tsconfig.json`, `tsdown.config.ts` (`packageConfig([...])`), `src/index.ts`, `test/`.
-3. Add it to `ALLOWED_INTERNAL` in `packages/core/test/architecture.test.ts`.
-4. Tests: composition order, immutability of inputs, determinism, no SDK dependency, target-spec constraints (as `packages/skills/test` does for Agent Skills).
-5. Wire into the CLI only if useful (`--target` choice), and update `docs/reference/cli.md`.
-6. Add an example under `examples/` if it clarifies usage (fixtures only; dry run without credentials).
-7. Update `provider-adapters.md`, `compilation.md` targets table, `packages.md`, roadmap; add a changeset. Run `pnpm check`.
+1. Confirme que o item está no roadmap; se for um novo tipo de target ou canal, escreva um ADR.
+2. Crie `packages/<nome>/` como `packages/openai`: `package.json` (ESM, condição de export `@vernaculo/source`, `engines`, `publishConfig`, `repository`/`homepage`/`bugs`, descrição em português), `tsconfig.json`, `tsdown.config.ts` (`packageConfig([...])`), `src/index.ts`, `test/`.
+3. Acrescente-o a `ALLOWED_INTERNAL` em `packages/core/test/architecture.test.ts`.
+4. Testes: ordem da composição, imutabilidade das entradas, determinismo, nenhuma dependência de SDK, restrições da especificação do target (como `packages/skills/test` faz para Agent Skills).
+5. Ligue à CLI só se fizer sentido (opção de `--target`) e atualize `docs/reference/cli.md`.
+6. Acrescente um exemplo em `examples/` se isso deixar o uso mais claro (só fixtures; simulação sem credenciais).
+7. Atualize `provider-adapters.md`, a tabela de targets de `compilation.md`, `packages.md` e o roadmap; acrescente um changeset. Rode `pnpm check`.

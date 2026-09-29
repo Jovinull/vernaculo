@@ -1,41 +1,43 @@
 ---
 name: linguistic-research
-description: Create, extend or review a Vernáculo regional persona pack (e.g. pt-BR/ba/salvador, pt-BR/pe/recife) with sourced, license-checked evidence and without caricature. Use when adding linguistic features, examples or anti-patterns, researching a variety, evaluating a source (ALiB, NURC, corpora, datasets), reviewing a pack PR, or answering whether a regional form belongs in a pack.
+description: Cria, amplia ou revisa um pack de persona regional do Vernáculo (por exemplo pt-BR/ba/salvador, pt-BR/pe/recife) com evidência citada, licenças conferidas e sem caricatura. Use ao adicionar traços linguísticos, exemplos ou antipadrões, pesquisar uma variedade, avaliar uma fonte (ALiB, NURC, corpora, datasets), revisar o PR de um pack ou responder se uma forma regional pertence a um pack.
 ---
 
-# Linguistic research for regional packs
+# Pesquisa linguística para packs regionais
 
-## Read first
+## Leia antes
 
-- `docs/linguistic/methodology.md` — what is modeled, granularity, evidence
-- `docs/linguistic/anti-caricature.md` — the non-negotiable policy
-- `docs/specification/provenance.md` — evidence levels, source usage, maturity
-- `docs/linguistic/sources.md` — known sources and their verified licenses
-- `docs/development/contributing-personas.md` — steps and review checklist
+- `docs/linguistic/methodology.md` — o que é modelado, granularidade, evidência
+- `docs/linguistic/anti-caricature.md` — a política inegociável
+- `docs/specification/provenance.md` — níveis de evidência, uso das fontes, maturidade
+- `docs/linguistic/sources.md` — fontes conhecidas e suas licenças verificadas
+- `docs/development/contributing-personas.md` — passos e checklist de revisão
 
-## Hard rules
+## Regras rígidas
 
-1. **Never invent regionalisms.** Do not add a form because it "sounds regional" or because a model suggested it. You (Claude) must not generate regional features from your own knowledge as if they were evidence: find a citable source or record it as `hypothesis` with a note, for humans to confirm.
-2. **Evidence per feature.** `attested` needs a published source; `reported` needs a cited speaker-review round; otherwise `hypothesis` (never rendered).
-3. **Licenses.** For each source record `license`, `usage` (`consulted` / `cited` / `redistributed`), `accessed` (quoted date). Paraphrase with citation; never copy corpus/atlas content unless the license allows redistribution under the pack's license. MuPe-Diversidades is CC BY-NC-ND 4.0: consult/cite only.
-4. **Primary sources first**: universities, institutional pages, peer-reviewed articles, official repositories. Verify with web access; if unavailable, record the point as pending verification — never claim confirmation you don't have.
-5. **Granularity follows evidence**: city-level by default; no state-wide or non-administrative variety without evidence; share features via explicit `extends`.
-6. **Language only**: no personality, humor, class, education, profession, religion, politics or behavior — in features, examples, notes or anti-pattern explanations.
-7. **Maturity honesty**: new work is `draft`. Human review by speakers is always recommended and never mandatory (ADR-0015): always recommend it, never block on it. Set `reviewed` only when a review really took place (`docs/linguistic/human-review.md`) and cite it. Never describe a pack as validated, natural or representative without evidence.
-8. **License**: library packs are Apache-2.0 (`metadata.license: Apache-2.0`, ADR-0014).
+1. **Nunca invente regionalismos.** Não acrescente uma forma porque ela "soa regional" ou porque um modelo sugeriu. Você (Claude) não pode gerar traços regionais a partir do próprio conhecimento como se fossem evidência: encontre uma fonte citável ou registre como `hypothesis`, com uma nota, para que pessoas confirmem.
+2. **Evidência por traço.** `attested` precisa de uma fonte publicada; `reported` precisa de uma rodada de revisão por falantes citada; o resto é `hypothesis` (nunca renderizada).
+3. **Licenças.** Para cada fonte, registre `license`, `usage` (`consulted` / `cited` / `redistributed`) e `accessed` (data entre aspas). Parafraseie com citação; nunca copie conteúdo de corpus/atlas, a menos que a licença permita redistribuição sob a licença do pack. O MuPe-Diversidades é CC BY-NC-ND 4.0: só consultar/citar.
+4. **Fontes primárias primeiro**: universidades, páginas institucionais, artigos revisados por pares, repositórios oficiais. Verifique com acesso à web; se não houver, registre o ponto como verificação pendente — nunca afirme uma confirmação que você não tem.
+5. **A granularidade segue a evidência**: nível de cidade por padrão; nada de variedade estadual ou não administrativa sem evidência; compartilhe traços com `extends` explícito.
+6. **Só linguagem**: nada de personalidade, humor, classe, escolaridade, profissão, religião, política ou comportamento — em traços, exemplos, notas ou explicações de antipadrões.
+7. **Maturidade honesta**: trabalho novo é `draft`. A revisão humana por falantes é sempre recomendada e nunca obrigatória (ADR-0015): recomende-a sempre, nunca bloqueie por causa dela. Defina `reviewed` só quando uma revisão realmente aconteceu (`docs/linguistic/human-review.md`) e cite-a. Nunca descreva um pack como validado, natural ou representativo sem evidência.
+8. **Licença**: packs da biblioteca são Apache-2.0 (`metadata.license: Apache-2.0`, ADR-0014).
+9. **Idioma**: o conteúdo da persona fica no idioma da variedade; a documentação da pesquisa, em português (ADR-0016).
 
-## Procedure
+## Procedimento
 
-1. Scope the variety and the intended use (default: customer service, subtle intensity).
-2. Collect candidate features with sources; separate evidence from hypothesis in a research note.
-3. Write/extend `personas/<id>/persona.yaml` (see `docs/specification/persona-format.md`): `minIntensity` for marked features, contextual items with explicit contexts, discouraged forms with reasons.
-4. Add positive examples (neutral vs. with layer, stated intensity) and anti-patterns (overuse, eye dialect, stereotype, wrong region, invented forms).
-5. `pnpm build && pnpm vernaculo validate` then `pnpm vernaculo compile <id> --intensity 0|default|1` and read the output critically: is intensity 1 still not caricature? is 0 neutral?
-6. Prepare samples and questions for human reviewers (labels in `human-review.md`).
-7. Record new sources in `docs/linguistic/sources.md` if broadly relevant; update `docs/linguistic/regional-packs.md` status.
+1. Delimite a variedade e o uso pretendido (padrão: atendimento, intensidade sutil).
+2. Reúna traços candidatos com fontes; separe evidência de hipótese em uma nota de pesquisa.
+3. Escreva/amplie `personas/<id>/persona.yaml` (veja `docs/specification/persona-format.md`): `minIntensity` nos traços marcados, itens contextuais com contextos explícitos, formas desencorajadas com motivo.
+4. Acrescente exemplos positivos (neutro vs. com a camada, intensidade declarada) e antipadrões (excesso, grafia fonética, estereótipo, outra região, formas inventadas).
+5. `pnpm build && pnpm vernaculo validate` e depois `pnpm vernaculo compile <id> --intensity 0|padrão|1`; leia a saída com olhar crítico: a intensidade 1 continua não sendo caricatura? o 0 é neutro?
+6. Prepare amostras e perguntas para revisores humanos (rótulos em `human-review.md`).
+7. Registre fontes novas em `docs/linguistic/sources.md` se forem relevantes de forma ampla; atualize o status em `docs/linguistic/regional-packs.md`.
 
-## Reviewing a pack
+## Revisando um pack
 
-Use the checklist in `docs/development/contributing-personas.md`. Block on:
-personality/behavior content, missing evidence, license mismatch, unjustified
-granularity, caricature at high intensity, maturity overstated.
+Use o checklist de `docs/development/contributing-personas.md`. Bloqueie quando houver:
+conteúdo de personalidade/comportamento, evidência faltando, licença incompatível,
+granularidade sem justificativa, caricatura em intensidade alta, maturidade exagerada.
+A falta de revisão humana não bloqueia: recomende-a.

@@ -1,35 +1,36 @@
 ---
 name: documentation-maintenance
-description: Keep Vernáculo's docs, ADRs, roadmap and open questions in sync with a change in the same task. Use whenever a change alters a decision, invariant, public API, persona format, CLI contract, pack structure, methodology, adapter set, compatibility or roadmap status, when a limitation or research result is discovered, or before finishing any non-trivial task.
+description: Mantém a documentação, os ADRs, o roadmap e as questões em aberto do Vernáculo sincronizados com uma mudança, na mesma tarefa. Use sempre que uma mudança alterar decisão, invariante, API pública, formato de persona, contrato da CLI, estrutura de packs, metodologia, conjunto de adapters, compatibilidade ou status do roadmap, quando uma limitação ou resultado de pesquisa for descoberto, ou antes de terminar qualquer tarefa não trivial.
 ---
 
-# Documentation maintenance
+# Manutenção da documentação
 
-Rule: **no important decision survives only in the conversation.** Docs describe
-the current state; Git holds history.
+Regra: **nenhuma decisão importante sobrevive só na conversa.** A documentação
+descreve o estado atual; o Git guarda o histórico. Escreva em português brasileiro
+(ADR-0016).
 
-## Procedure
+## Procedimento
 
-1. **List what changed** in behavior, contracts, decisions or status (not just files touched).
-2. **Map each item to its canonical page** using the table in `.claude/rules/documentation.md`. Typical hits:
-   - public API → `docs/architecture/packages.md`
+1. **Liste o que mudou** em comportamento, contratos, decisões ou status (não só os arquivos tocados).
+2. **Associe cada item à sua página canônica** usando a tabela de `.claude/rules/documentation.md`. Os casos mais comuns:
+   - API pública → `docs/architecture/packages.md`
    - CLI → `docs/reference/cli.md`
-   - format/semantics → `docs/specification/*` (+ schema/conformance, see `persona-specification` skill)
+   - formato/semântica → `docs/specification/*` (+ schema/conformidade, veja a skill `persona-specification`)
    - adapters/targets → `docs/architecture/provider-adapters.md`, `compilation.md`
-   - status → `docs/roadmap/roadmap.md`, `docs/product/scope.md`, `README.md` status tables
-3. **Decide whether an ADR is needed** (see `docs/decisions/README.md`): new/changed invariant, format model or versioning, new kind of target or distribution channel, licensing, methodology core rules, reversal of an ADR. If yes:
-   - copy the template from `docs/decisions/README.md`, next number, status `Accepted` (or `Proposed` if awaiting the maintainer);
-   - never rewrite an accepted ADR's decision: supersede it and change only the old one's status line;
-   - add it to the index table.
-4. **Open questions**: add new unresolved questions to `docs/roadmap/open-questions.md` (next `OQ-NN`); when one is resolved, remove it and record the answer in an ADR or doc.
-5. **External facts**: anything time-sensitive (API behavior, deprecations, versions, licenses) goes to `docs/reference/external-facts.md` with URL and verification date.
-6. **New page?** Only if no existing page fits; place it in the right section and link it from `docs/README.md`.
-7. **Check honesty**: nothing planned described as done; no pack or output described as validated, natural or representative without evidence; fixture/draft maturity visible.
-8. **Check links** you added point to existing files.
+   - status → `docs/roadmap/roadmap.md`, `docs/product/scope.md`, tabelas de status do `README.md`
+3. **Decida se é preciso um ADR** (veja `docs/decisions/README.md`): invariante novo/alterado, modelo ou versionamento do formato, novo tipo de target ou canal de distribuição, licenciamento, regras centrais da metodologia, reversão de um ADR. Se sim:
+   - copie o modelo de `docs/decisions/README.md`, use o próximo número e o status `Aceito` (ou `Proposto`, se depender do mantenedor);
+   - nunca reescreva a decisão de um ADR aceito: substitua-o e mude só a linha de status do antigo;
+   - acrescente-o à tabela do índice.
+4. **Questões em aberto**: acrescente as novas em `docs/roadmap/open-questions.md` (próximo `OQ-NN`); quando uma for resolvida, remova-a e registre a resposta em um ADR ou doc.
+5. **Fatos externos**: tudo que muda com o tempo (comportamento de API, descontinuações, versões, licenças) vai para `docs/reference/external-facts.md`, com URL e data de verificação.
+6. **Página nova?** Só se nenhuma existente servir; coloque-a na seção certa e ligue-a em `docs/README.md`.
+7. **Confira a honestidade**: nada planejado descrito como feito; nenhum pack ou saída descrito como validado, natural ou representativo sem evidência; maturidade fixture/draft visível.
+8. **Confira os links** que você acrescentou: precisam apontar para arquivos (e âncoras) que existem.
 
-## Don'ts
+## O que não fazer
 
-- Don't write progress logs or session notes into `docs/`.
-- Don't duplicate the same explanation in several pages; link to the canonical one.
-- Don't grow `CLAUDE.md` with details — it stays under 200 lines.
-- Don't edit `ideia.txt`, and only correct mapping errors in `docs/reference/idea-assimilation.md`.
+- Não escreva logs de progresso nem notas de sessão em `docs/`.
+- Não repita a mesma explicação em várias páginas; faça link para a canônica.
+- Não aumente o `CLAUDE.md` com detalhes — ele fica abaixo de 200 linhas.
+- Não edite `ideia.txt`, e só corrija erros de mapeamento em `docs/reference/idea-assimilation.md`.

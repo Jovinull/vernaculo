@@ -1,50 +1,50 @@
 ---
 name: persona-specification
-description: Work on the Vernáculo Persona Specification and its reference implementation — the JSON Schema, Zod mirror, conformance suite, parser, semantic rules, issue codes, inheritance/flattening, canonical form, intensity selection (IR) and serialization. Use when adding or changing persona fields, validation rules, extends/merge semantics, intensity behavior, ids, apiVersion, or @vernaculo/schema / @vernaculo/core internals.
+description: Trabalha na Vernáculo Persona Specification e na sua implementação de referência — JSON Schema, espelho Zod, suíte de conformidade, parser, regras semânticas, códigos de issue, herança/achatamento, forma canônica, seleção por intensidade (IR) e serialização. Use ao adicionar ou mudar campos de persona, regras de validação, semântica de extends/merge, comportamento de intensidade, ids, apiVersion, ou internals de @vernaculo/schema / @vernaculo/core.
 ---
 
-# Persona specification work
+# Trabalho na especificação de personas
 
-## Read first
+## Leia antes
 
-- `docs/specification/overview.md` — documents, ids, persona roots, processing model, conformance, issue codes
-- `docs/specification/persona-format.md` — fields, semantic rules, format history
-- `docs/specification/inheritance-and-composition.md` — flattening rules
-- `docs/specification/regional-intensity.md` — selection rules
-- `docs/specification/provenance.md` — evidence, sources, maturity
-- ADR-0003 (format), ADR-0013 (explicit inheritance), ADR-0010 (no personality fields)
+- `docs/specification/overview.md` — documentos, ids, raízes de personas, modelo de processamento, conformidade, códigos de issue
+- `docs/specification/persona-format.md` — campos, regras semânticas, histórico do formato
+- `docs/specification/inheritance-and-composition.md` — regras de achatamento
+- `docs/specification/regional-intensity.md` — regras de seleção
+- `docs/specification/provenance.md` — evidência, fontes, maturidade
+- ADR-0003 (formato), ADR-0013 (herança explícita), ADR-0010 (nenhum campo de personalidade)
 
-## Where things live
+## Onde cada coisa fica
 
-| Concern | File |
+| Assunto | Arquivo |
 | --- | --- |
-| Normative structure | `schemas/v1alpha1/persona.schema.json` |
-| TS types / Zod mirror | `packages/schema/src/types.ts`, `packages/schema/src/zod.ts` |
-| Parsing (JSON data model, duplicate keys) | `packages/core/src/parse.ts` |
-| Document-level rules | `packages/core/src/validate.ts` |
-| Keyed lists (keys, used vs discouraged) | `packages/core/src/lists.ts` |
-| Lineage, flattening, resolved-level rules | `packages/core/src/resolve.ts` |
-| Canonical key order (from the JSON Schema) | `packages/core/src/canonical.ts` |
-| Intensity/evidence selection | `packages/core/src/ir.ts` |
-| Issue codes | `packages/core/src/errors.ts` |
-| Conformance suite | `schemas/conformance/v1alpha1/{valid,invalid-schema,invalid-semantic,resolution}` |
+| Estrutura normativa | `schemas/v1alpha1/persona.schema.json` |
+| Tipos TS / espelho Zod | `packages/schema/src/types.ts`, `packages/schema/src/zod.ts` |
+| Parse (modelo de dados JSON, chaves duplicadas) | `packages/core/src/parse.ts` |
+| Regras do documento | `packages/core/src/validate.ts` |
+| Listas com chave (chaves, usadas vs. desencorajadas) | `packages/core/src/lists.ts` |
+| Linhagem, achatamento, regras da persona resolvida | `packages/core/src/resolve.ts` |
+| Ordem canônica das chaves (vinda do JSON Schema) | `packages/core/src/canonical.ts` |
+| Seleção por intensidade/evidência | `packages/core/src/ir.ts` |
+| Códigos de issue | `packages/core/src/errors.ts` |
+| Suíte de conformidade | `schemas/conformance/v1alpha1/{valid,invalid-schema,invalid-semantic,resolution}` |
 
-## Procedure for a format change
+## Procedimento para uma mudança de formato
 
-1. Decide whether it is compatible. Alpha may break, but breaking changes need a new `apiVersion` directory and a note in the docs; structural model changes need an ADR.
-2. Write conformance fixtures first: a `valid/` case and an `invalid-*` case (`# expect: <code>` for semantic ones); a `resolution/` case with the exact expected flattened document if merging is affected (key order is part of the contract).
-3. Update the JSON Schema. Keep objects closed (`additionalProperties: false`). Quote-safe patterns; limits identical in Zod.
-4. Mirror in `types.ts` and `zod.ts` (explicit types; `z.strictObject`; same regex sources and limits).
-5. Implement semantic rules in core with a stable issue code; add the code to `IssueCode`, `docs/specification/overview.md` and `persona-format.md`.
-6. If rendering is affected, update the compiler, golden files and `docs/architecture/compilation.md`.
-7. Run `pnpm check`. The parity test (`packages/schema/test/schema-parity.test.ts`) must pass.
-8. Update docs (`documentation-maintenance` skill).
+1. Decida se ela é compatível. A versão alfa pode quebrar, mas mudanças incompatíveis precisam de um novo diretório de `apiVersion` e de uma nota na documentação; mudanças no modelo estrutural precisam de um ADR.
+2. Escreva primeiro os fixtures de conformidade: um caso em `valid/` e um caso `invalid-*` (`# expect: <código>` nos semânticos); um caso em `resolution/` com o documento achatado exato se o merge for afetado (a ordem das chaves faz parte do contrato).
+3. Atualize o JSON Schema. Mantenha os objetos fechados (`additionalProperties: false`). Padrões seguros para aspas; limites idênticos aos do Zod. Descrições em português.
+4. Espelhe em `types.ts` e `zod.ts` (tipos explícitos; `z.strictObject`; mesmas fontes de regex e mesmos limites).
+5. Implemente as regras semânticas no core com um código de issue estável; acrescente o código em `IssueCode`, `docs/specification/overview.md` e `persona-format.md`.
+6. Se a renderização for afetada, atualize o compilador, os golden files e `docs/architecture/compilation.md`.
+7. Rode `pnpm check`. O teste de paridade (`packages/schema/test/schema-parity.test.ts`) precisa passar.
+8. Atualize a documentação (skill `documentation-maintenance`).
 
-## Invariants to protect
+## Invariantes a proteger
 
-- No field may express personality, attitudes or other non-linguistic traits.
-- Ids never imply inheritance; only `extends` does. Ids stay path-safe (no `.`/`\`).
-- Hypotheses are never rendered; synthetic evidence only with effective maturity `fixture`.
-- Discouraged forms and anti-patterns are rendered at every intensity; intensity 0 is neutral.
-- Resolution is deterministic and byte-stable (canonical order, no Map/Set iteration leaking into output order).
-- `apiVersion`'s `vernaculo.dev` is never fetched.
+- Nenhum campo pode expressar personalidade, atitudes ou outros traços não linguísticos.
+- Ids nunca implicam herança; só `extends` implica. Ids continuam seguros para caminhos (sem `.`/`\`).
+- Hipóteses nunca são renderizadas; evidência sintética só com maturidade efetiva `fixture`.
+- Formas desencorajadas e antipadrões são renderizados em toda intensidade; a intensidade 0 é neutra.
+- A resolução é determinística e estável byte a byte (ordem canônica, sem iteração de Map/Set vazando para a ordem da saída).
+- O `vernaculo.dev` do `apiVersion` nunca é buscado na rede.

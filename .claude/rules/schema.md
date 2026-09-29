@@ -4,18 +4,20 @@ paths:
   - "packages/schema/**"
 ---
 
-# Specification change rules
+# Regras para mudanças na especificação
 
-The JSON Schema in `schemas/<version>/` is normative; the Zod mirror follows it.
+O JSON Schema em `schemas/<versão>/` é normativo; o espelho Zod o segue.
 
-A format change is complete only when, in the same change:
+Uma mudança de formato só está completa quando, na mesma mudança:
 
-1. `schemas/<version>/persona.schema.json` is updated (the source of truth);
-2. `packages/schema/src/types.ts` and `packages/schema/src/zod.ts` mirror it byte-for-byte in patterns and limits (the parity test compares every node);
-3. conformance fixtures cover it: at least one `valid/` case and one `invalid-schema/` or `invalid-semantic/` case (`# expect: <code>`), plus a `resolution/` case if merge semantics are affected;
-4. semantic rules/issue codes are implemented in `packages/core` and documented in `docs/specification/persona-format.md` and `overview.md`;
-5. `docs/specification/*` describe the new state; add a "history" note if a drafted idea was adopted or rejected;
-6. incompatible changes move to a new `apiVersion` directory (`v1alpha2`, ...) — alpha versions may break, but never silently.
+1. `schemas/<versão>/persona.schema.json` foi atualizado (a fonte da verdade);
+2. `packages/schema/src/types.ts` e `packages/schema/src/zod.ts` o espelham com padrões e limites idênticos (o teste de paridade compara cada nó);
+3. fixtures de conformidade a cobrem: pelo menos um caso em `valid/` e um em `invalid-schema/` ou `invalid-semantic/` (`# expect: <código>`), mais um caso em `resolution/` se a semântica de merge for afetada;
+4. regras semânticas/códigos de issue estão implementados em `packages/core` e documentados em `docs/specification/persona-format.md` e `overview.md`;
+5. `docs/specification/*` descrevem o novo estado; acrescente uma nota de "histórico" se uma ideia de rascunho foi adotada ou rejeitada;
+6. mudanças incompatíveis vão para um novo diretório de `apiVersion` (`v1alpha2`, ...) — versões alfa podem quebrar, mas nunca em silêncio.
 
-Never make the format's meaning depend on TypeScript behavior. Load the
-`persona-specification` skill for this work.
+As descrições (`description`/`title`) do JSON Schema são escritas em português;
+nomes de campos, valores de enums e padrões não mudam de idioma. Nunca faça o
+significado do formato depender de comportamento do TypeScript. Carregue a skill
+`persona-specification` para esse trabalho.

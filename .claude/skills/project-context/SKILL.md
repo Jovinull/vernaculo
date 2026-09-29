@@ -1,53 +1,55 @@
 ---
 name: project-context
-description: Recover Vernáculo's product, architecture and decision context before a non-trivial change — which docs and ADRs to read for a given question, without loading all documentation or rereading ideia.txt. Use when starting work on an unfamiliar area, when a request touches architecture, invariants, the persona format, adapters, distribution or roadmap, or when unsure whether something was already decided.
+description: Recupera o contexto de produto, arquitetura e decisões do Vernáculo antes de uma mudança relevante — quais docs e ADRs ler para cada pergunta, sem carregar toda a documentação nem reler ideia.txt. Use ao começar a trabalhar em uma área desconhecida, quando um pedido envolver arquitetura, invariantes, formato de persona, adapters, distribuição ou roadmap, ou quando não souber se algo já foi decidido.
 ---
 
-# Project context
+# Contexto do projeto
 
-`docs/` is the source of truth. Load only what the task needs.
+`docs/` é a fonte da verdade. Carregue só o que a tarefa precisa.
 
-## 1. Orient (always, ~2 minutes)
+## 1. Orientação (sempre, ~2 minutos)
 
-- `docs/README.md` — the map.
-- `docs/product/principles.md` — the invariants, each linked to its ADR.
-- `docs/roadmap/roadmap.md` — what exists vs. what is planned. Never assume a planned item exists.
+- `docs/README.md` — o mapa.
+- `docs/product/principles.md` — os invariantes, cada um ligado ao seu ADR.
+- `docs/roadmap/roadmap.md` — o que existe vs. o que está planejado. Nunca assuma que um item planejado já existe.
 
-## 2. Pick the pages for the question
+## 2. Escolha as páginas para a pergunta
 
-| Question | Read |
+| Pergunta | Leia |
 | --- | --- |
-| What is the product / what is out of scope? | `docs/product/vision.md`, `docs/product/scope.md` |
-| How do packages fit, who may import whom? | `docs/architecture/overview.md`, `docs/architecture/packages.md` |
-| How is a persona turned into instructions? | `docs/architecture/compilation.md` |
-| Provider specifics (OpenAI, future Claude/Gemini/local/MCP) | `docs/architecture/provider-adapters.md`, `docs/reference/external-facts.md` |
-| Install, `add`, `eject`, no lock-in | `docs/architecture/distribution.md`, `docs/reference/cli.md` |
-| Cost / network / hosting constraints | `docs/architecture/zero-infrastructure.md`, ADR-0001 |
-| Persona fields and rules | `docs/specification/persona-format.md`, `overview.md` |
-| Inheritance / merging | `docs/specification/inheritance-and-composition.md` |
-| Intensity | `docs/specification/regional-intensity.md` |
-| Evidence, sources, maturity, licenses | `docs/specification/provenance.md`, `docs/linguistic/sources.md` |
-| Regional content, caricature risks | `docs/linguistic/anti-caricature.md`, `methodology.md`, `regional-packs.md` |
-| Evals, human review | `docs/evals/*`, `docs/linguistic/human-review.md` |
-| Tooling, versions, tests | `docs/development/stack.md`, `testing.md` |
-| Was X already decided? | `docs/decisions/README.md` index, then the ADR; `docs/roadmap/open-questions.md` |
-| Where did an idea originally come from? | `docs/reference/idea-assimilation.md` (maps `ideia.txt` line ranges to docs) |
+| O que é o produto / o que está fora de escopo? | `docs/product/vision.md`, `docs/product/scope.md` |
+| Como os pacotes se encaixam, quem pode importar quem? | `docs/architecture/overview.md`, `docs/architecture/packages.md` |
+| Como uma persona vira instruções? | `docs/architecture/compilation.md` |
+| Especificidades de provedores (OpenAI, futuros Claude/Gemini/local/MCP) | `docs/architecture/provider-adapters.md`, `docs/reference/external-facts.md` |
+| Instalação, `add`, `eject`, sem lock-in | `docs/architecture/distribution.md`, `docs/reference/cli.md` |
+| Restrições de custo / rede / hospedagem | `docs/architecture/zero-infrastructure.md`, ADR-0001 |
+| Campos e regras de persona | `docs/specification/persona-format.md`, `overview.md` |
+| Herança / merge | `docs/specification/inheritance-and-composition.md` |
+| Intensidade | `docs/specification/regional-intensity.md` |
+| Evidência, fontes, maturidade, licenças | `docs/specification/provenance.md`, `docs/linguistic/sources.md` |
+| Conteúdo regional, riscos de caricatura | `docs/linguistic/anti-caricature.md`, `methodology.md`, `regional-packs.md` |
+| Evals, revisão humana | `docs/evals/*`, `docs/linguistic/human-review.md` |
+| Ferramentas, versões, testes | `docs/development/stack.md`, `testing.md` |
+| Idioma de docs, código e mensagens | `docs/decisions/0016-documentation-in-portuguese.md` |
+| X já foi decidido? | índice em `docs/decisions/README.md`, depois o ADR; `docs/roadmap/open-questions.md` |
+| De onde veio uma ideia? | `docs/reference/idea-assimilation.md` (liga faixas de linhas de `ideia.txt` aos docs) |
 
-## 3. Confirm against the code
+## 3. Confirme no código
 
-Docs describe intent and contracts; verify behavior in the source before relying
-on it (`packages/*/src`, tests in `packages/*/test`). If docs and code disagree,
-treat it as a bug: fix whichever is wrong in the same task and say so.
+A documentação descreve intenção e contratos; verifique o comportamento no código
+antes de confiar nele (`packages/*/src`, testes em `packages/*/test`). Se docs e
+código discordarem, trate como bug: corrija o que estiver errado na mesma tarefa e
+diga isso.
 
-## 4. About `ideia.txt`
+## 4. Sobre `ideia.txt`
 
-Historical record only. Read a specific line range (from the assimilation table)
-only when researching the origin or intent of a decision. Its versions, API
-examples and model names are not authoritative.
+É só um registro histórico. Leia uma faixa específica de linhas (tirada da tabela de
+assimilação) apenas ao pesquisar a origem ou a intenção de uma decisão. Versões,
+exemplos de API e nomes de modelos dele não têm autoridade.
 
-## 5. Before acting
+## 5. Antes de agir
 
-State which ADRs/invariants the change touches. If the task conflicts with an
-accepted ADR, propose a superseding ADR instead of working around it. Then load
-the specific skill: `persona-specification`, `linguistic-research`, `evals`,
+Diga quais ADRs/invariantes a mudança toca. Se a tarefa conflitar com um ADR aceito,
+proponha um ADR substituto em vez de contorná-lo. Depois carregue a skill
+específica: `persona-specification`, `linguistic-research`, `evals`,
 `adapter-development`, `documentation-maintenance`, `release-quality`.

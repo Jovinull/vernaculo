@@ -1,50 +1,52 @@
 ---
 name: release-quality
-description: Checklist to decide whether a Vernáculo change is done and releasable — lint, typecheck, tests, build, persona/schema validation, golden-file review, docs and ADR sync, changesets, versioning and honesty of claims. Use before reporting a task as complete, before opening or approving a PR, and before any version bump or release preparation.
+description: Checklist para decidir se uma mudança do Vernáculo está pronta e publicável — lint, typecheck, testes, build, validação de personas/schemas, revisão dos golden files, sincronia de docs e ADRs, changesets, versionamento, convenção de commits e honestidade das afirmações. Use antes de dar uma tarefa por concluída, antes de abrir ou aprovar um PR e antes de qualquer bump de versão ou preparação de release.
 ---
 
-# Release quality checklist
+# Checklist de qualidade para release
 
-Run from the repository root.
+Rode a partir da raiz do repositório.
 
-## 1. Automated gates (all must pass)
+## 1. Portões automáticos (todos precisam passar)
 
 ```bash
-pnpm check        # biome lint, tsc typecheck, vitest, tsdown build, vernaculo validate on fixtures/personas/examples
+pnpm check        # lint do biome, typecheck com tsc, vitest, build com tsdown, vernaculo validate em fixtures/personas/examples
 ```
 
-If anything fails, fix the cause; don't weaken tests, add lint ignores or loosen
-the architecture test to get green. Report real failures with their output.
+Se algo falhar, corrija a causa; não enfraqueça testes, não acrescente ignores de
+lint nem afrouxe o teste de arquitetura para ficar verde. Reporte falhas reais com a
+saída delas.
 
-## 2. Change-specific checks
+## 2. Verificações específicas da mudança
 
-- [ ] **Golden files** (`packages/compiler/test/__golden__/`): any diff is intended and explained.
-- [ ] **Specification**: JSON Schema, Zod mirror, conformance fixtures and spec docs changed together (see `.claude/rules/schema.md`).
-- [ ] **Invariants**: no network, no provider SDKs, dependency direction, determinism, non-mutation — covered by tests, not just by review.
-- [ ] **CLI**: behavior, help text and exit codes match `docs/reference/cli.md`.
-- [ ] **Dependencies**: new ones checked for current version, maintenance, engines, license; lockfile regenerated through pnpm's policies (no casual `minimumReleaseAgeExclude`).
-- [ ] **Windows/Linux**: paths joined with `node:path`, ids with `/`, LF endings.
+- [ ] **Golden files** (`packages/compiler/test/__golden__/`): todo diff é intencional e explicado.
+- [ ] **Especificação**: JSON Schema, espelho Zod, fixtures de conformidade e docs da especificação mudaram juntos (veja `.claude/rules/schema.md`).
+- [ ] **Invariantes**: sem rede, sem SDKs de provedores, direção de dependências, determinismo, sem mutação — cobertos por testes, não só por revisão.
+- [ ] **CLI**: comportamento, texto de ajuda e códigos de saída batem com `docs/reference/cli.md`.
+- [ ] **Dependências**: as novas foram conferidas quanto a versão atual, manutenção, engines e licença; lockfile regenerado respeitando as políticas do pnpm (sem `minimumReleaseAgeExclude` à toa).
+- [ ] **Windows/Linux**: caminhos com `node:path`, ids com `/`, finais de linha LF.
 
-## 3. Documentation (use `documentation-maintenance`)
+## 3. Documentação (use `documentation-maintenance`)
 
-- [ ] Canonical docs updated for every changed decision/behavior/contract.
-- [ ] ADR added or superseded for structural decisions; index updated.
-- [ ] Roadmap, scope and README status tables accurate; open questions updated.
+- [ ] Docs canônicos atualizados para toda decisão/comportamento/contrato alterado, em português.
+- [ ] ADR acrescentado ou substituído para decisões estruturais; índice atualizado.
+- [ ] Tabelas de status do roadmap, do escopo e do README corretas; questões em aberto atualizadas.
 
-## 4. Honesty of claims
+## 4. Honestidade das afirmações
 
-- [ ] Nothing planned presented as done.
-- [ ] No pack/output called validated, natural, representative, stereotype-free or production-ready without human review and eval evidence.
-- [ ] Fixture/draft maturity visible where relevant.
+- [ ] Nada planejado apresentado como feito.
+- [ ] Nenhum pack/saída chamado de validado, natural, representativo, livre de estereótipos ou pronto para produção sem revisão humana e evidência de evals.
+- [ ] Maturidade fixture/draft visível onde for relevante; revisão humana recomendada para rascunhos.
 
-## 5. Versioning (published packages only)
+## 5. Versionamento e commits
 
-- [ ] `pnpm changeset` added for public behavior changes (all published packages share one version).
-- [ ] Persona pack versions (`metadata.version`) bumped per `docs/architecture/persona-lifecycle.md` when pack content changes.
-- [ ] Spec changes: `apiVersion` policy respected.
+- [ ] `pnpm changeset` acrescentado para mudanças de comportamento público (todos os pacotes publicados compartilham uma versão).
+- [ ] Versões dos packs (`metadata.version`) incrementadas conforme `docs/architecture/persona-lifecycle.md` quando o conteúdo de um pack mudar.
+- [ ] Mudanças na especificação: política de `apiVersion` respeitada.
+- [ ] Commits em Conventional Commits, em português, só com a linha de assunto e sem `Co-Authored-By`, separados por assunto.
 
-## 6. Outward actions
+## 6. Ações externas
 
-Publishing to npm, pushing, tagging, creating GitHub Releases: **only with an
-explicit instruction for that action.** Otherwise stop after local verification
-and report what is ready. See `docs/development/releasing.md`.
+Publicar no npm, fazer push, criar tags e GitHub Releases: **só com instrução
+explícita para aquela ação.** Sem ela, pare depois da verificação local e diga o que
+está pronto. Veja `docs/development/releasing.md`.
