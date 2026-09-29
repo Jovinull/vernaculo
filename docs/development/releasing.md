@@ -20,5 +20,7 @@ Nada foi publicado ainda. Todos os pacotes estão em `0.0.0`.
 ## Pré-requisitos do primeiro release público
 
 - Escopo `@vernaculo` e nome de pacote `vernaculo` registrados pelo mantenedor no npm (os dois estavam livres em 2026-09-29 — veja as questões em aberto).
-- URL do repositório (https://github.com/Jovinull/vernaculo) adicionada a todo `package.json` (`repository`, `homepage`, `bugs`).
 - Pelo menos um pack real, ou o release claramente identificado como só de ferramentas, com fixtures.
+
+Já atendido: repositório público em https://github.com/Jovinull/vernaculo, com
+`repository`, `homepage` e `bugs` preenchidos em todo `package.json` publicável.
