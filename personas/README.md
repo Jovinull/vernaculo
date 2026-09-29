@@ -1,29 +1,29 @@
-# Persona library
+# Biblioteca de personas
 
-This directory is the public library of **regional persona packs**. It is a
-persona root: each pack lives at `personas/<persona id>/persona.yaml`.
+Este diretório é a biblioteca pública de **packs de persona regional**. Ele é uma
+raiz de personas: cada pack fica em `personas/<id da persona>/persona.yaml`.
 
-**There are no packs yet.** The first four are planned and their research has not
-started:
+**Ainda não há packs.** Os quatro primeiros estão planejados e a pesquisa deles não
+começou:
 
 | Id | Status |
 | --- | --- |
-| `pt-BR/ba/salvador` | not started |
-| `pt-BR/se/aracaju` | not started |
-| `pt-BR/pe/recife` | not started |
-| `pt-BR/sp/sao-paulo` | not started |
+| `pt-BR/ba/salvador` | não iniciado |
+| `pt-BR/se/aracaju` | não iniciado |
+| `pt-BR/pe/recife` | não iniciado |
+| `pt-BR/sp/sao-paulo` | não iniciado |
 
-A pack is added here only with real research: evidence and sources for every
-feature, source licenses checked, positive and negative examples. Packs start as
-`maturity: draft`; human review by speakers of the variety is always recommended
-(never mandatory) and a pack becomes `reviewed` once such a review has actually
-taken place.
+Um pack só entra aqui com pesquisa de verdade: evidência e fontes para cada traço,
+licenças das fontes conferidas, exemplos positivos e negativos. Os packs começam
+como `maturity: draft`; a revisão humana por falantes da variedade é sempre
+recomendada (nunca obrigatória), e um pack passa a `reviewed` quando essa revisão
+realmente aconteceu.
 
-License: every pack here is **Apache-2.0** (`metadata.license: Apache-2.0`), like
-the rest of the repository.
+Licença: todo pack aqui é **Apache-2.0** (`metadata.license: Apache-2.0`), como o
+resto do repositório.
 
-- How packs are built: [docs/linguistic/methodology.md](../docs/linguistic/methodology.md)
-- What must never be in a pack: [docs/linguistic/anti-caricature.md](../docs/linguistic/anti-caricature.md)
-- How to contribute: [docs/development/contributing-personas.md](../docs/development/contributing-personas.md)
+- Como os packs são construídos: [docs/linguistic/methodology.md](../docs/linguistic/methodology.md)
+- O que nunca pode estar em um pack: [docs/linguistic/anti-caricature.md](../docs/linguistic/anti-caricature.md)
+- Como contribuir: [docs/development/contributing-personas.md](../docs/development/contributing-personas.md)
 
-Synthetic test personas live in [`../fixtures/personas`](../fixtures/personas), never here.
+Personas sintéticas de teste ficam em [`../fixtures/personas`](../fixtures/personas), nunca aqui.

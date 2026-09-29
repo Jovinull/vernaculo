@@ -1,20 +1,22 @@
 # Fixtures
 
-**Synthetic data. Not linguistic content.**
+**Dados sintéticos. Não é conteúdo linguístico.**
 
-`personas/` is a persona root with invented personas used by tests, examples and
-CI (`pnpm validate:data`):
+`personas/` é uma raiz de personas com personas inventadas, usadas por testes,
+exemplos e pelo CI (`pnpm validate:data`):
 
-| Id | Role |
+| Id | Papel |
 | --- | --- |
-| `pt-BR/x-fixture` | base persona |
-| `pt-BR/x-fixture/cidade-a` | locality A, extends the base, adds features and examples |
-| `pt-BR/x-fixture/cidade-b` | locality B, extends the base, discourages a base form |
+| `pt-BR/x-fixture` | persona base |
+| `pt-BR/x-fixture/cidade-a` | localidade A; estende a base e acrescenta traços e exemplos |
+| `pt-BR/x-fixture/cidade-b` | localidade B; estende a base e desencoraja uma forma da base |
 
-Every "regional" form here (`termo-sintético-a`, `marcador-sintético-base`, ...) is
-a placeholder. Every persona is `maturity: fixture` and every feature is
-`evidence: synthetic`, which the specification only allows in fixtures. The
-`x-` segment marks the ids as private/synthetic.
+Toda forma "regional" daqui (`termo-sintético-a`, `marcador-sintético-base`, ...) é
+um marcador de posição. Toda persona é `maturity: fixture` e todo traço é
+`evidence: synthetic`, o que a especificação só permite em fixtures. O segmento
+`x-` marca os ids como privados/sintéticos.
 
-Do not copy these files into a real pack, and do not add real regional claims
-here: tests must never depend on unreviewed linguistic content.
+Não copie estes arquivos para um pack real e não coloque afirmações regionais reais
+aqui: os testes nunca podem depender de conteúdo linguístico não revisado. Os
+comentários e descrições dentro dos YAML ficam em inglês, como o resto dos dados de
+teste.
