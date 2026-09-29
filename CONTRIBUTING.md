@@ -1,44 +1,45 @@
-# Contributing
+# Contribuindo
 
-Thanks for your interest in Vernáculo. The project is at an early stage; the
-documentation in [`docs/`](docs/README.md) is the source of truth.
+Obrigado pelo interesse no Vernáculo. O projeto está no começo; a documentação em
+[`docs/`](docs/README.md) é a fonte da verdade.
 
-## Before you change anything important
+## Antes de mudar qualquer coisa importante
 
-1. Read the relevant docs and ADRs ([docs/decisions](docs/decisions/README.md)).
-2. Respect the invariants in [docs/product/principles.md](docs/product/principles.md) — in particular: no Vernáculo infrastructure at runtime, no provider coupling in the core, deterministic compilation, and the anti-caricature policy.
-3. For structural changes, propose an ADR first.
+1. Leia a documentação e os ADRs relacionados ([docs/decisions](docs/decisions/README.md)).
+2. Respeite os invariantes de [docs/product/principles.md](docs/product/principles.md) — em especial: nenhuma infraestrutura do Vernáculo em runtime, nenhum acoplamento a provedores no core, compilação determinística e a política anti-caricatura.
+3. Para mudanças estruturais, proponha um ADR antes.
 
-## Workflow
+## Fluxo de trabalho
 
 ```bash
 pnpm install
-pnpm check          # must pass before a PR
-pnpm changeset      # when a published package's public behavior changes
+pnpm check          # precisa passar antes de um PR
+pnpm changeset      # quando o comportamento público de um pacote publicado mudar
 ```
 
-- Commits follow [Conventional Commits](https://www.conventionalcommits.org/) written in Portuguese, subject line only (no body, no trailers such as `Co-Authored-By`), one concern per commit — e.g. `feat(cli): adiciona comando add`, `docs(spec): documenta regra de herança`.
-- Code, specification, evals and documentation change together: if your change alters a decision, behavior, format or contract, update the corresponding page in `docs/` in the same PR.
-- Tests accompany behavior changes; see [docs/development/testing.md](docs/development/testing.md).
-- Format changes go through the JSON Schema, the Zod mirror, conformance fixtures and the specification docs together.
+- Commits seguem [Conventional Commits](https://www.conventionalcommits.org/) em português, só com a linha de assunto (sem corpo e sem trailers como `Co-Authored-By`), um assunto por commit — por exemplo, `feat(cli): adiciona comando add`, `docs(spec): documenta regra de herança`.
+- Código, especificação, evals e documentação mudam juntos: se a sua mudança altera uma decisão, um comportamento, um formato ou um contrato, atualize a página correspondente em `docs/` no mesmo PR.
+- A documentação é escrita em português ([ADR-0016](docs/decisions/0016-documentation-in-portuguese.md)).
+- Mudanças de comportamento vêm com testes; veja [docs/development/testing.md](docs/development/testing.md).
+- Mudanças de formato passam juntas pelo JSON Schema, pelo espelho Zod, pelos fixtures de conformidade e pela documentação da especificação.
 
-## Code conventions
+## Convenções de código
 
-- TypeScript, ESM, strict; explicit types on exports (`isolatedDeclarations`); imports with `.ts` extensions; no enums/namespaces (`erasableSyntaxOnly`).
-- Biome formats and lints (`pnpm lint:fix`).
-- Errors: throw `VernaculoError` with stable issue codes; never exit the process from library code.
-- No network access, provider SDKs or `node:` imports where the architecture forbids them (enforced by tests).
+- TypeScript, ESM, strict; tipos explícitos nos exports (`isolatedDeclarations`); imports com extensão `.ts`; sem enums/namespaces (`erasableSyntaxOnly`).
+- Identificadores, comentários de código, nomes de testes e mensagens da CLI ficam em inglês.
+- O Biome formata e faz o lint (`pnpm lint:fix`).
+- Erros: lance `VernaculoError` com códigos de issue estáveis; código de biblioteca nunca encerra o processo.
+- Nada de acesso à rede, SDKs de provedores ou imports `node:` onde a arquitetura proíbe (verificado por testes).
 
-## Persona packs
+## Packs de persona
 
-See [docs/development/contributing-personas.md](docs/development/contributing-personas.md).
-Evidence, sources and license checks are required; review by speakers of the
-variety is always recommended (never mandatory). Synthetic data belongs only in
+Veja [docs/development/contributing-personas.md](docs/development/contributing-personas.md).
+Evidência, fontes e conferência de licenças são obrigatórias; a revisão por falantes
+da variedade é sempre recomendada (nunca obrigatória). Dados sintéticos ficam só em
 `fixtures/`.
 
-## License
+## Licença
 
-Everything in the repository (code, docs, schemas and persona content) is
-Apache-2.0. By contributing you license your contribution under Apache-2.0
-(its section 5); no CLA is required. Whether to require a DCO sign-off is still an
-open question.
+Tudo no repositório (código, documentação, schemas e conteúdo das personas) é
+Apache-2.0. Ao contribuir, você licencia a sua contribuição sob a Apache-2.0 (seção
+5); não é preciso CLA. Exigir ou não assinatura DCO ainda é uma questão em aberto.
