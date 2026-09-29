@@ -56,3 +56,5 @@ Do **not** write ADRs for routine choices (a helper's name, a dependency patch b
 | [0011](0011-deterministic-llm-free-compilation.md) | Deterministic, LLM-free compilation | Accepted |
 | [0012](0012-apache-2-0-code-license.md) | Apache-2.0 for code; third-party linguistic material licensed separately | Accepted |
 | [0013](0013-explicit-inheritance.md) | Explicit `extends` inheritance; ids never imply inheritance | Accepted |
+| [0014](0014-apache-2-0-persona-content.md) | Apache-2.0 for persona content too: one open license for the whole repository | Accepted |
+| [0015](0015-human-review-recommended-not-mandatory.md) | Human review is always recommended, never mandatory | Accepted |

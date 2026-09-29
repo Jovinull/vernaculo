@@ -1,6 +1,6 @@
 # ADR-0012: Apache-2.0 for code; third-party linguistic material licensed separately
 
-- Status: Accepted
+- Status: Accepted (pack content license decided by [ADR-0014](0014-apache-2-0-persona-content.md))
 - Date: 2026-09-29
 - Origin: `ideia.txt` ("Apache-2.0 para código seria minha preferência; permissiva e adequada para adoção empresarial"; "cada fonte precisaria ter sua licença verificada")
 
@@ -20,12 +20,12 @@ project.
   - `cited` — referenced/quoted briefly with attribution;
   - `redistributed` — material copied into a pack; only allowed when the source license permits it for this project's distribution terms.
 - Corpora and datasets are **never** copied into the repository merely because they are publicly accessible.
-- Each persona declares the license of its own content in `metadata.license`. Which license the official packs will use (Apache-2.0, CC-BY-4.0, CC0, ...) is an [open question](../roadmap/open-questions.md).
+- Each persona declares the license of its own content in `metadata.license`. Which license the official packs will use (Apache-2.0, CC-BY-4.0, CC0, ...) is an open question → resolved: Apache-2.0 ([ADR-0014](0014-apache-2-0-persona-content.md)).
 
 ## Consequences
 
 - Pack reviews must check `provenance.sources[].usage` against each source's license ([provenance.md](../specification/provenance.md), [sources.md](../linguistic/sources.md)).
-- Contribution terms (DCO/CLA) and a NOTICE file are open questions.
+- Contribution terms (DCO, NOTICE file, copyright line) are open questions; Apache-2.0 section 5 already makes contributions inbound = outbound.
 
 ## Alternatives considered
 
