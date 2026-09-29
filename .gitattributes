@@ -1,0 +1,9 @@
+# Normalize line endings. Compiled persona output is byte-for-byte deterministic
+# and tests compare it across platforms, so the repository always uses LF.
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+
+# Historical record: stored byte-for-byte (original CRLF line endings preserved).
+ideia.txt -text

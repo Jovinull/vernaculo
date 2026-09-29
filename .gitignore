@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+*.tsbuildinfo
+
+# Test output
+coverage/
+
+# Local tooling
+.vernaculo-tmp/
+*.log
+.DS_Store
+Thumbs.db
+
+# Environment (never commit provider credentials)
+.env
+.env.*
+!.env.example
+
+# Personal Claude Code files
+CLAUDE.local.md
+.claude/settings.local.json
