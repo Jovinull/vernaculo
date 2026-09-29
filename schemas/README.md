@@ -1,23 +1,27 @@
-# Schemas and conformance suite
+# Schemas e suíte de conformidade
 
-Normative, language-neutral artifacts of the Vernáculo Persona Specification.
+Artefatos normativos e neutros de linguagem da Vernáculo Persona Specification.
 
-| Path | Content |
+| Caminho | Conteúdo |
 | --- | --- |
-| `v1alpha1/persona.schema.json` | JSON Schema (draft 2020-12) for `apiVersion: vernaculo.dev/v1alpha1` persona documents |
-| `conformance/v1alpha1/valid/` | documents that must parse, validate and resolve |
-| `conformance/v1alpha1/invalid-schema/` | documents that must fail structural validation (`# reason:` explains why) |
-| `conformance/v1alpha1/invalid-semantic/` | structurally valid documents that must fail with the issue code in `# expect:` |
-| `conformance/v1alpha1/resolution/<case>/` | a persona root (`personas/`) and `case.yaml` with the id to resolve and the expected lineage + flattened document, or the expected error code |
+| `v1alpha1/persona.schema.json` | JSON Schema (draft 2020-12) para documentos de persona com `apiVersion: vernaculo.dev/v1alpha1` |
+| `conformance/v1alpha1/valid/` | documentos que devem fazer parse, validar e resolver |
+| `conformance/v1alpha1/invalid-schema/` | documentos que devem falhar na validação estrutural (`# reason:` explica o motivo) |
+| `conformance/v1alpha1/invalid-semantic/` | documentos estruturalmente válidos que devem falhar com o código de issue de `# expect:` |
+| `conformance/v1alpha1/resolution/<caso>/` | uma raiz de personas (`personas/`) e um `case.yaml` com o id a resolver e a linhagem + documento achatado esperados, ou o código de erro esperado |
 
-The JSON Schema covers structure only; semantic rules and resolution semantics are
-specified in [`docs/specification/`](../docs/specification/overview.md). An
-implementation in any language conforms when it passes this suite
-([conformance rules](../docs/specification/overview.md#conformance)).
+O JSON Schema cobre apenas a estrutura; as regras semânticas e a semântica de
+resolução estão especificadas em [`docs/specification/`](../docs/specification/overview.md).
+Uma implementação em qualquer linguagem está em conformidade quando passa nesta
+suíte ([regras de conformidade](../docs/specification/overview.md#conformidade)).
 
-Editor support (optional): add `# yaml-language-server: $schema=<relative path to persona.schema.json>`
-at the top of a persona file.
+Suporte no editor (opcional): adicione
+`# yaml-language-server: $schema=<caminho relativo para persona.schema.json>` no
+topo de um arquivo de persona.
 
-Changing the format: update the JSON Schema, the Zod mirror in
-`packages/schema/src/zod.ts`, fixtures here and the specification docs in the same
-change; see the `persona-specification` project skill.
+Para mudar o formato: atualize na mesma mudança o JSON Schema, o espelho Zod em
+`packages/schema/src/zod.ts`, os fixtures daqui e a documentação da especificação;
+veja a skill de projeto `persona-specification`.
+
+Os comentários dos arquivos de conformidade (`# reason:`, `# expect:`) ficam em
+inglês por serem dados de teste lidos por implementações de qualquer lugar.

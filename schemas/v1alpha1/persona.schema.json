@@ -1,14 +1,14 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "urn:vernaculo:schema:v1alpha1:persona",
-  "title": "Vernáculo Persona (v1alpha1)",
-  "description": "Normative structural contract for a Vernáculo persona document (apiVersion vernaculo.dev/v1alpha1). A persona describes observable, sociolinguistic features of a language variety. It is data, not a prompt: compilers turn it into instructions. Structural validity is necessary but not sufficient; the semantic rules in docs/specification/persona-format.md also apply. This version is ALPHA and may change incompatibly.",
+  "title": "Persona do Vernáculo (v1alpha1)",
+  "description": "Contrato estrutural normativo de um documento de persona do Vernáculo (apiVersion vernaculo.dev/v1alpha1). Uma persona descreve traços sociolinguísticos observáveis de uma variedade linguística. É dado, não prompt: compiladores a transformam em instruções. A validade estrutural é necessária, mas não suficiente; as regras semânticas de docs/specification/persona-format.md também se aplicam. Esta versão é ALFA e pode mudar de forma incompatível.",
   "type": "object",
   "additionalProperties": false,
   "required": ["apiVersion", "kind", "metadata"],
   "properties": {
     "apiVersion": {
-      "description": "Specification version. 'vernaculo.dev' is a namespace identifier, never fetched over the network.",
+      "description": "Versão da especificação. 'vernaculo.dev' é um identificador de namespace e nunca é buscado na rede.",
       "const": "vernaculo.dev/v1alpha1"
     },
     "kind": {
@@ -18,7 +18,7 @@
       "$ref": "#/$defs/metadata"
     },
     "extends": {
-      "description": "Explicit parent persona id. Inheritance is never implied by the id hierarchy.",
+      "description": "Id explícito da persona pai. A herança nunca é implícita na hierarquia do id.",
       "$ref": "#/$defs/personaId"
     },
     "regionality": {
@@ -28,12 +28,12 @@
       "$ref": "#/$defs/linguistics"
     },
     "examples": {
-      "description": "Positive examples: how a neutral utterance may look with this variety's features applied.",
+      "description": "Exemplos positivos: como uma frase neutra pode ficar com os traços desta variedade aplicados.",
       "type": "array",
       "items": { "$ref": "#/$defs/example" }
     },
     "antiPatterns": {
-      "description": "Negative examples: outputs that must be avoided, with the reason.",
+      "description": "Exemplos negativos: saídas que devem ser evitadas, com o motivo.",
       "type": "array",
       "items": { "$ref": "#/$defs/antiPattern" }
     },
@@ -43,13 +43,13 @@
   },
   "$defs": {
     "personaId": {
-      "description": "Slash-separated id. First segment: a BCP 47 language tag (e.g. pt-BR). Following segments: lowercase ASCII slugs naming progressively narrower varieties (e.g. pt-BR/ba/salvador). Segments are names, not an inheritance chain.",
+      "description": "Id separado por barras. Primeiro segmento: uma tag de idioma BCP 47 (por exemplo, pt-BR). Segmentos seguintes: slugs ASCII minúsculos que nomeiam variedades progressivamente mais estreitas (por exemplo, pt-BR/ba/salvador). Os segmentos são nomes, não uma cadeia de herança.",
       "type": "string",
       "maxLength": 128,
       "pattern": "^[a-z]{2,3}(-[A-Za-z0-9]{1,8})*(/[a-z0-9]+(-[a-z0-9]+)*)*$"
     },
     "languageTag": {
-      "description": "BCP 47 language tag (simplified syntax check).",
+      "description": "Tag de idioma BCP 47 (verificação de sintaxe simplificada).",
       "type": "string",
       "maxLength": 35,
       "pattern": "^[a-z]{2,3}(-[A-Za-z0-9]{1,8})*$"
@@ -75,21 +75,21 @@
       "maxLength": 2000
     },
     "intensity": {
-      "description": "Regional intensity: 0 = neutral (no regional marking), 1 = the most marked rendering the persona supports. High intensity never relaxes naturalness or anti-caricature rules.",
+      "description": "Intensidade regional: 0 = neutra (sem marcação regional), 1 = a renderização mais marcada que a persona suporta. Intensidade alta nunca afrouxa as regras de naturalidade ou anti-caricatura.",
       "type": "number",
       "minimum": 0,
       "maximum": 1
     },
     "maturity": {
-      "description": "fixture: synthetic data for tests, never linguistic content. draft: under research, not reviewed. reviewed: human review completed per docs/linguistic/human-review.md.",
+      "description": "fixture: dado sintético para testes, nunca conteúdo linguístico. draft: em pesquisa, não revisado. reviewed: uma revisão humana por falantes realmente aconteceu (docs/linguistic/human-review.md); a revisão é recomendada, nunca obrigatória.",
       "enum": ["fixture", "draft", "reviewed"]
     },
     "evidence": {
-      "description": "attested: documented in cited sources. reported: reported by speakers/reviewers (cite the review as a source). hypothesis: unconfirmed; compilers MUST NOT render it. synthetic: invented test data; only allowed in fixture personas.",
+      "description": "attested: documentado em fontes citadas. reported: relatado por falantes/revisores (cite a revisão como fonte). hypothesis: não confirmado; compiladores NÃO DEVEM renderizá-lo. synthetic: dado de teste inventado; permitido apenas em personas fixture.",
       "enum": ["attested", "reported", "hypothesis", "synthetic"]
     },
     "sourceRefs": {
-      "description": "Ids of entries in provenance.sources (of this persona or an ancestor).",
+      "description": "Ids de entradas de provenance.sources (desta persona ou de um ancestral).",
       "type": "array",
       "minItems": 1,
       "items": { "$ref": "#/$defs/slug" }
@@ -103,30 +103,30 @@
         "name": { "$ref": "#/$defs/shortText" },
         "description": { "$ref": "#/$defs/longText" },
         "language": {
-          "description": "Must equal the first segment of metadata.id.",
+          "description": "Deve ser igual ao primeiro segmento de metadata.id.",
           "$ref": "#/$defs/languageTag"
         },
         "version": { "$ref": "#/$defs/semver" },
         "maturity": { "$ref": "#/$defs/maturity" },
         "license": {
-          "description": "License of this persona's content (SPDX expression recommended). Not inherited.",
+          "description": "Licença do conteúdo desta persona (expressão SPDX recomendada). Não é herdada.",
           "$ref": "#/$defs/shortText"
         },
         "region": { "$ref": "#/$defs/region" }
       }
     },
     "region": {
-      "description": "Descriptive geographic information. Informational only: it never drives inheritance, and a variety need not coincide with an administrative boundary.",
+      "description": "Informação geográfica descritiva. Apenas informativa: nunca guia a herança, e uma variedade não precisa coincidir com uma fronteira administrativa.",
       "type": "object",
       "additionalProperties": false,
       "properties": {
         "country": {
-          "description": "ISO 3166-1 alpha-2 code.",
+          "description": "Código ISO 3166-1 alfa-2.",
           "type": "string",
           "pattern": "^[A-Z]{2}$"
         },
         "subdivision": {
-          "description": "ISO 3166-2 subdivision code without the country prefix (e.g. BA for BR-BA).",
+          "description": "Código de subdivisão ISO 3166-2 sem o prefixo do país (por exemplo, BA para BR-BA).",
           "type": "string",
           "pattern": "^[A-Z0-9]{1,3}$"
         },
@@ -292,7 +292,7 @@
           "additionalProperties": false,
           "properties": {
             "phoneticSpelling": {
-              "description": "Whether eye-dialect/phonetic spellings may be used. Defaults to 'avoid' when absent in the whole lineage.",
+              "description": "Se grafias fonéticas (eye dialect) podem ser usadas. O padrão é 'avoid' quando ausente em toda a linhagem.",
               "enum": ["avoid", "allow"]
             }
           }
@@ -353,11 +353,11 @@
         "citation": { "$ref": "#/$defs/longText" },
         "license": { "$ref": "#/$defs/shortText" },
         "usage": {
-          "description": "What this persona does with the source: consulted (read only), cited (referenced/quoted briefly), redistributed (material copied into the pack; requires a compatible license).",
+          "description": "O que esta persona faz com a fonte: consulted (apenas lida), cited (referenciada/citada brevemente), redistributed (material copiado para o pack; exige licença compatível).",
           "enum": ["consulted", "cited", "redistributed"]
         },
         "accessed": {
-          "description": "Date the source was consulted (YYYY-MM-DD).",
+          "description": "Data em que a fonte foi consultada (AAAA-MM-DD).",
           "type": "string",
           "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
         },
