@@ -1,6 +1,6 @@
 # ADR-0009: A camada regional é separada do papel e das regras de negócio do agente
 
-- Status: Aceito
+- Status: Aceito (complementado pelo [ADR-0017](0017-any-ai-use-case-neutral-packs.md): "agente de negócio" vale para qualquer IA hospedeira)
 - Data: 2026-09-29
 - Origem: `ideia.txt` (tabela de camadas; "A inteligência comercial continua sendo exatamente a mesma. Só muda a camada sociolinguística"; "Honda Agent + Vernáculo Salvador = Honda Salvador Agent")
 

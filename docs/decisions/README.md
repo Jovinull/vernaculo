@@ -59,3 +59,4 @@ Escreva um ADR quando uma mudança:
 | [0014](0014-apache-2-0-persona-content.md) | Apache-2.0 também para o conteúdo das personas: uma única licença aberta para todo o repositório | Aceito |
 | [0015](0015-human-review-recommended-not-mandatory.md) | Revisão humana sempre recomendada, nunca obrigatória | Aceito |
 | [0016](0016-documentation-in-portuguese.md) | Documentação e metadados do projeto em português | Aceito |
+| [0017](0017-any-ai-use-case-neutral-packs.md) | A camada serve a qualquer IA; packs não pressupõem caso de uso | Aceito |
