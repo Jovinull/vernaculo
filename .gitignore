@@ -10,6 +10,8 @@ coverage/
 
 # Local tooling
 .vernaculo-tmp/
+# Agent lab outputs (model replies; share deliberately, never by accident)
+examples/agent-lab/reports/
 *.log
 .DS_Store
 Thumbs.db

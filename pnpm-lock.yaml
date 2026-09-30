@@ -194,6 +194,27 @@ importers:
         specifier: 2.9.1
         version: 2.9.1
 
+  examples/agent-lab:
+    dependencies:
+      '@vernaculo/compiler':
+        specifier: workspace:^
+        version: link:../../packages/compiler
+      '@vernaculo/core':
+        specifier: workspace:^
+        version: link:../../packages/core
+      '@vernaculo/openai':
+        specifier: workspace:^
+        version: link:../../packages/openai
+      '@vernaculo/schema':
+        specifier: workspace:^
+        version: link:../../packages/schema
+      openai:
+        specifier: 7.23.0
+        version: 7.23.0(zod@4.6.5)
+      yaml:
+        specifier: 2.9.1
+        version: 2.9.1
+
   examples/openai:
     dependencies:
       '@vernaculo/compiler':

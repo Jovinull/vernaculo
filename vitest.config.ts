@@ -9,7 +9,7 @@ const config: ViteUserConfig = defineConfig({
   resolve: { conditions },
   ssr: { resolve: { conditions } },
   test: {
-    include: ["packages/*/test/**/*.test.ts"],
+    include: ["packages/*/test/**/*.test.ts", "examples/*/test/**/*.test.ts"],
     environment: "node",
   },
 });

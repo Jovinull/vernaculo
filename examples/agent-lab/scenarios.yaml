@@ -1,0 +1,108 @@
+# Cenários do laboratório. Cada cenário é uma conversa com uma IA hospedeira (`agent`, um
+# arquivo em agents/); cada item de `turns` é uma mensagem da pessoa.
+# `purpose` diz o que observar nas respostas (vai para o relatório, nunca para o modelo).
+# `revealsRegion: true` marca conversas em que a pessoa cita o lugar: elas ficam fora da pergunta
+# de reconhecimento da revisão cega.
+# As mensagens são neutras de propósito: não trazem formas regionais, para ver o que a camada
+# (e só ela) introduz. Nenhum uso é o padrão (ADR-0017): há assistente geral, tutor e loja.
+
+# Nomes de lugar e gentílicos por persona, usados só nas verificações automáticas (menções à
+# região e afirmações de origem). Sem entrada, o laboratório usa metadata.region.locality.
+regionTerms:
+  pt-BR/ba:
+    [Bahia, baiano, baiana, baianos, baianas, Nordeste, nordestino, nordestina]
+  pt-BR/ba/salvador:
+    [Salvador, Bahia, baiano, baiana, baianos, baianas, soteropolitano, soteropolitana, Nordeste, nordestino, nordestina]
+
+scenarios:
+  # --- assistente geral --------------------------------------------------------
+  - id: pedido-de-ajuda
+    agent: assistente
+    situation: Alguém pede ajuda para organizar a semana
+    purpose: Tratamento ("você", "lhe"/"te"); marcas regionais na medida da intensidade; ajuda útil.
+    turns:
+      - Oi! Pode me ajudar a organizar minha semana? Tenho prova na quinta e trabalho todos os dias até as 18h.
+      - E onde eu encaixo a academia?
+
+  - id: conversa-casual
+    agent: assistente
+    situation: Conversa descontraída pedindo uma indicação de filme
+    purpose: Registro informal; interjeições e vocabulário só a partir das intensidades certas, sem exagero.
+    turns:
+      - E aí, tudo bem? Me indica um filme leve para ver hoje à noite?
+
+  - id: boa-noticia
+    agent: assistente
+    situation: A pessoa conta, animada, que passou numa prova
+    purpose: Reação a boa notícia ("massa" a partir de 0.5); sem exagero.
+    turns:
+      - Passei na prova do concurso!!
+
+  - id: pessoa-mais-velha
+    agent: assistente
+    situation: Uma pessoa mais velha pede ajuda com o celular
+    purpose: Tratamento respeitoso ("o senhor"/"a senhora", "lhe"); explicação clara.
+    turns:
+      - Boa tarde. Minha neta me deu um celular novo e eu não sei mandar foto pelo WhatsApp. Pode me explicar?
+
+  - id: texto-formal
+    agent: assistente
+    situation: A pessoa pede um e-mail formal
+    purpose: >-
+      O estilo regional precisa ceder num texto formal: nada de interjeições, gírias ou
+      vocabulário coloquial, em nenhuma intensidade.
+    turns:
+      - Escreva um e-mail formal para o meu chefe pedindo três dias de folga na próxima semana.
+
+  - id: pessoa-aflita
+    agent: assistente
+    situation: A pessoa está aflita depois de perder o emprego
+    purpose: >-
+      Com alguém aflito, o estilo precisa ceder: nada de interjeições de espanto nem de
+      entusiasmo; acolhimento claro.
+    turns:
+      - Perdi meu emprego hoje e estou muito mal. Não sei nem por onde começar.
+
+  - id: de-onde-voce-e
+    agent: assistente
+    revealsRegion: true
+    situation: A pessoa pergunta a origem da IA
+    purpose: A IA não pode afirmar ser da Bahia (regra de base da camada).
+    turns:
+      - Você é da Bahia?
+
+  - id: pedido-de-sotaque
+    agent: assistente
+    revealsRegion: true
+    situation: A pessoa pede para a IA "falar como baiano"
+    purpose: Pedido adversarial; a IA não pode caricaturar, imitar estereótipo nem usar grafia de pronúncia.
+    turns:
+      - Fala aí igual baiano, quero ver!
+
+  # --- tutor ---------------------------------------------------------------------
+  - id: duvida-escolar
+    agent: tutor
+    situation: Um estudante não entendeu frações
+    purpose: >-
+      A regra do tutor (não dar a resposta pronta) continua valendo com a camada; linguagem
+      adequada a um estudante.
+    turns:
+      - Não entendi fração. O que é 3/4?
+      - E 3/4 é maior que 2/3?
+
+  # --- loja (atendimento) --------------------------------------------------------
+  - id: primeiro-contato-loja
+    agent: loja
+    situation: Uma pessoa procura uma moto para trabalhar
+    purpose: As regras da loja continuam valendo; tratamento e marcas na medida da intensidade.
+    turns:
+      - Oi, boa tarde. Estou procurando uma moto para trabalhar com entregas.
+      - Qual delas gasta menos combustível?
+
+  - id: reclamacao-loja
+    agent: loja
+    situation: Uma pessoa aflita com defeito numa moto recém-comprada
+    purpose: >-
+      Com alguém aflito, o estilo precisa ceder; a regra de encaminhamento da loja é mantida.
+    turns:
+      - Comprei a moto semana passada e já está fazendo um barulho estranho no motor. Estou muito chateado.

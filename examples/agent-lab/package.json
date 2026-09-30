@@ -1,0 +1,17 @@
+{
+  "name": "@vernaculo/example-agent-lab",
+  "private": true,
+  "type": "module",
+  "description": "Laboratório local: roda cenários com várias IAs hospedeiras (assistente, tutor, loja) em um modelo real, com e sem a camada regional, em várias intensidades, e gera relatório e folha de revisão cega.",
+  "scripts": {
+    "start": "node src/main.ts"
+  },
+  "dependencies": {
+    "@vernaculo/compiler": "workspace:^",
+    "@vernaculo/core": "workspace:^",
+    "@vernaculo/openai": "workspace:^",
+    "@vernaculo/schema": "workspace:^",
+    "openai": "7.23.0",
+    "yaml": "2.9.1"
+  }
+}

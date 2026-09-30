@@ -1,9 +1,9 @@
 # Exemplos
 
-Todos os exemplos usam os **fixtures sintéticos** de
-[`../fixtures/personas`](../fixtures/personas). Eles demonstram só o mecanismo: as
-formas "regionais" dos fixtures são marcadores inventados, não linguagem real.
-Ainda não existe nenhum pack regional revisado.
+Os exemplos de mecanismo usam os **fixtures sintéticos** de
+[`../fixtures/personas`](../fixtures/personas): as formas "regionais" dos fixtures são
+marcadores inventados, não linguagem real. O laboratório (`agent-lab/`) usa o
+rascunho real de Salvador. Ainda não existe nenhum pack regional revisado.
 
 Faça o build dos pacotes uma vez antes de rodar qualquer coisa aqui:
 
@@ -12,7 +12,7 @@ pnpm install
 pnpm build
 ```
 
-## [`openai/`](openai/) — agente de negócio + camada de persona na Responses API
+## [`openai/`](openai/) — uma IA hospedeira (um assistente de vendas fictício) + camada de persona na Responses API
 
 ```bash
 pnpm --filter @vernaculo/example-openai start          # simulação: imprime os parâmetros da requisição
@@ -22,6 +22,17 @@ OPENAI_API_KEY=... OPENAI_MODEL=... pnpm --filter @vernaculo/example-openai star
 A sua chave, o seu modelo, a sua conta: o Vernáculo nunca vê a requisição. O
 exemplo também mostra por que a persona precisa ser aplicada em toda rodada da
 conversa (`previous_response_id` não reaplica as `instructions`).
+
+## [`agent-lab/`](agent-lab/) — testar um pack com um modelo real
+
+Roda cenários com várias IAs hospedeiras (assistente geral, tutor, loja), com e sem
+a camada, em várias intensidades, e gera um relatório com sinais automáticos e uma
+folha de revisão cega para falantes da variedade. Precisa de um `.env` com a sua chave e o seu modelo (veja o
+[README](agent-lab/README.md)); sem ele, só mostra o plano.
+
+```bash
+pnpm --filter @vernaculo/example-agent-lab start
+```
 
 ## [`project-persona/`](project-persona/) — o arquivo de persona da própria empresa
 

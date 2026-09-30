@@ -20,6 +20,7 @@ histórico. O conteúdo dele foi assimilado aqui; veja
 | ver como as peças se encaixam | [architecture/overview.md](architecture/overview.md) |
 | escrever ou ler um arquivo de persona | [specification/persona-format.md](specification/persona-format.md) |
 | contribuir com um pack regional | [development/contributing-personas.md](development/contributing-personas.md) |
+| testar um pack com um modelo real | [examples/agent-lab](../examples/agent-lab/README.md) |
 | saber por que algo foi decidido | [decisions/](decisions/README.md) |
 | saber o que está feito e o que vem depois | [roadmap/roadmap.md](roadmap/roadmap.md), [roadmap/open-questions.md](roadmap/open-questions.md) |
 

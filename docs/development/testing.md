@@ -24,6 +24,7 @@ Os testes importam os fontes dos pacotes pela condição de export
 | Compilador | `packages/compiler/test/compile.test.ts` | saídas golden por intensidade; regras de base em toda intensidade; aviso de maturidade; determinismo; escape; funciona com a rede desativada |
 | Adapter da OpenAI | `packages/openai/test/openai.test.ts` | ordem da composição, imutabilidade, idempotência por requisição, sem dependência de SDK |
 | Exportador de skills | `packages/skills/test/skills.test.ts` | restrições da especificação Agent Skills, estrutura, filtragem, determinismo |
+| Laboratório de agente | `examples/agent-lab/test/checks.test.ts` | sinais automáticos: formas inteiras sem diferenciar maiúsculas e acentos, formas dentro/fora da camada, hipóteses, formas desencorajadas, afirmação de origem vs. simples menção, contagem de tratamento |
 | CLI | `packages/cli/test/cli.test.ts` | todos os comandos, códigos de saída, proteção contra sobrescrita, ida e volta do eject (a persona ejetada compila para instruções idênticas), recomendação de revisão para rascunhos e notas de licença nos arquivos ejetados (ADR-0015) |
 
 ## Convenções
