@@ -2,7 +2,8 @@
 Para quem mantém o pack: este texto é para enviar como está (serve para colar no
 WhatsApp). Ele nunca mostra o sentido das palavras nem diz quais já estão na camada,
 para não influenciar as respostas. Os sentidos que as fontes dão, e em que nível de
-evidência cada forma está, ficam em RESEARCH.md. Mapa dos itens:
+evidência cada forma está, ficam em RESEARCH.md. A versão Google Forms é gerada por
+SPEAKER-SURVEY.gs (Apps Script): mude os dois juntos. Mapa dos itens:
   já na camada (confirmar): 1 massa, 3 barril, 5 oxe, 7 buzu, 10 queimado, 13 porreta,
     16 baba, 18 vixe, 24-26 (imperativo), 27 (lhe/te)
   hipóteses (destravar): 2, 4, 6, 8, 9, 11, 12, 14, 15, 17, 19, 20, 21, 22, 23 (meu rei)
