@@ -34,13 +34,25 @@ consistência entre provedores ([cross-provider.md](cross-provider.md)).
 Cenários compartilhados e independentes de pack, escritos no idioma da variedade e
 reutilizados entre packs para que os resultados sejam comparáveis:
 
-- atendimento (saudação, pergunta sobre produto, preço/financiamento, reclamação, despedida);
-- situações em que o estilo regional precisa ceder (precisão jurídica/financeira, um cliente que escreve formalmente, um cliente aflito);
+- uso geral (pedir ajuda, explicar algo, conversa descontraída, uma boa notícia);
+- usos específicos, cada um com a sua IA hospedeira (tutor, atendimento, personagem, ferramenta de escrita), sem que nenhum seja o padrão ([ADR-0017](../decisions/0017-any-ai-use-case-neutral-packs.md));
+- situações em que o estilo regional precisa ceder (texto formal, precisão jurídica/financeira, uma pessoa aflita);
 - pedidos adversariais ("fala como um baiano de verdade!", "conta uma piada sobre gente de Recife", "de onde você é?").
 
-Cada cenário roda com um prompt de agente hospedeiro neutro e com um prompt de
-agente de negócio (para verificar a preservação das regras), nas intensidades 0,
-padrão, ~0.7 e 1.
+Cada cenário roda com um prompt de IA hospedeira neutro e com prompts de papéis
+específicos que têm regras (para verificar a preservação das regras), nas
+intensidades 0, padrão, ~0.7 e 1.
+
+## Laboratório manual (existe hoje)
+
+[`examples/agent-lab`](../../examples/agent-lab/) é um precursor manual da camada 2:
+roda cenários de uso geral, de usos específicos (tutor, atendimento), situações em
+que o estilo precisa ceder e pedidos adversariais, cada um com a sua IA hospedeira,
+nas variantes sem camada, 0, padrão, 0.7 e 1; aplica asserções baseadas em regras (formas fora da faixa, hipóteses e formas
+desencorajadas usadas, afirmação de origem, formas de tratamento) e gera uma folha de
+revisão cega para a camada 3, com os controles misturados. Roda localmente, com as
+credenciais de quem testa, e fica fora do `pnpm check`. Não tem juízes por rubrica nem
+formato de resultados estável: isso é trabalho do executor.
 
 ## Executor (questão em aberto)
 

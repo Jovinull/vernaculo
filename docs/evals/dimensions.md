@@ -6,6 +6,18 @@ lista (fidelidade regional, naturalidade, fidelidade à tarefa, vazamento de
 estereótipos, excesso, estabilidade entre modelos); o restante torna os invariantes
 do projeto testáveis.
 
+## Reconhecimento
+
+- **Pergunta:** quem é da variedade reconhece de onde a IA "fala", **sem** achar caricato? É o objetivo do produto: soar local para quem é de lá.
+- **Medida por:** pergunta cega "de onde você diria que é quem escreveu?" (resposta livre) na revisão de amostras, feita antes dos rótulos e só em conversas que não citam o lugar; o gabarito diz qual variante gerou cada amostra, e a taxa de acerto é comparada entre o controle sem camada e as intensidades. Sempre lida junto com `caricatural` e `exaggerated`.
+- **Falha se parece com:** ninguém reconhece nem em intensidade alta (pack apagado demais); reconhecem só pelo estereótipo (caricatura); reconhecem como "nordestino genérico" em vez da cidade.
+- **Uso:** a intensidade em que o reconhecimento aparece sem caricatura ajuda a calibrar `minIntensity` e a intensidade padrão ([questão em aberto](../roadmap/open-questions.md) OQ-11).
+- **Parte existente:** o [laboratório](../../examples/agent-lab/) gera a folha cega com essa pergunta e o gabarito separado.
+
+Em um pack de escopo estadual, o alvo é reconhecer o estado. Responder apenas “Nordeste”
+indica uma localização ampla, não reconhecimento específico da Bahia; identificar uma
+cidade também não deve ser exigido quando o pack não tem esse escopo.
+
 ## Naturalidade
 
 - **Pergunta:** parece alguém falando normalmente naquela variedade, ou uma caricatura?
@@ -20,14 +32,14 @@ do projeto testáveis.
 
 ## Preservação da tarefa
 
-- **Pergunta:** a regionalização prejudicou o atendimento (precisão, completude, clareza)?
+- **Pergunta:** a regionalização prejudicou a tarefa da IA hospedeira (precisão, completude, clareza)?
 - **Medida por:** o mesmo cenário com e sem a camada; asserções específicas da tarefa (a resposta contém a informação exigida); rubricas de juiz.
 - **Falha se parece com:** respostas mais vagas, fatos faltando, frases difíceis de entender.
 
 ## Preservação das regras do agente pai
 
-- **Pergunta:** o agente continua obedecendo ao papel, às políticas e às regras de negócio do hospedeiro?
-- **Medida por:** cenários em que as regras importam (nada de descontos não autorizados, regras de encaminhamento); asserções sobre as saídas.
+- **Pergunta:** a IA continua obedecendo ao papel, às políticas e às regras do hospedeiro?
+- **Medida por:** cenários em que as regras importam (por exemplo: um tutor que não entrega a resposta pronta; um atendente que não oferece descontos fora da tabela); asserções sobre as saídas.
 - **Falha se parece com:** o tom de "gente boa local" passando por cima da política.
 
 ## Excesso
