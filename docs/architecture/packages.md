@@ -38,7 +38,8 @@ Ponto de entrada principal (independente de runtime):
 - `validatePersonaDocument(data)` → `{ ok, document } | { ok: false, issues }` (estrutura + regras do documento).
 - `resolvePersona(id, source)` / `resolvePersonaDocument(document, source, origin)` → `ResolvedPersona { document (achatado, canônico), lineage }`.
 - `createMemorySource(record)` — uma `PersonaSource` para testes, bundlers e edge runtimes.
-- `buildIR(resolved, { intensity })` → `PersonaIR` congelada; `assertIntensity(value)`.
+- `buildIR(resolved, { intensity })` → `PersonaIR` congelada (com o grupo `corroborated`, tipo `CorroboratedFeatures`); `assertIntensity(value)`.
+- `CORROBORATED_MIN_SOURCES` (2) e `CORROBORATED_MIN_INTENSITY` (0.5): os limites normativos do nível `corroborated`.
 - `serializePersonaYaml(document, { header })`, `canonicalizeDocument(document)`.
 - `VernaculoError` (com `code` e `issues[]`), `IssueCode`, `formatIssue`.
 
@@ -57,7 +58,7 @@ em [inheritance-and-composition.md](../specification/inheritance-and-composition
 ## `@vernaculo/compiler`
 
 - `compilePersona(resolved, { intensity })` → `CompiledPersona { instructions, metadata }`.
-- `compile(ir)`, `renderInstructions(ir)` (Markdown puro), `groundRules(ir)`, `describeIntensity()`, `maturityNotice()`.
+- `compile(ir)`, `renderInstructions(ir)` (Markdown puro), `groundRules(ir)`, `describeIntensity()`, `maturityNotice()`, `UNCONFIRMED_GUIDANCE` (a orientação da seção de formas não confirmadas).
 - `INSTRUCTIONS_FORMAT = "vernaculo-instructions/v1alpha1"` — incrementado quando o layout das instruções muda de forma incompatível.
 
 ## `@vernaculo/openai`

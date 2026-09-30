@@ -18,6 +18,7 @@ ResolvedPersona ──buildIR({ intensity })──► PersonaIR ──compile()�
 - a identidade da persona (id, nome, idioma, versão, **maturidade efetiva**, licença, linhagem);
 - a `intensity` selecionada e a política de ortografia (`phoneticSpelling`, padrão `avoid`);
 - os traços selecionados: vocabulário (preferido, contextual), marcadores discursivos, padrões de frase, convenções (formas de tratamento, saudações, confirmações, discordâncias, despedidas), exemplos;
+- em `corroborated`, com a mesma forma de agrupamento, os traços selecionados cuja evidência é `corroborated` — eles nunca aparecem nas listas principais, para que todo target os apresente como não confirmados ([ADR-0018](../decisions/0018-corroborated-evidence-level.md));
 - restrições sempre presentes: formas desencorajadas e antipadrões;
 - todas as fontes declaradas;
 - contagens do que foi omitido (abaixo da intensidade, hipóteses), por transparência.
@@ -46,7 +47,9 @@ semântica de seleção.
    - não forçar traços em toda frase;
    - ortografia padrão, a menos que a persona permita grafia fonética.
 4. Orientação de **intensidade** (veja abaixo).
-5. Os traços selecionados (seções vazias são omitidas), depois **Avoid** e **Never produce output like this**.
+5. Os traços selecionados (seções vazias são omitidas).
+6. **Forms not yet confirmed by speakers**, só quando houver traços `corroborated` selecionados: uma orientação fixa (`UNCONFIRMED_GUIDANCE` — são formas descritas por várias fontes públicas mas ainda não confirmadas; usar raramente, só em conversa claramente informal, no máximo uma por resposta, nunca no lugar de uma forma confirmada) seguida das formas.
+7. **Avoid** e **Never produce output like this**.
 
 O texto de enquadramento é em inglês (os modelos o seguem de forma confiável em
 qualquer idioma); o conteúdo da persona (formas, exemplos) fica no idioma da

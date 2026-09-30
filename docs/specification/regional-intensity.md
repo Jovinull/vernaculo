@@ -15,6 +15,9 @@ linguagem neutra                 variedade fortemente marcada
 - **Regras de seleção** (aplicadas uma única vez, na IR):
   1. Na intensidade **0**, nenhum traço de forma usada e nenhum exemplo é renderizado: a saída é linguagem neutra mais restrições.
   2. Traços com `evidence: hypothesis` **nunca** são renderizados, em nenhuma intensidade.
+     Traços `corroborated` seguem a regra 3, mas o formato exige `minIntensity` ≥ 0.5
+     para eles, e a IR os entrega separados para que sejam apresentados como não
+     confirmados ([ADR-0018](../decisions/0018-corroborated-evidence-level.md)).
   3. Um traço é renderizado quando intensidade > 0 e seu `minIntensity` (padrão 0) ≤ intensidade.
   4. Um exemplo é renderizado quando intensidade > 0 e sua `intensity` (padrão 0) ≤ intensidade.
   5. Formas desencorajadas e antipadrões são **sempre** renderizados.

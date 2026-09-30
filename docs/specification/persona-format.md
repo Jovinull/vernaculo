@@ -95,7 +95,7 @@ Todo traço renderizado tem `evidence` (obrigatório) e, opcionalmente, `sources
 | `antiPatterns` | `id` | `text`, `category`, `explanation` (todos obrig.) | saídas que nunca devem ser produzidas |
 | `provenance.sources` | `id` | `type`, `title`, `usage` (obrig.); `url`, `citation`, `license`, `accessed` | de onde vem a evidência |
 
-`evidence`: `attested` | `reported` | `hypothesis` | `synthetic` — veja [provenance.md](provenance.md).
+`evidence`: `attested` | `reported` | `corroborated` | `hypothesis` | `synthetic` — veja [provenance.md](provenance.md).
 `category` dos antipadrões: `caricature`, `stereotype`, `overuse`, `phonetic-spelling`,
 `invented-regionalism`, `wrong-region`, `register-mismatch`, `other`.
 
@@ -114,6 +114,8 @@ No nível do documento (verificadas em cada documento):
 | `duplicate-key` | As chaves DEVEM ser únicas dentro de cada lista. |
 | `conflicting-forms` | Dentro de um documento, uma forma NÃO DEVE ser ao mesmo tempo usada (em qualquer lista de formas usadas) e desencorajada. |
 | `evidence-without-source` | Traços `attested` e `reported` DEVEM citar pelo menos uma fonte. |
+| `insufficient-corroboration` | Traços `corroborated` DEVEM citar pelo menos 2 fontes distintas. |
+| `corroborated-below-min-intensity` | Traços `corroborated` DEVEM declarar `minIntensity` ≥ 0.5. |
 
 Na linhagem e na persona resolvida (verificadas durante a resolução):
 

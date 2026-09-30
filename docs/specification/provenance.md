@@ -10,12 +10,27 @@ usuários e modelos.
 | --- | --- | --- | --- |
 | `attested` | documentado em fontes citadas (atlas, corpora, estudos, obras de referência) | sim | ≥ 1 fonte |
 | `reported` | relatado por falantes ou revisores (rodadas de revisão são citadas como fontes `speaker-review`) | sim | ≥ 1 fonte |
+| `corroborated` | usado só quando não há fonte para `attested`; duas fontes públicas independentes, com origens de evidência distintas e pelo menos uma local, concordam no sentido; sem revisão estruturada por falantes | sim, **à parte**, identificado como não validado por revisão de falantes | ≥ 2 fontes distintas; `minIntensity` ≥ 0.5 |
 | `hypothesis` | plausível, mas não confirmado; mantido para pesquisa | **nunca** | — |
 | `synthetic` | dado de teste inventado | sim, mas só em personas `fixture` | maturidade efetiva `fixture` |
 
 É com essa separação que o projeto mantém evidência e hipótese distintas e aplica o
 "nunca inventar regionalismos": uma forma não confirmada pode ser registrada sem
 jamais chegar a um modelo.
+
+`corroborated` ([ADR-0018](../decisions/0018-corroborated-evidence-level.md)) cobre o
+meio-termo: formas que várias fontes públicas descrevem do mesmo jeito, mas que
+falantes ainda não validaram por uma rodada de revisão (tipicamente gírias e
+expressões correntes, que a literatura acadêmica quase não documenta). O rótulo
+indica convergência documental; não prova frequência, exclusividade regional,
+distribuição por geração ou naturalidade para todo falante. Elas chegam ao modelo
+com três travas:
+só a partir da intensidade 0.5, numa seção separada que as identifica como não
+confirmadas e com a instrução de usá-las raramente. Os critérios para aceitar as
+fontes (veículos diferentes, pelo menos uma local, mesmo sentido; humor, memes,
+música e dicionários colaborativos não contam; "ímãs de caricatura" continuam
+hipótese) estão na [metodologia](../linguistic/methodology.md#evidência). A revisão
+por falantes promove essas formas a `reported` ou as rebaixa.
 
 ## Fontes
 

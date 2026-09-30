@@ -23,7 +23,7 @@ review". As dicas nunca mudam o código de saída.
 | Comando | Para que serve |
 | --- | --- |
 | `vernaculo list [--root ...] [--json]` | lista as personas das raízes (duplicatas sombreadas são marcadas) |
-| `vernaculo inspect <persona> [--intensity x] [--json]` | linhagem, maturidade, licença, intensidade padrão, o que uma intensidade renderiza e omite; `--json` imprime a persona achatada e a linhagem |
+| `vernaculo inspect <persona> [--intensity x] [--json]` | linhagem, maturidade, licença, intensidade padrão, o que uma intensidade renderiza (incluindo "unconfirmed forms", as formas `corroborated`) e omite; `--json` imprime a persona achatada e a linhagem |
 | `vernaculo validate [personas...]` | valida as personas indicadas, ou todas as personas das raízes; sai com 1 se alguma falhar |
 | `vernaculo compile <persona> [--target markdown\|openai] [--intensity x] [--agent arquivo] [--out arquivo]` | imprime as instruções; `openai` imprime JSON `{ instructions, metadata }` e pode compor as instruções do agente vindas de `--agent` |
 | `vernaculo export <persona> --target skill [--intensity x] [--out dir] [--force]` | grava um diretório de Agent Skill em `<out>/vernaculo-<slug-do-id>/`; recusa sobrescrever um diretório não vazio sem `--force` |

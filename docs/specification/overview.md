@@ -81,7 +81,7 @@ Códigos estáveis, legíveis por máquina, compartilhados entre implementaçõe
 | Etapa | Códigos |
 | --- | --- |
 | Parse | `yaml-syntax`, `non-json-value`, `schema-violation` |
-| Regras do documento | `language-mismatch`, `duplicate-key`, `conflicting-forms`, `evidence-without-source` |
+| Regras do documento | `language-mismatch`, `duplicate-key`, `conflicting-forms`, `evidence-without-source`, `insufficient-corroboration`, `corroborated-below-min-intensity` |
 | Resolução | `invalid-id`, `persona-not-found`, `parent-not-found`, `id-mismatch`, `inheritance-cycle`, `inheritance-too-deep`, `lineage-language-mismatch`, `unknown-source`, `synthetic-outside-fixture`, `missing-default-intensity` |
 | Opções | `invalid-intensity` |
 
