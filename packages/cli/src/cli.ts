@@ -325,6 +325,7 @@ function summarize(resolved: ResolvedPersona, ir: PersonaIR): string {
     ["discourse markers", count(ir.discourseMarkers)],
     ["sentence patterns", count(ir.morphosyntax)],
     ["conventions", count(Object.values(ir.pragmatics).flat())],
+    ["unconfirmed forms", `${countCorroborated(ir)} (evidence: corroborated)`],
     ["examples", count(ir.examples)],
     ["anti-patterns", count(ir.antiPatterns)],
     ["sources", count(ir.sources)],
@@ -335,6 +336,17 @@ function summarize(resolved: ResolvedPersona, ir: PersonaIR): string {
   ];
   const width = Math.max(...rows.map(([label]) => label.length));
   return `${rows.map(([label, value]) => `${label.padEnd(width)}  ${value}`).join("\n")}\n`;
+}
+
+function countCorroborated(ir: PersonaIR): number {
+  const { vocabulary, discourseMarkers, morphosyntax, pragmatics } = ir.corroborated;
+  return [
+    vocabulary.preferred,
+    vocabulary.contextual,
+    discourseMarkers,
+    morphosyntax,
+    ...Object.values(pragmatics),
+  ].flat().length;
 }
 
 function ejectFiles(resolved: ResolvedPersona, ir: PersonaIR): { path: string; content: string }[] {
