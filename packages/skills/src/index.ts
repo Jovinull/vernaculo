@@ -120,7 +120,10 @@ function reference(
 }
 
 function vocabularyReference(ir: PersonaIR): SkillFile | undefined {
-  const { preferred, contextual, discouraged } = ir.vocabulary;
+  const { discouraged } = ir.vocabulary;
+  // Corroborated forms are listed with their evidence; SKILL.md flags them as unconfirmed.
+  const preferred = [...ir.vocabulary.preferred, ...ir.corroborated.vocabulary.preferred];
+  const contextual = [...ir.vocabulary.contextual, ...ir.corroborated.vocabulary.contextual];
   return reference("references/vocabulary.md", "Vocabulary", [
     [
       "Preferred",
@@ -150,14 +153,14 @@ function discourseReference(ir: PersonaIR): SkillFile | undefined {
   return reference("references/discourse.md", "Discourse and sentence patterns", [
     [
       "Discourse markers",
-      ir.discourseMarkers.flatMap((i) => [
+      [...ir.discourseMarkers, ...ir.corroborated.discourseMarkers].flatMap((i) => [
         `- **${md(i.form)}** — ${md(i.function)}`,
         ...details(i),
       ]),
     ],
     [
       "Sentence patterns",
-      ir.morphosyntax.flatMap((i) => [
+      [...ir.morphosyntax, ...ir.corroborated.morphosyntax].flatMap((i) => [
         `- \`${i.id}\` — ${md(i.description)}${i.example ? ` Example: "${md(i.example)}"` : ""}`,
         ...details(i),
       ]),
@@ -166,12 +169,16 @@ function discourseReference(ir: PersonaIR): SkillFile | undefined {
 }
 
 function pragmaticsReference(ir: PersonaIR): SkillFile | undefined {
+  const both = (name: keyof PersonaIR["pragmatics"]) => [
+    ...ir.pragmatics[name],
+    ...ir.corroborated.pragmatics[name],
+  ];
   const groups: [string, PersonaIR["pragmatics"]["greetings"]][] = [
-    ["Forms of address", ir.pragmatics.addressForms],
-    ["Greetings", ir.pragmatics.greetings],
-    ["Acknowledgements", ir.pragmatics.acknowledgements],
-    ["Disagreements", ir.pragmatics.disagreements],
-    ["Closings", ir.pragmatics.closings],
+    ["Forms of address", both("addressForms")],
+    ["Greetings", both("greetings")],
+    ["Acknowledgements", both("acknowledgements")],
+    ["Disagreements", both("disagreements")],
+    ["Closings", both("closings")],
   ];
   return reference(
     "references/pragmatics.md",
