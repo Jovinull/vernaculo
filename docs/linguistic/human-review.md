@@ -37,7 +37,10 @@ nunca mostra o sentido que as fontes dão nem diz quais formas já estão no pac
 duas coisas misturadas na mesma lista), para não induzir a resposta; o sentido vem da
 própria pessoa e é comparado depois com o dossiê. Traços gramaticais entram como
 escolha entre variantes ("me diga" ou "me diz"?). O texto é escrito para ser colado
-num aplicativo de mensagens (listas numeradas, sem tabelas). É o caminho para transformar hipóteses em
+num aplicativo de mensagens (listas numeradas, sem tabelas). Opcionalmente, um script
+Apps Script ao lado (`SPEAKER-SURVEY.gs`) cria o mesmo questionário como Google Form,
+com as respostas numa planilha; ele roda na conta Google de quem coordena a revisão,
+sem nenhuma infraestrutura do Vernáculo, e não coleta e-mail. É o caminho para transformar hipóteses em
 evidência `reported`, sobretudo gírias e expressões que a literatura acadêmica
 quase não documenta.
 

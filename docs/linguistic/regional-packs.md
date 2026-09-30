@@ -67,7 +67,8 @@ personas/pt-BR/ba/
 personas/pt-BR/ba/salvador/
 ├── persona.yaml
 ├── RESEARCH.md
-└── SPEAKER-SURVEY.md     # questionário para falantes (recomendado)
+├── SPEAKER-SURVEY.md     # questionário para falantes (recomendado)
+└── SPEAKER-SURVEY.gs     # o mesmo questionário como Google Form + planilha (Apps Script)
 ```
 
 O `RESEARCH.md` explica de onde veio cada decisão, o que ficou de fora, as licenças e
