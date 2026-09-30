@@ -60,3 +60,4 @@ Escreva um ADR quando uma mudança:
 | [0015](0015-human-review-recommended-not-mandatory.md) | Revisão humana sempre recomendada, nunca obrigatória | Aceito |
 | [0016](0016-documentation-in-portuguese.md) | Documentação e metadados do projeto em português | Aceito |
 | [0017](0017-any-ai-use-case-neutral-packs.md) | A camada serve a qualquer IA; packs não pressupõem caso de uso | Aceito |
+| [0018](0018-corroborated-evidence-level.md) | Nível de evidência `corroborated`, renderizado à parte e só em intensidade moderada | Aceito |
