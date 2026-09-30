@@ -1,7 +1,7 @@
 {
   "name": "vernaculo",
   "version": "0.0.0",
-  "description": "CLI do Vernáculo: inspeciona, valida, compila, exporta e ejeta personas regionais para agentes de IA. Roda localmente; nenhum serviço do Vernáculo envolvido.",
+  "description": "CLI do Vernáculo: inspeciona, valida, compila, exporta e ejeta personas regionais para qualquer IA. Roda localmente; nenhum serviço do Vernáculo envolvido.",
   "license": "Apache-2.0",
   "keywords": [
     "vernaculo",
