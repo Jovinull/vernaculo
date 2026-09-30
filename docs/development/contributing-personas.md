@@ -18,9 +18,13 @@ Leia antes: [metodologia](../linguistic/methodology.md),
 2. Acrescente as fontes em `provenance.sources` com `license`, `usage` e `accessed`.
 3. Acrescente os traços. Cada um precisa de `evidence`; `attested`/`reported` precisam de `sources`. Mantenha formas não confirmadas como `hypothesis` (nunca renderizadas).
 4. Defina `minIntensity` nos traços marcados; defina `regionality.defaultIntensity` para o uso típico do pack (geralmente sutil).
-5. Acrescente `examples` positivos (com `neutral`, `text` e `intensity`) em situações realistas, começando pelo atendimento.
+5. Acrescente `examples` positivos (com `neutral`, `text` e `intensity`) em situações realistas e variadas, sem pressupor um caso de uso ([ADR-0017](../decisions/0017-any-ai-use-case-neutral-packs.md)).
 6. Acrescente `antiPatterns`: excesso, grafia fonética, atitudes estereotipadas, formas de outras regiões.
-7. Valide e observe a saída:
+7. Escreva `RESEARCH.md` ao lado do `persona.yaml` (veja o de
+   [Salvador](../../personas/pt-BR/ba/salvador/RESEARCH.md)): escopo, critério de
+   evidência, o que cada fonte diz, o que entrou, o que ficou como hipótese ou foi
+   descartado, licenças, perguntas para revisores e referências completas.
+8. Valide e observe a saída:
 
    ```bash
    pnpm build
@@ -30,12 +34,19 @@ Leia antes: [metodologia](../linguistic/methodology.md),
    pnpm vernaculo compile pt-BR/<...> --intensity 1
    ```
 
-8. Abra um pull request descrevendo as fontes, as lacunas de evidência e os riscos conhecidos.
+9. Escreva um `SPEAKER-SURVEY.md` (veja o de
+   [Salvador](../../personas/pt-BR/ba/salvador/SPEAKER-SURVEY.md)) com as formas do
+   pack e as hipóteses, para confirmação por falantes.
+10. Teste com um modelo real e gere amostras para revisores com o
+   [laboratório local](../../examples/agent-lab/) (a sua chave, o seu modelo).
+11. Abra um pull request descrevendo as fontes, as lacunas de evidência e os riscos conhecidos.
 
 ## Checklist de revisão
 
 - [ ] Nenhuma personalidade, atitude, humor, classe, escolaridade, profissão, religião, política ou comportamento — em lugar nenhum, incluindo exemplos e notas.
+- [ ] Nenhum caso de uso pressuposto: nada de "cliente", "venda" ou "atendimento" como moldura; adequação descrita por registro e relação.
 - [ ] Todo traço renderizado tem evidência; `attested`/`reported` citam fontes; nenhum conteúdo `synthetic`.
+- [ ] O `RESEARCH.md` existe e bate com o `persona.yaml` (mesmas fontes, mesmas decisões).
 - [ ] O uso de cada fonte bate com a licença dela; nada copiado que não possa ser redistribuído.
 - [ ] A granularidade é justificada por evidência (e não "o estado inteiro" por padrão).
 - [ ] A saída na intensidade 1 ainda não é caricatura; a intensidade 0 é neutra.

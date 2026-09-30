@@ -8,22 +8,33 @@ número mínimo de revisores, limiar de concordância nem portão de revisão pa
 publicar ou usar um pack. Tudo nesta página é orientação para fazer uma boa
 revisão. A CLI recomenda revisão sempre que lida com uma persona `draft`.
 
-Status: **processo definido, ainda não executado** (não existe pack real). O formato
-de registro abaixo é uma proposta; ele vira schema quando a primeira rodada de
-revisão acontecer.
+Status: **processo definido, ainda não executado**. Os rascunhos reais
+(`pt-BR/ba` estadual e `pt-BR/ba/salvador`) ainda não passaram por revisão de
+falantes. Para preparar amostras, o
+[laboratório local](../../examples/agent-lab/) gera as amostras e a folha de revisão
+cega. O formato de registro abaixo é uma proposta; ele vira schema quando a primeira
+rodada de revisão acontecer.
 
 ## O que os revisores veem
 
 Amostras geradas localmente a partir de um pack (pela pessoa que coordena a
 revisão, com as próprias credenciais de provedor ou modelos locais), cobrindo:
 
-- cenários padrão (atendimento primeiro: saudação, pergunta sobre produto, pergunta sobre preço/financiamento, reclamação, despedida);
+- cenários variados, com mais de um tipo de IA hospedeira (assistente geral, tutor, atendimento...): pedir ajuda, explicar algo, conversa descontraída, texto formal, alguém aflito, pedidos adversariais;
 - várias intensidades: 0 (controle), a padrão do pack, ~0.7 e 1;
 - mais de um provedor/modelo quando possível (veja [cross-provider.md](../evals/cross-provider.md));
-- controles neutros misturados, para que os revisores não sejam induzidos a encontrar traços regionais em tudo.
+- controles neutros misturados, para que os revisores não sejam induzidos a encontrar traços regionais em tudo;
+- a pergunta cega de **reconhecimento** ("de onde você diria que é quem escreveu?"), feita antes dos rótulos e só nas conversas que não citam o lugar; a folha não revela a variedade ([dimensões](../evals/dimensions.md#reconhecimento)).
 
 Os revisores também revisam diretamente o conteúdo do pack: cada forma, seu
-significado, contexto e exemplos.
+significado, contexto e exemplos. Para isso, o pack pode trazer um
+**questionário para falantes** (`SPEAKER-SURVEY.md`, como o de
+[Salvador](../../personas/pt-BR/ba/salvador/SPEAKER-SURVEY.md)): para cada forma já
+no pack ou ainda hipótese, "você usa?" e "numa IA, soaria natural, forçado ou
+caricato?", mais perguntas abertas sobre o que faz alguém ser reconhecido como dali
+e o que é só estereótipo de fora. É o caminho para transformar hipóteses em
+evidência `reported`, sobretudo gírias e expressões que a literatura acadêmica
+quase não documenta.
 
 ## Rótulos
 
@@ -78,6 +89,7 @@ reviewer:
 items:
   - sample: s-042              # id de uma amostra gerada, guardada com a rodada
     intensity: 0.3
+    recognizedAs: Salvador     # resposta livre à pergunta de reconhecimento
     labels: [natural]
   - form: "..."                # uma forma específica do pack
     labels: [exaggerated]

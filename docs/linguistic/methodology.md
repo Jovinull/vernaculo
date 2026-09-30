@@ -41,8 +41,10 @@ exemplo, entre Bahia e Sergipe).
 
 Por isso:
 
-- Comece pela unidade mais específica para a qual há evidência — geralmente uma cidade (`pt-BR/ba/salvador`), não um estado.
-- Crie personas mais amplas (`pt-BR/ba`) só se houver evidência de traços compartilhados em toda aquela área, e compartilhe-os com `extends` explícito, nunca pelo caminho do id.
+- Escolha o escopo que a pesquisa consegue sustentar. Se o produto começar por um estado, limite a camada a formas explicitamente associadas a esse estado; não a apresente como voz uniforme nem copie automaticamente traços da capital.
+- Um rótulo lexicográfico como `Reg (BA)` pode sustentar a disponibilidade contextual de uma forma no pack estadual, mas não mede frequência, distribuição por cidade ou uso por todos. Regras gramaticais e padrões de frequência estaduais precisam de dados de várias localidades.
+- Um pack de escopo mais amplo pode ser uma seleção curta de opções bem documentadas, em vez de um retrato completo. Registre o que ficou de fora e por quê.
+- Componha níveis (`pt-BR/ba` → `pt-BR/ba/salvador`) apenas com `extends` explícito e revisão da sobreposição; o caminho do id nunca cria herança.
 - Variedades que não seguem fronteiras administrativas (a conversa citou o Recôncavo, o sul da Bahia, o interior de Sergipe) podem ser representadas com slugs próprios **quando houver evidência**. Nenhuma variedade é inventada antecipadamente.
 - A variação urbana vs. rural, de idade, de classe e de registro dentro de uma localidade é real; a v1alpha1 não tem modelagem dedicada para ela além da intensidade e das notas. A modelagem de registro é uma questão em aberto.
 
@@ -56,8 +58,19 @@ Cada traço precisa de um nível de evidência ([provenance.md](../specification
 4. Nunca use como evidência texto gerado por IA, piadas, memes, estereótipos de dublagem/novela ou "listas de gírias regionais".
 
 Registre em `notes`, para cada traço, o alcance da evidência (quais falantes, qual
-período, qual contexto) quando for relevante, e prefira o uso contemporâneo para
-agentes que conversam com os clientes de hoje.
+período, qual contexto) quando for relevante, e prefira o uso contemporâneo, que é
+o que uma IA escrevendo hoje precisa.
+
+## Nenhum caso de uso pressuposto
+
+Um pack descreve a variedade, não um uso: ele serve a assistentes, tutores,
+personagens, ferramentas de escrita, atendimento ou qualquer outra IA que escreva na
+língua ([ADR-0017](../decisions/0017-any-ai-use-case-neutral-packs.md)). Quando a
+adequação de uma forma depende da situação, descreva-a pelo **registro e pela
+relação** — formal/informal, interlocutor desconhecido, mais velho ou próximo,
+situação de problema ou de celebração —, nunca por papel ("cliente", "venda").
+Restrições próprias de um uso (o guia de estilo de uma empresa, por exemplo) ficam
+na IA hospedeira ou numa persona de projeto com `extends`.
 
 ## Fontes e licenças
 
@@ -68,7 +81,7 @@ Descrever um traço com suas próprias palavras, com citação, é o caso normal
 
 ## Exemplos e antipadrões
 
-- Exemplos positivos mostram uma frase neutra e a mesma frase com a camada aplicada, em uma intensidade declarada, em situações realistas (atendimento primeiro).
+- Exemplos positivos mostram uma frase neutra e a mesma frase com a camada aplicada, em uma intensidade declarada, em situações realistas e variadas (pedir ajuda, explicar algo, conversa descontraída, situação formal), sem pressupor um caso de uso.
 - Antipadrões mostram o que nunca deve ser produzido: empilhar marcadores, grafia fonética, atitudes estereotipadas, formas de outra região, palavras inventadas, registro errado.
 
 ## Revisão e avaliação
@@ -80,4 +93,5 @@ Descrever um traço com suas próprias palavras, com citação, é o caso normal
 ## Packs iniciais
 
 Salvador/BA, Aracaju/SE, Recife/PE e São Paulo/SP — veja [regional-packs.md](regional-packs.md).
-A pesquisa para eles **não começou**; o repositório contém apenas fixtures sintéticos.
+Salvador tem um rascunho baseado em pesquisa bibliográfica, ainda sem revisão por
+falantes; a pesquisa dos outros três **não começou**.

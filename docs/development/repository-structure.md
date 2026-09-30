@@ -19,7 +19,7 @@ vernaculo/
 │   ├── openai/                # @vernaculo/openai
 │   ├── skills/                # @vernaculo/skills
 │   └── cli/                   # vernaculo (CLI)
-├── personas/                  # a biblioteca pública de personas (vazia: ainda não há pack real)
+├── personas/                  # biblioteca pública; packs reais com pesquisa ficam aqui
 ├── fixtures/personas/         # personas SINTÉTICAS para testes e exemplos
 ├── examples/                  # exemplos executáveis (usam fixtures)
 ├── ideia.txt                  # conversa de concepção (registro histórico; não é fonte da verdade)
@@ -35,11 +35,11 @@ Cada pacote tem: `src/` (com `index.ts`), `test/`, `package.json`, `tsconfig.jso
 | Esboço | Agora | Motivo |
 | --- | --- | --- |
 | `schemas/persona.schema.json` (antes: `spec/persona.schema.json`) | `schemas/v1alpha1/persona.schema.json` | um diretório por versão da especificação, com a sua suíte de conformidade |
-| `personas/pt-BR/{base,ba/salvador,se/aracaju,pe/recife,sp/sao-paulo}` | só `personas/README.md` | nenhum pack foi pesquisado ainda; nada de packs placeholder |
+| `personas/pt-BR/{base,ba/salvador,se/aracaju,pe/recife,sp/sao-paulo}` | `personas/pt-BR/ba/` (Bahia estadual) e `personas/pt-BR/ba/salvador/` (recorte) | só existem os escopos pesquisados; nada de packs placeholder nem de base `pt-BR` |
 | `packages/mcp` "posteriormente" | não criado | trabalho futuro; documentado em vez de criado como esqueleto |
 | `packages/eval` (esboço inicial) | não criado | ainda não há executor de evals; a estratégia está documentada |
 | `evals/` | não criado | será criado com a primeira suíte de evals real |
-| `examples/{openai, openai-agents, raw-prompt, skill}` | `examples/openai`, `examples/project-persona` e comandos em `examples/README.md` | só exemplos executáveis; prompt simples e skill são um único comando da CLI |
+| `examples/{openai, openai-agents, raw-prompt, skill}` | `examples/openai`, `examples/project-persona`, `examples/agent-lab` e comandos em `examples/README.md` | só exemplos executáveis; prompt simples e skill são um único comando da CLI |
 | — | `fixtures/personas` | dados sintéticos compartilhados, separados da biblioteca para nunca serem confundidos com packs reais |
 | — | `schemas/conformance/` | torna a especificação implementável em outras linguagens |
 
