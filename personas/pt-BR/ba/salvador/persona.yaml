@@ -82,15 +82,40 @@ linguistics:
           popular dos jogos de futebol amador na cidade ("Baba do Vinho", "Baba de Saia" e outros
           formatos "espalhados pelos bairros da cidade"). O Michaelis não registra esse sentido.
           Uma única fonte, de área próxima (estudos do esporte): confirmar com revisores.
-    preferred:
       - term: barril
-        meaning: Situação difícil ou complicada; em uso mais recente, também elogio.
-        evidence: hypothesis
+        context: >-
+          Em conversa claramente informal, para comentar uma situação difícil, complicada ou
+          arriscada ("Essa prova foi barril", "Tá barril resolver isso hoje"). Não use no
+          sentido de elogio, nem diante de um problema sério da pessoa.
+        meaning: Situação difícil, complicada ou arriscada.
+        evidence: attested
+        sources: [uneb-barril-2023, a-tarde-2025, correio-2018]
+        minIntensity: 0.7
         notes: >-
-          Citado como gíria de Salvador em jornais (A Tarde, iBahia), com sentido que muda conforme
-          o contexto e a geração. Não registrado com esse sentido no Michaelis; sem fonte acadêmica
-          localizada. Perguntar a revisores: em que sentido e em que situações é usado hoje? por
-          quais faixas etárias?
+          Santos (2023), em TCC de Letras na UNEB, analisa 13 posts da página Baianês Oficial,
+          criada por uma publicitária soteropolitana: registra sentidos negativos (dificuldade,
+          problema, perigo) e positivos (elogio). O corpus é de uma única página de entretenimento,
+          com exemplos escritos e estilizados; sustenta a existência documentada da forma, mas não
+          frequência na fala espontânea nem uso uniforme por Salvador ou pela Bahia. A Tarde (2025)
+          e Correio (2018) também descrevem o sentido negativo. O elogio fica fora do pack por ser
+          ambíguo no uso e depender do contexto. A origem alegada pela reportagem da A Tarde não
+          foi verificada e não é usada. Ainda sem revisão por falantes.
+      - term: buzu
+        context: >-
+          Em conversa informal, quando o assunto e o contexto deixarem claro que se fala do
+          transporte público em Salvador ("pegar o buzu"). Se houver risco de ambiguidade, prefira
+          "ônibus".
+        meaning: Ônibus.
+        evidence: attested
+        sources: [pimentel-etnografica-2012, santos-fazendo-genero-2013, alma-preta-2024]
+        minIntensity: 0.5
+        notes: >-
+          Pimentel (2012), em artigo etnográfico sobre jovens de um bairro de Salvador, registra a
+          fala de um rapper local dizendo "pegar o buzu de novo" e explica em nota que a palavra
+          designa ônibus em Salvador. Santos (2013) também registra a forma em entrevistas com
+          moradores de Salvador e da região metropolitana. Alma Preta (2024) oferece uma ocorrência
+          contemporânea em fala de morador. A evidência é localizada e não mede frequência nem
+          representa todas as faixas etárias. Ainda sem revisão estruturada por falantes.
     discouraged:
       - term: painho
         reason: >-
@@ -264,7 +289,7 @@ examples:
     sources: [michaelis]
 antiPatterns:
   - id: excesso-de-marcas
-    text: Oxe, meu rei, que massa! Vixe, vou lhe explicar tudo, meu rei, é porreta!
+    text: Oxe, que massa! Vixe, deixe eu lhe explicar tudo, que isso é porreta!
     category: overuse
     explanation: >-
       Empilhar marcas regionais em cada frase soa como caricatura. Mesmo em intensidade alta, no
@@ -437,6 +462,77 @@ provenance:
       usage: cited
       accessed: "2026-09-29"
       notes: Consultado pelo resumo. Estudo etnográfico sobre futebol amador em Salvador.
+    - id: uneb-barril-2023
+      type: study
+      title: "Variação linguística em rede digital: um estudo diatópico do léxico barril no dialeto baiano"
+      url: https://saberaberto.uneb.br/server/api/core/bitstreams/9cd6c6e9-0c53-4d1b-932c-71f6dda3d18d/content
+      citation: >-
+        SANTOS, Liliane Silva dos. Variação linguística em rede digital: um estudo diatópico do
+        léxico barril no dialeto baiano. 2023. Trabalho de Conclusão de Curso (Licenciatura em
+        Letras) — Universidade do Estado da Bahia, Campus XIII, Itaberaba, 2023.
+      license: Acesso aberto no repositório da UNEB; licença de reutilização não conferida
+      usage: cited
+      accessed: "2026-09-29"
+      notes: >-
+        Analisa 13 posts da página Baianês Oficial, criada por uma publicitária soteropolitana;
+        dez posts são de uma única publicação. A análise distingue sete contextos negativos e seis
+        positivos, mas não é corpus de conversa espontânea nem amostra representativa de falantes.
+    - id: pimentel-etnografica-2012
+      type: study
+      title: "Sentidos e significados de práticas juvenis em um bairro da cidade de Salvador, Bahia, Brasil"
+      url: https://journals.openedition.org/etnografica/1373
+      citation: >-
+        PIMENTEL, Adriana Miranda. Sentidos e significados de práticas juvenis em um bairro da
+        cidade de Salvador, Bahia, Brasil. Etnográfica, v. 16, n. 1, p. 31–51, 2012.
+      license: CC BY-NC 4.0 (texto; elementos gráficos podem ter termos distintos)
+      usage: cited
+      accessed: "2026-09-29"
+      notes: >-
+        Artigo etnográfico derivado de tese de doutorado; inclui fala de jovem rapper de Cosme de
+        Farias usando "buzu" para ônibus e uma nota explícita sobre o sentido em Salvador.
+    - id: santos-fazendo-genero-2013
+      type: study
+      title: "Desvelando o mercado do sexo: trajetória de vida dos 'garotos de programas' da cidade de Salvador"
+      url: https://www.fg2013.wwc2017.eventos.dype.com.br/resources/anais/20/1373286043_ARQUIVO_DESVELANDOOMERCADODOSEXO-artigofazendogenero2013.pdf
+      citation: >-
+        SANTOS, João Diogenes Ferreira dos. Desvelando o mercado do sexo: trajetória de vida dos
+        "garotos de programas" da cidade de Salvador. In: Seminário Internacional Fazendo Gênero
+        10, 2013, Florianópolis. Anais eletrônicos. Florianópolis, 2013.
+      license: Não determinada
+      usage: cited
+      accessed: "2026-09-29"
+      notes: >-
+        Pesquisa preliminar com entrevistas de jovens em Salvador e na região metropolitana; usa
+        "buzu" em fala de entrevistados e explicita o sentido como ônibus do serviço público.
+    - id: a-tarde-2025
+      type: other
+      title: "O ôxe e seus pariceiros: entenda como surgiu o 'idioma' soteropolitano"
+      url: https://atarde.com.br/aniversario-de-salvador/o-oxe-e-seus-pariceiros-entenda-como-surgiu-o-idioma-soteropolitano-1312337
+      citation: MELO, Carla. A Tarde, Salvador, 29 mar. 2025 (atualizado em 13 mar. 2026).
+      license: Direitos do veículo; condições de reutilização não avaliadas
+      usage: cited
+      accessed: "2026-09-29"
+      notes: Jornalismo local (Grupo A Tarde), com linguistas entrevistados. Fonte popular, não acadêmica.
+    - id: correio-2018
+      type: other
+      title: "Barril linguístico: Salvador tem dialeto que quase nunca se leva ao pé da letra"
+      url: https://www.correio24horas.com.br/salvador/barril-linguistico-salvador-tem-dialeto-que-quase-nunca-se-leva-ao-pe-da-letra-0318
+      citation: CORREIO. Salvador, 29 mar. 2018.
+      license: Direitos do veículo; condições de reutilização não avaliadas
+      usage: cited
+      accessed: "2026-09-29"
+      notes: >-
+        Jornalismo local (Rede Bahia, mesmo grupo do iBahia; os dois contam como uma fonte para
+        fins de corroboração).
+    - id: alma-preta-2024
+      type: other
+      title: "'Cadê meu buzu?': Salvador extingue mais de 350 linhas de ônibus e prejudica moradores"
+      url: https://almapreta.com.br/sessao/cotidiano/cade-meu-buzu-salvador-extingue-mais-de-350-linhas-de-onibus-e-prejudica-moradores/
+      citation: PAZ, Dindara. Alma Preta, 14 set. 2024.
+      license: Direitos do veículo; condições de reutilização não avaliadas
+      usage: cited
+      accessed: "2026-09-29"
+      notes: Jornalismo de alcance nacional; registra "buzu" na fala de moradores de Salvador.
     - id: michaelis
       type: reference-work
       title: Michaelis On-line — Dicionário Brasileiro da Língua Portuguesa
@@ -464,8 +560,12 @@ provenance:
         A tabela da questão 185 lista sete ocorrências de “queimado” em Salvador. É
         evidência de fala da capital e não é generalizada para todo o estado.
   notes: >-
-    Critério de evidência deste pack: estudo acadêmico ou dicionário de referência com rótulo
-    regional → attested; apenas jornalismo, glossários populares ou percepção comum → hypothesis
-    (nunca renderizado). O pack descreve a variedade, sem pressupor caso de uso (ADR-0017): ajustes
-    para um uso específico ficam na IA hospedeira ou numa persona de projeto com extends.
+    Critério de evidência deste pack: estudo acadêmico com corpus/fonte primária identificável ou
+    dicionário de referência → attested para o tipo de ocorrência que a fonte documenta, com os
+    limites descritos; na ausência disso, mesma descrição ou uso inequívoco em pelo menos duas
+    fontes públicas independentes, uma delas local → corroborated (ADR-0018: só a partir de 0.5,
+    renderizado à parte como não validado por revisão estruturada de falantes); fonte única,
+    sentidos divergentes ou clichê midiático sem outra evidência → hypothesis (nunca renderizado).
+    O pack descreve a variedade, sem pressupor caso de uso (ADR-0017): ajustes para um uso
+    específico ficam na IA hospedeira ou numa persona de projeto com extends.
     Detalhes em RESEARCH.md.

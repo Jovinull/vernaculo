@@ -39,9 +39,10 @@ obrigatória ([ADR-0015](../../../../docs/decisions/0015-human-review-recommende
 
 | Tipo de fonte | Nível no pack |
 | --- | --- |
-| Estudo acadêmico sobre Salvador (dissertação, tese, artigo revisado) | `attested` |
+| Estudo acadêmico com corpus ou fonte primária identificável sobre Salvador (dissertação, tese, TCC ou artigo revisado) | `attested` para o tipo de ocorrência que a fonte documenta; delimitar amostra, meio e população |
 | Dicionário de referência com rótulo regional (Reg (BA), Reg (N.E.)) | `attested` para o rótulo e o sentido |
-| Jornalismo, glossário popular, dicionário colaborativo, percepção comum | `hypothesis` (nunca renderizada) ou só pista neste dossiê |
+| A mesma descrição ou uso inequívoco em ≥ 2 fontes públicas independentes (≥ 1 local), sem fonte acadêmica/referencial que sustente `attested` | `corroborated` ([ADR-0018](../../../../docs/decisions/0018-corroborated-evidence-level.md)): vai para a IA só a partir de 0.5, numa seção marcada como não validada por revisão estruturada de falantes |
+| Fonte única, sentidos divergentes, humor, meme, música, dicionário colaborativo, "ímã de caricatura" | `hypothesis` (nunca renderizada) ou só pista neste dossiê |
 | Revisão por falantes (ainda não houve) | seria `reported` |
 
 ## O que entrou no pack (renderizado)
@@ -54,6 +55,8 @@ obrigatória ([ADR-0015](../../../../docs/decisions/0015-human-review-recommende
 | Imperativo na forma do subjuntivo ("me diga", "deixe eu ver", "olhe", "venha") | attested | Scherre (2007); Santos, Muniz e Barros (2024) | 0 < intensidade | Cerca de três quartos dos imperativos em Salvador; no Sul, Sudeste e Centro-Oeste predomina a outra forma. Ver abaixo |
 | "queimado" (bala) | attested | Yida (2011), dados do ALiB | 0.5 | A tabela registra sete ocorrências em Salvador; dado de fala da capital, não de todo o estado |
 | "baba" (pelada, futebol informal) | attested | Caldas e Abrahão (2023) | 0.5 | Só quando o assunto for futebol; uma fonte só, a confirmar |
+| "buzu" (ônibus) | **attested** | Pimentel (2012); Santos (2013); Alma Preta (2024) | 0.5 | Fala citada em estudos etnográficos de Salvador; usar só com contexto de transporte claro |
+| "barril" (situação difícil, complicada ou arriscada) | **attested** | Santos (2023); A Tarde (2025); Correio (2018) | 0.7 | O TCC analisa posts de uma criadora soteropolitana, não fala espontânea; só o sentido negativo entra |
 | "massa" (adjetivo: ótimo) | attested | Michaelis | 0.5 | Só sobre coisas/situações; nunca sobre pessoas (outra acepção: pessoa atraente) nem como substantivo (acepção Reg (BA): maconha) |
 | "vixe" (surpresa) | attested | Michaelis | 0.7 | Regionalismo do Nordeste, não exclusivo de Salvador |
 | "oxe" (espanto, surpresa) | attested | Michaelis | 0.75 | Nordeste em geral; um dos traços mais estereotipados, por isso a intensidade mínima alta e o limite de uma vez por conversa |
@@ -152,11 +155,14 @@ O balanço desta pesquisa:
   acadêmicos sólidos sobre Salvador e já estão no pack.
 - **Vocabulário típico: pouco documentado.** O Michaelis marca "massa" e "porreta"
   como regionais para BA; "queimado" aparece em sete registros da amostra de fala de
-  Salvador no estudo de Yida (2011). Outras formas bem conhecidas ("buzu",
-  "brocado", "pirangueiro") não aparecem com rótulo regional. Não achamos estudo
-  acadêmico acessível sobre "meu rei", "barril" (há um trabalho da UNEB sobre
-  "barril", mas o repositório bloqueou o acesso) nem sobre o marcador "viu?" em
-  Salvador.
+  Salvador no estudo de Yida (2011). Para "buzu", há fala de moradores em estudos
+  etnográficos de Salvador (Pimentel, 2012; Santos, 2013), embora não um levantamento
+  de frequência. Para "barril", o TCC de Santos (2023) analisa 13 posts de uma página
+  criada por uma soteropolitana; isso documenta usos escritos e estilizados, mas não
+  frequência em conversa espontânea. Outras formas bem conhecidas ("brocado",
+  "pirangueiro") não aparecem com rótulo regional no Michaelis. Não localizamos
+  estudo acadêmico ou dicionário de referência sobre "meu rei" nem sobre o marcador
+  "viu?" em Salvador.
 - **Consequência:** as expressões que mais geram reconhecimento estão como hipótese
   ou pista. O caminho para confirmá-las é o
   [questionário para falantes](SPEAKER-SURVEY.md): as respostas viram evidência
@@ -167,11 +173,38 @@ O balanço desta pesquisa:
   controle sem camada e nas intensidades mostra a partir de onde o pack fica
   reconhecível.
 
+## Busca de corroboração (ADR-0018)
+
+Critério: use `corroborated` apenas quando não houver fonte de pesquisa ou referência
+que sustente `attested`. Exige a mesma descrição ou uso inequívoco em pelo menos duas
+fontes públicas independentes, uma local; grupos de mídia diferentes contam como
+independentes apenas se a base da evidência também for independente (Correio e iBahia
+são ambos da Rede Bahia; republicações ou cópias da mesma entrevista/glossário contam
+como uma origem). Humor, memes, música, blogs de empresas, sites anônimos de listas e
+dicionários colaborativos não contam. Se a única base for retrato midiático que uma
+fonte identifica como clichê ou estereótipo, fica `hypothesis`. Corroboração documental
+não mede frequência, exclusividade regional ou naturalidade geral.
+
+| Forma | Fontes independentes | Veredito |
+| --- | --- | --- |
+| barril | Santos (2023), TCC de Letras na UNEB, analisa 13 posts de Baianês Oficial; A Tarde (2025) e Correio (2018) descrevem o sentido negativo. A pesquisa da UNEB registra sentidos negativos e positivos, mas sua base é uma página de entretenimento criada por uma soteropolitana; dez dos 13 posts vêm de uma única publicação | `attested` pela regra atual do projeto para estudos acadêmicos; manter a limitação explícita. Não é evidência de frequência espontânea ou de uso uniforme. Só o sentido negativo entra no pack |
+| buzu | Pimentel (2012) cita um jovem de Cosme de Farias dizendo "pegar o buzu de novo" e define o sentido em nota; Santos (2013) registra "buzu" em falas de entrevistados de Salvador e da região metropolitana. Alma Preta (2024) traz uso contemporâneo | `attested`; há exemplos de fala publicados, mas são amostras etnográficas localizadas, não confirmação estruturada por falantes nem medida de frequência |
+| vumbora / bó | Só A Tarde entre veículos estabelecidos; o restante são blogs e listas | `hypothesis` |
+| é bala | Correio e iBahia (mesmo grupo); o restante são blogs de empresas e páginas de meme | `hypothesis` |
+| me respeite | Correio diz "não, recusa"; outras fontes dizem "pedir respeito" | `hypothesis` (sentidos divergentes) |
+| é nenhuma / não é o quê? | Correio ("é isso mesmo"); uma lista atribui "é ninhuma" a Feira de Santana como "tudo bem" | `hypothesis` (sentidos e lugares divergentes) |
+| abusado / abusar | "Zoar" (Correio), "perturbar", "irritado" (listas; esta última de Alagoas) | `hypothesis` (sentidos divergentes) |
+| à vera | "De verdade" (A Tarde) e um sentido ligado a futebol em outra fonte | `hypothesis` (sentidos divergentes) |
+| retado | Michaelis: Reg (BA), remete a "arretado 2", cujo sentido não foi localizado; fontes populares dão dois sentidos ("é retado" = ótimo; "tô retado" = zangado) | `hypothesis` até ler o verbete |
+| lá ele | Bahia Notícias, BNews, iBahia e Terra concordam: resposta para se afastar de um duplo sentido, em tom de brincadeira | fora: função humorística, de duplo sentido; inadequada para uma IA |
+| se pique / se plante | iBahia (2022, 2024) e KondZilla: "vá embora" / "fique na sua" | fora: pedidos ríspidos, que uma IA não deve dirigir a ninguém |
+| pirangueiro | Sentidos divergentes (pão-duro, malvestido, sem dinheiro); uma definição tem conotação de classe social | fora |
+| meu rei / minha rainha | Muitas fontes populares, mas uma aponta difusão pela TV | `hypothesis` ("ímã de caricatura") |
+
 ## Hipóteses registradas no pack (não renderizadas)
 
 | Forma | Onde apareceu | Por que não é `attested` |
 | --- | --- | --- |
-| "barril" (situação difícil; mais recentemente, elogio) | A Tarde (2025); iBahia (2022) | Só jornalismo; o Michaelis não registra esse sentido; o sentido muda com a geração |
 | "meu rei" / "minha rainha" (vocativo afetivo) | Associação popular (música, jornalismo, glossários colaborativos) | Nenhum estudo acadêmico ou dicionário encontrado; muito estereotipado |
 | Negação pós-verbal ("sei não", "tem não") | Literatura sobre o português do Nordeste | Nenhum estudo específico de Salvador encontrado; o estudo baiano localizado trata de comunidades rurais afro-brasileiras (Lucchesi, Baxter e Ribeiro, 2009) |
 
@@ -228,10 +261,9 @@ Michaelis registra "lenhar" com sentido vulgar em outro regionalismo, Reg (N.).
   (EDUFBA), conhecido por uma resenha: descreve comunidades rurais, não Salvador.
 - **Glossários colaborativos** (Dicionário Informal, Dicionário Popular e
   semelhantes): aparecem nas buscas, mas não são fonte.
-- **Estudo da UNEB sobre "barril"** ("Variação linguística em rede digital: um
-  estudo diatópico do léxico barril no dialeto baiano", repositório Saber Aberto):
-  achado na busca, mas o repositório bloqueou o acesso automatizado. Leitura
-  pendente; pode sustentar "barril" se tratar da fala de Salvador.
+- **Aratu On (2026), "Diva do Buzu"**: a ocorrência encontrada é parte de um apelido
+  próprio, não uma descrição independente do uso comum de `buzu` = ônibus; não foi
+  usada para classificar a forma.
 - **"Meu rei" / "minha rainha":** um blog afirma que "minha rainha" teria sido
   difundida por produções de TV, e não pela fala local. Não é fonte, mas reforça
   que a forma precisa de confirmação por falantes antes de qualquer uso.
@@ -321,6 +353,19 @@ mais detalhada; use os rótulos de [human-review.md](../../../../docs/linguistic
   Acupe" em Piatã, Salvador, Bahia. _Cenas Educacionais_, v. 6, 2023.
   <https://revistas.uneb.br/index.php/cenaseducacionais/article/view/17034>.
   Acesso em: 29 set. 2026.
+- PIMENTEL, Adriana Miranda. Sentidos e significados de práticas juvenis em um bairro
+  da cidade de Salvador, Bahia, Brasil. _Etnográfica_, v. 16, n. 1, p. 31–51, 2012.
+  <https://journals.openedition.org/etnografica/1373>. Acesso em: 29 set. 2026.
+- SANTOS, João Diogenes Ferreira dos. Desvelando o mercado do sexo: trajetória de vida
+  dos "garotos de programas" da cidade de Salvador. In: _Seminário Internacional
+  Fazendo Gênero 10_, Florianópolis, 2013. Anais eletrônicos.
+  <https://www.fg2013.wwc2017.eventos.dype.com.br/resources/anais/20/1373286043_ARQUIVO_DESVELANDOOMERCADODOSEXO-artigofazendogenero2013.pdf>.
+  Acesso em: 29 set. 2026.
+- SANTOS, Liliane Silva dos. _Variação linguística em rede digital: um estudo diatópico
+  do léxico barril no dialeto baiano_. 2023. Trabalho de Conclusão de Curso
+  (Licenciatura em Letras) — Universidade do Estado da Bahia, Campus XIII, Itaberaba,
+  2023. <https://saberaberto.uneb.br/server/api/core/bitstreams/9cd6c6e9-0c53-4d1b-932c-71f6dda3d18d/content>.
+  Acesso em: 29 set. 2026.
 - CARDOSO, Suzana Alice Marcelino et al. _Atlas Linguístico do Brasil_. Londrina:
   EDUEL, 2014. v. 1 e 2. <https://alib.ufba.br/>.
 - YIDA, Vanessa. _O campo semântico da Alimentação e Cozinha no Atlas Linguístico do
@@ -330,11 +375,24 @@ mais detalhada; use os rótulos de [human-review.md](../../../../docs/linguistic
 - CORREIO. Barril linguístico: Salvador tem dialeto que quase nunca se leva ao pé
   da letra. _Correio_, Salvador, 29 mar. 2018.
   <https://www.correio24horas.com.br/salvador/barril-linguistico-salvador-tem-dialeto-que-quase-nunca-se-leva-ao-pe-da-letra-0318>.
-  Acesso em: 29 set. 2026. (Jornalismo: pista, não evidência.)
+  Acesso em: 29 set. 2026. (Jornalismo local; descreve o sentido negativo de `barril`.)
+- DOWLING, Victoria. Conheça gírias do "baianês", vocabulário queridinho de Salvador.
+  _iBahia_, Salvador, 29 mar. 2024.
+  <https://www.ibahia.com/diversao/bora-ali/salvador-conheca-girias-do-baianes-vocabulario-dos-soteropolitanos-316585>.
+  Acesso em: 29 set. 2026. (Jornalismo, Rede Bahia.)
+- PAZ, Dindara. 'Cadê meu buzu?': Salvador extingue mais de 350 linhas de ônibus e
+  prejudica moradores. _Alma Preta_, 14 set. 2024.
+  <https://almapreta.com.br/sessao/cotidiano/cade-meu-buzu-salvador-extingue-mais-de-350-linhas-de-onibus-e-prejudica-moradores/>.
+  Acesso em: 29 set. 2026.
+- ROCHA, Taís. Diva do Buzu: como a rotina nos ônibus de Salvador fez Paulinha virar
+  febre na internet. _Aratu On_, Salvador, 2 set. 2026.
+  <https://aratuon.com.br/entretenimento/de-pedinte-a-fenomeno-das-redes-em-salvador-conheca-a-historia-da-diva-do-buzu/>.
+  Acesso em: 29 set. 2026. (A ocorrência está num apelido próprio; não conta como descrição
+  independente do uso comum da palavra.)
 - MELO, Carla. O ôxe e seus pariceiros: entenda como surgiu o "idioma" soteropolitano.
   _A Tarde_, Salvador, 29 mar. 2025.
   <https://atarde.com.br/aniversario-de-salvador/o-oxe-e-seus-pariceiros-entenda-como-surgiu-o-idioma-soteropolitano-1312337>.
-  Acesso em: 29 set. 2026. (Jornalismo: pista, não evidência.)
+  Acesso em: 29 set. 2026. (Jornalismo local; descreve sentidos negativos e positivos de `barril`.)
 - OLIVEIRA, Sandra Carneiro de; MOTA, Jacyra Andrade. Atitudes linguísticas aos
   tratamentos o senhor/a senhora e você em Salvador, Bahia, Brasil. _Estudos
   Linguísticos e Literários_, Salvador, n. 68, núm. esp., p. 192-218, 2020.

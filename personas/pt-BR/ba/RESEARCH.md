@@ -48,10 +48,12 @@ observa que palavras deixam de circular quando práticas e objetos mudam.
 | `queimado` (bala, doce) | Yida (2011) registra a forma em Salvador; Sampaio (1961) é uma pista histórica | Permanece como `hypothesis`, que o compilador não renderiza no pack estadual. Não atribuímos essa acepção ao Michaelis: a consulta atual não confirmou a referência que constava no rascunho de Salvador. |
 
 O pack não inclui como marcas estaduais `oxe`/`vixe` (registradas como nordestinas em
-geral), `baba` (a fonte localizada trata de Salvador), `barril` (ainda sem estudo
-acadêmico acessível que estabeleça distribuição), nem `meu rei`/`minha rainha` (sem
-fonte de distribuição encontrada). Não os classifico como “errados”; apenas não há
-evidência suficiente para fazê-los representar o estado inteiro.
+geral), `baba` (a fonte localizada trata de Salvador), `buzu` (as fontes acadêmicas
+consultadas o situam em Salvador e na região metropolitana) nem `barril` (o estudo da
+UNEB analisa posts de uma página criada por uma soteropolitana, sem amostra de fala
+distribuída pelo estado). Também ficam fora `meu rei`/`minha rainha` (sem fonte de
+distribuição encontrada). Isso não os torna “errados”; as fontes atuais não sustentam
+que representem o estado inteiro.
 
 ## Varredura exploratória de três episódios baianos
 

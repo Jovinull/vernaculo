@@ -35,6 +35,7 @@ Se quiser, escreva uma frase sua com a palavra, do jeito que você falaria.
 | 7 | queimado | bala (o doce) | | | |
 | 8 | baba | pelada, futebol informal | | | |
 | 9 | barril | coisa difícil ou perigosa; também elogio | | | |
+| 9a | buzu | ônibus | | | |
 | 10 | meu rei / minha rainha | jeito carinhoso de chamar alguém | | | |
 | 11 | "sei não", "tem não" | negação no fim da frase | | | |
 | 12 | me respeite | "não", recusa (não no sentido literal) | | | |
@@ -47,9 +48,13 @@ Se quiser, escreva uma frase sua com a palavra, do jeito que você falaria.
 | 19 | abusado / abusar | irritado / zoar, provocar | | | |
 | 20 | retado | ? (nos diga o sentido) | | | |
 
-Os itens 1 a 8 já estão na camada, com base em estudos e em dicionário; queremos
-confirmar se soam naturais escritos por uma IA. Os itens 9 a 20 apareceram em
-reportagens e ainda não foram confirmados: sem a sua resposta, eles não entram.
+Os itens 1 a 8 já estão na camada, com base em estudos e em dicionário. "Barril" e
+"buzu" (9 e 9a) também entram com fontes acadêmicas, mas a evidência tem limites:
+para "barril", há posts escritos e estilizados de uma página criada por uma
+soteropolitana; para "buzu", há falas citadas em estudos etnográficos localizados.
+Queremos confirmar sentidos, registro, faixa etária e se soariam naturais escritos
+por uma IA. Os itens 10 a 20 apareceram em reportagens e ainda não foram confirmados:
+sem a sua resposta, eles não entram.
 
 ## Parte 2 — Perguntas abertas
 
