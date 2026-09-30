@@ -58,8 +58,8 @@ function skillDocument(ir: PersonaIR, name: string, references: readonly SkillFi
   const { persona } = ir;
   const description =
     `Regional language layer for ${persona.name} (${persona.id}) at intensity ${ir.intensity}. ` +
-    `Use when replying in ${persona.language} as an agent localized to this variety: it adjusts vocabulary, ` +
-    "discourse markers and conversational conventions without changing the agent's role, rules or facts.";
+    `Use when writing in ${persona.language} in this regional variety: it adjusts vocabulary, ` +
+    "discourse markers and conversational conventions without changing your role, rules or facts.";
 
   const frontmatter: Record<string, unknown> = {
     name,
