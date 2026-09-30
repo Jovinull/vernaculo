@@ -30,9 +30,14 @@ Os revisores também revisam diretamente o conteúdo do pack: cada forma, seu
 significado, contexto e exemplos. Para isso, o pack pode trazer um
 **questionário para falantes** (`SPEAKER-SURVEY.md`, como o de
 [Salvador](../../personas/pt-BR/ba/salvador/SPEAKER-SURVEY.md)): para cada forma já
-no pack ou ainda hipótese, "você usa?" e "numa IA, soaria natural, forçado ou
-caricato?", mais perguntas abertas sobre o que faz alguém ser reconhecido como dali
-e o que é só estereótipo de fora. É o caminho para transformar hipóteses em
+no pack ou ainda hipótese, "você usa?", "o que significa pra você?" e "numa IA,
+soaria natural, forçado ou caricato?", mais perguntas abertas sobre o que faz alguém
+ser reconhecido como dali e o que é só estereótipo de fora. O questionário é **cego**:
+nunca mostra o sentido que as fontes dão nem diz quais formas já estão no pack (as
+duas coisas misturadas na mesma lista), para não induzir a resposta; o sentido vem da
+própria pessoa e é comparado depois com o dossiê. Traços gramaticais entram como
+escolha entre variantes ("me diga" ou "me diz"?). O texto é escrito para ser colado
+num aplicativo de mensagens (listas numeradas, sem tabelas). É o caminho para transformar hipóteses em
 evidência `reported`, sobretudo gírias e expressões que a literatura acadêmica
 quase não documenta.
 
