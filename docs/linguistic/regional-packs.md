@@ -43,7 +43,10 @@ Michaelis para delimitar o que se pode afirmar:
   uso atual em diferentes regiões; por isso permanece como hipótese não renderizada;
 - “oxe” e “vixe” são registrados como nordestinos em geral, “baba” foi pesquisado em
   Salvador, e “meu rei”, “barril” e outras expressões populares ainda não têm evidência
-  suficiente para representar a Bahia inteira;
+  suficiente para representar a Bahia inteira (no pack de Salvador, “barril” e “buzu”
+  entram como `corroborated` — várias fontes jornalísticas independentes da cidade, sem
+  confirmação de falantes, só em intensidade moderada e numa seção marcada como não
+  confirmada; [ADR-0018](../decisions/0018-corroborated-evidence-level.md));
 - não há regra estadual para pronomes ou imperativo no pack atual. A coletânea
   *Português baiano* relata diferenças entre áreas urbanas e comunidades rurais.
 
@@ -63,7 +66,8 @@ personas/pt-BR/ba/
 
 personas/pt-BR/ba/salvador/
 ├── persona.yaml
-└── RESEARCH.md
+├── RESEARCH.md
+└── SPEAKER-SURVEY.md     # questionário para falantes (recomendado)
 ```
 
 O `RESEARCH.md` explica de onde veio cada decisão, o que ficou de fora, as licenças e

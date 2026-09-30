@@ -54,8 +54,21 @@ Cada traço precisa de um nível de evidência ([provenance.md](../specification
 
 1. Prefira evidência **attested** vinda de fontes linguísticas primárias (atlas, corpora, estudos revisados por pares, obras de referência).
 2. Use evidência **reported** vinda de revisões estruturadas por falantes, citadas como fontes `speaker-review`.
-3. Mantenha todo o resto como **hypothesis** (nunca renderizada) até ser confirmado.
-4. Nunca use como evidência texto gerado por IA, piadas, memes, estereótipos de dublagem/novela ou "listas de gírias regionais".
+3. Use **corroborated** ([ADR-0018](../decisions/0018-corroborated-evidence-level.md)) só quando não houver uma fonte de pesquisa ou referência que sustente `attested`, mas houver convergência pública independente e todos os critérios abaixo valerem:
+   - pelo menos **duas fontes de veículos ou autores diferentes**; publicações do mesmo grupo de mídia contam como uma só;
+   - a independência vale para a base da evidência, não só para o domínio: matérias que republicam a mesma nota, citam o mesmo glossário ou reciclam a mesma entrevista contam como uma origem, ainda que saiam em veículos diferentes;
+   - só contam veículos de imprensa, emissoras, podcasts ou canais com falantes identificáveis e obras publicadas com autoria identificável; blogs de empresas e sites anônimos de listas de gírias não contam;
+   - pelo menos **uma fonte local** (produzida na região: jornal, portal, rádio, podcast ou canal com falantes de lá);
+   - **o mesmo sentido** em todas as fontes; uma ocorrência em fala ou texto publicado também pode contar se o contexto deixa inequívoco o sentido e se a ocorrência veio de um evento independente;
+   - nenhuma das fontes é página de humor, meme, esquete, personagem, letra de música ou dicionário colaborativo;
+   - se a única base forem retratos de mídia e uma fonte disser que a forma é um clichê difundido pela mídia ou um estereótipo, não promover por repetição: manter `hypothesis`. Evidência acadêmica direta ou revisão por falantes é avaliada nos níveis próprios (`attested`/`reported`), não apagada por esse filtro;
+   - `minIntensity` ≥ 0.5 (mais alto para formas fortes ou de uma geração específica).
+4. Mantenha todo o resto como **hypothesis** (nunca renderizada) até ser confirmado.
+5. Nunca use como evidência texto gerado por IA, piadas, memes, estereótipos de dublagem/novela ou "listas de gírias regionais". Episódios de podcast e entrevistas jornalísticas servem para achar pistas; sozinhos, não constituem revisão estruturada (`reported`) nem estudo linguístico (`attested`). Já um estudo acadêmico que analise e contextualize fala registrada pode sustentar `attested`.
+
+`corroborated` atesta convergência entre fontes, não frequência, exclusividade regional,
+distribuição entre gerações nem naturalidade para qualquer falante. Registre esses
+limites em `notes`; a revisão por falantes continua recomendada.
 
 Registre em `notes`, para cada traço, o alcance da evidência (quais falantes, qual
 período, qual contexto) quando for relevante, e prefira o uso contemporâneo, que é

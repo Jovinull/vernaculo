@@ -71,7 +71,7 @@ lista.
 | --- | --- |
 | Excesso (um marcador em cada oração) | faixas de intensidade; "não forçar traços"; antipadrões `overuse`; dimensão de eval |
 | Grafia fonética / "eye dialect" (grafia de deboche) | `phoneticSpelling: avoid` por padrão; antipadrões `phonetic-spelling` |
-| Regionalismos inventados | só as formas listadas são renderizadas; `hypothesis` nunca é renderizada; dimensão de eval |
+| Regionalismos inventados | só as formas listadas são renderizadas; `hypothesis` nunca é renderizada; `corroborated` exige fontes reais independentes, só aparece a partir de 0.5 e vai numa seção marcada como não confirmada; dimensão de eval |
 | Formas de outra região | antipadrões `wrong-region`; rótulo de revisão "isso é de outra região" |
 | Atitudes estereotipadas vazando para o conteúdo | regra de base 3; antipadrões `stereotype`; evals de vazamento de estereótipos |
 | O agente afirmar ser local | regra de base 4 |

@@ -57,9 +57,9 @@ Mais um comentário livre. Como os rótulos se traduzem em mudanças no pack:
 
 | Sinal | Ação típica |
 | --- | --- |
-| `authentic`, `natural` entre revisores | sustenta `evidence: reported` (cite a rodada de revisão) |
+| `authentic`, `natural` entre revisores | sustenta `evidence: reported` (cite a rodada de revisão); formas `corroborated` confirmadas sobem para `reported` |
 | `exaggerated` | subir `minIntensity`, ajustar exemplos, reforçar as faixas |
-| `unrecognized`, `wrong-region` | reconferir a evidência; reduzir o escopo; rebaixar para `hypothesis` ou remover |
+| `unrecognized`, `wrong-region` | reconferir a evidência; reduzir o escopo; rebaixar para `hypothesis` ou remover (formas `corroborated` não reconhecidas por revisores voltam a `hypothesis`) |
 | `caricatural`, `offensive` | remover ou desencorajar a forma e acrescentar um antipadrão, como a [política anti-caricatura](anti-caricature.md) exige independentemente da maturidade |
 | `register-mismatch` | acrescentar contexto (`contextual`), ajustar exemplos |
 
