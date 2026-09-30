@@ -1,74 +1,94 @@
-# Questionário para falantes de Salvador
+<!--
+Para quem mantém o pack: este texto é para enviar como está (serve para colar no
+WhatsApp). Ele nunca mostra o sentido das palavras nem diz quais já estão na camada,
+para não influenciar as respostas. Os sentidos que as fontes dão, e em que nível de
+evidência cada forma está, ficam em RESEARCH.md. Mapa dos itens:
+  já na camada (confirmar): 1 massa, 3 barril, 5 oxe, 7 buzu, 10 queimado, 13 porreta,
+    16 baba, 18 vixe, 24-26 (imperativo), 27 (lhe/te)
+  hipóteses (destravar): 2, 4, 6, 8, 9, 11, 12, 14, 15, 17, 19, 20, 21, 22, 23 (meu rei)
+    e 28 (negação no fim da frase)
+  fora da lista de propósito: "lá ele", "se pique", "se plante", "pirangueiro",
+    "de lenhar" (inadequados para uma IA) e gírias genéricas ("tá ligado", "brother"...)
+-->
 
-Estamos criando uma camada de linguagem para que uma IA escreva com o jeito de falar
-de Salvador, **sem caricatura**. Não temos como saber o que soa natural sem perguntar
-a quem é daqui. Leva uns 10 minutos.
+# Questionário para quem é de Salvador
 
-- Responda pelo que **você** usa e ouve no dia a dia, não pelo que "baiano fala" na TV.
-- Não há resposta certa. "Não conheço" e "soa forçado" ajudam tanto quanto "uso".
-- Não escreva seu nome, telefone ou dados pessoais. Você pode parar quando quiser.
-- Suas respostas entram num projeto aberto (licença Apache-2.0) e podem ser citadas de
-  forma anônima, como "revisão de falantes de Salvador, rodada 1".
+Oi! Estamos ensinando uma inteligência artificial a escrever com o jeito de falar de
+Salvador, **sem caricatura**. Para isso a gente precisa de quem é daqui. Leva uns 15
+minutos.
+
+- Responda pelo que **você** fala e ouve no dia a dia, não pelo que "baiano fala" na TV.
+- Não tem resposta certa. "Nunca ouvi" e "soa forçado" ajudam tanto quanto "uso".
+- Não coloque nome, telefone nem dados pessoais. Pode parar quando quiser e pular o
+  que não souber.
+- As respostas vão para um projeto aberto (licença Apache-2.0) e podem ser citadas sem
+  identificar você, como "revisão de falantes de Salvador, rodada 1".
 
 ## Sobre você (opcional)
 
-- Relação com Salvador: [ ] nasci ou cresci aqui  [ ] moro aqui há mais de 10 anos  [ ] outra
-- Faixa de idade: [ ] até 24  [ ] 25–39  [ ] 40–59  [ ] 60 ou mais
+- Você: (a) nasceu ou cresceu em Salvador · (b) mora aqui há mais de 10 anos · (c) outro
+- Idade: (a) até 24 · (b) 25 a 39 · (c) 40 a 59 · (d) 60 ou mais
 
 ## Parte 1 — Palavras e expressões
 
-Para cada item, marque:
+Para cada uma, responda três coisas:
 
-- **Você usa?** uso / conheço mas não uso / não conheço
-- **Se uma IA escrevesse isso numa conversa com você, soaria:** natural / forçado / caricato
+- **A) Você usa?** uso · conheço mas não uso · nunca ouvi
+- **B) O que significa pra você?** Se puder, escreva uma frase do seu jeito.
+- **C) Se uma IA falasse isso com você, soaria:** natural · forçado · caricato
 
-Se quiser, escreva uma frase sua com a palavra, do jeito que você falaria.
+Pode responder bem curto, assim:
+`1 — uso — quando algo é muito bom: "o show foi ___" — natural`
 
-| # | Palavra ou expressão | Sentido que nos disseram | Você usa? | Numa IA, soaria… | Sua frase (opcional) |
-| --- | --- | --- | --- | --- | --- |
-| 1 | "Me diga", "deixe eu ver", "olhe", "venha cá" (em vez de "me diz", "deixa eu ver", "olha", "vem cá") | pedidos e orientações no dia a dia | | | |
-| 2 | "Posso lhe ajudar?" / "Posso te ajudar?" | oferecer ajuda (qual das duas, com quem?) | | | |
-| 3 | massa | muito bom ("que massa!") | | | |
-| 4 | porreta | muito bom, excelente | | | |
-| 5 | oxe / oxente | espanto, surpresa | | | |
-| 6 | vixe | surpresa, contratempo | | | |
-| 7 | queimado | bala (o doce) | | | |
-| 8 | baba | pelada, futebol informal | | | |
-| 9 | barril | coisa difícil ou perigosa; também elogio | | | |
-| 9a | buzu | ônibus | | | |
-| 10 | meu rei / minha rainha | jeito carinhoso de chamar alguém | | | |
-| 11 | "sei não", "tem não" | negação no fim da frase | | | |
-| 12 | me respeite | "não", recusa (não no sentido literal) | | | |
-| 13 | é nenhuma / não é o quê? | "é isso mesmo", concordância | | | |
-| 14 | aonde? | "de jeito nenhum" | | | |
-| 15 | é bala | muito bom | | | |
-| 16 | lá ele | expressão de conversa | | | |
-| 17 | à vera | de verdade | | | |
-| 18 | bó / vumbora | vamos embora | | | |
-| 19 | abusado / abusar | irritado / zoar, provocar | | | |
-| 20 | retado | ? (nos diga o sentido) | | | |
+1. massa
+2. vumbora / bó
+3. barril
+4. é bala
+5. oxe / oxente
+6. me respeite
+7. buzu
+8. é nenhuma
+9. retado
+10. queimado
+11. não é o quê? (como resposta a alguém)
+12. abusado / abusar
+13. porreta
+14. à vera
+15. aonde? (como resposta a alguém)
+16. baba
+17. é lenha
+18. vixe
+19. na telha
+20. na pala
+21. bateno
+22. muxoxo
+23. meu rei / minha rainha
 
-Os itens 1 a 8 já estão na camada, com base em estudos e em dicionário. "Barril" e
-"buzu" (9 e 9a) também entram com fontes acadêmicas, mas a evidência tem limites:
-para "barril", há posts escritos e estilizados de uma página criada por uma
-soteropolitana; para "buzu", há falas citadas em estudos etnográficos localizados.
-Queremos confirmar sentidos, registro, faixa etária e se soariam naturais escritos
-por uma IA. Os itens 10 a 20 apareceram em reportagens e ainda não foram confirmados:
-sem a sua resposta, eles não entram.
+## Parte 2 — Jeito de falar
 
-## Parte 2 — Perguntas abertas
+Diga qual soa mais como você falaria numa conversa do dia a dia: a primeira, a
+segunda, as duas ou depende (e do quê).
 
-1. Que palavras ou expressões fazem você reconhecer **na hora** que alguém é de
-   Salvador, e que caberiam numa conversa respeitosa?
-2. O que as pessoas de fora acham que baiano fala, mas vocês **não** falam (ou só
-   falam de brincadeira)?
-3. Alguma palavra acima é mais de uma idade, de um bairro ou de um grupo específico?
-4. Tem alguma palavra acima que você acharia ofensiva ou de mau gosto vinda de uma IA?
+24. "Me diga uma coisa" ou "Me diz uma coisa"?
+25. "Deixe eu ver" ou "Deixa eu ver"?
+26. "Olhe, é assim…" ou "Olha, é assim…"?
+27. Com alguém que você **não conhece**: "Posso lhe ajudar?" ou "Posso te ajudar?"?
+    E com um **amigo**?
+28. Você fala com o "não" no fim, como "sei não" ou "tem não"? Em que situação?
 
-## Parte 3 — Amostras (se tiver tempo)
+## Parte 3 — Perguntas abertas
 
-Se recebeu também uma folha de amostras (`revisao-cega.md`), leia as conversas e
-responda o que ela pede. Não se preocupe em acertar: queremos a sua impressão.
+29. Que palavras ou expressões fazem você reconhecer **na hora** que alguém é de
+    Salvador, e que caberiam numa conversa respeitosa?
+30. O que o pessoal de fora acha que baiano fala, mas vocês **não** falam (ou só falam
+    de brincadeira)?
+31. Alguma palavra desta lista é mais de uma idade, de um bairro ou de um grupo?
+32. Alguma delas você acharia ofensiva ou de mau gosto vinda de uma IA?
 
-Obrigado! As respostas viram evidência de revisão (`reported`) no pack e decidem o
-que entra, o que sai e em que intensidade cada forma aparece.
+## Parte 4 — Amostras (opcional)
+
+Se você recebeu também uma folha de conversas (`revisao-cega.md`), leia e responda o
+que ela pede. Não se preocupe em acertar: queremos a sua impressão.
+
+Obrigado! Suas respostas decidem o que a IA vai usar, o que ela vai evitar e em que
+situações.
