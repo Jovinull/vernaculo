@@ -84,6 +84,10 @@ export function enabledForms(ir: PersonaIR): string[] {
     ir.pragmatics.acknowledgements,
     ir.pragmatics.disagreements,
     ir.pragmatics.closings,
+    ir.corroborated.vocabulary.preferred,
+    ir.corroborated.vocabulary.contextual,
+    ir.corroborated.discourseMarkers,
+    ...Object.values(ir.corroborated.pragmatics),
   ];
   return lists.flatMap((list) => formsOf(list, () => true));
 }
