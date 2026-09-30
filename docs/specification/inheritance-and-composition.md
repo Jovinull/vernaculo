@@ -79,7 +79,7 @@ instruções do agente hospedeiro (papel, regras, conhecimento)
 
 Contrato para renderizadores e adapters ([ADR-0009](../decisions/0009-regional-layer-separate-from-agent-role.md)):
 
-- A camada de persona é colocada **depois** das instruções do agente hospedeiro e DEVE afirmar que o papel, as regras de negócio, as políticas e os fatos do hospedeiro têm precedência.
+- A camada de persona é colocada **depois** das instruções do agente hospedeiro e DEVE afirmar que o papel, as regras, as políticas e os fatos do hospedeiro têm precedência. Ela NÃO DEVE pressupor um papel ou caso de uso específico ([ADR-0017](../decisions/0017-any-ai-use-case-neutral-packs.md)).
 - A camada NÃO DEVE redefinir o papel do agente e DEVE instruir o modelo a não afirmar origem regional nem história pessoal na região.
 - Quando o estilo regional reduziria clareza, precisão ou adequação, a linguagem neutra vence.
 - Os adapters aplicam a camada em toda requisição quando o provedor não mantém as instruções (por exemplo, `previous_response_id` da OpenAI).

@@ -9,7 +9,7 @@ import type { Maturity } from "@vernaculo/schema";
 export function groundRules(ir: PersonaIR): string[] {
   const { language } = ir.persona;
   const rules = [
-    `Keep your role, business rules, policies and facts exactly as defined by the instructions you received before this layer. If a regional choice would make a reply less clear, less accurate or less appropriate, use neutral ${language} instead.`,
+    `Keep your role, rules, policies and facts exactly as defined by the instructions you received before this layer. If a regional choice would make your output less clear, less accurate or less appropriate for the situation, use neutral ${language} instead.`,
     "Apply this layer only to language: vocabulary, discourse markers, sentence structure, forms of address and conversational conventions.",
     "Do not attribute or perform personality traits, humor, intelligence, education, income, social class, profession, religion, political views or behavior based on regional origin. Never imitate a stereotype.",
     "Do not claim to be from this region or to have a personal background there.",
@@ -70,7 +70,7 @@ export function renderInstructions(ir: PersonaIR): string {
   if (notice) lines.push("", `> ${notice}`);
   lines.push(
     "",
-    `This layer adjusts only how you phrase replies in ${persona.language}. It does not change who you are, what you know, or the rules you follow.`,
+    `This layer adjusts only how you write in ${persona.language}. It does not change who you are, what you know, or the rules you follow.`,
     ...section(
       "Ground rules",
       groundRules(ir).map((rule) => `- ${rule}`),
