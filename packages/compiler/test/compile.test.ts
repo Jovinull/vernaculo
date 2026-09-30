@@ -2,7 +2,13 @@ import { fileURLToPath } from "node:url";
 import { buildIR, createMemorySource, resolvePersona } from "@vernaculo/core";
 import { createDirectorySource } from "@vernaculo/core/node";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { compile, compilePersona, groundRules, INSTRUCTIONS_FORMAT } from "../src/index.ts";
+import {
+  compile,
+  compilePersona,
+  groundRules,
+  INSTRUCTIONS_FORMAT,
+  UNCONFIRMED_GUIDANCE,
+} from "../src/index.ts";
 
 const fixturesRoot = fileURLToPath(new URL("../../../fixtures/personas", import.meta.url));
 const resolved = await resolvePersona(
@@ -30,6 +36,38 @@ describe("compilePersona", () => {
     expect(instructions).not.toContain("## Examples");
     expect(instructions).toContain("## Avoid");
     expect(instructions).toContain("## Never produce output like this");
+  });
+
+  it("presents corroborated forms apart, as not yet confirmed by speakers", async () => {
+    const id = "pt-BR/x-fixture/corroborated";
+    const text = `apiVersion: vernaculo.dev/v1alpha1
+kind: Persona
+metadata: { id: ${id}, name: Corroborated, language: pt-BR, version: 0.1.0, maturity: fixture }
+regionality: { defaultIntensity: 0.3 }
+linguistics:
+  vocabulary:
+    preferred:
+      - { term: termo-sintético-confirmado, evidence: synthetic }
+      - term: termo-sintético-corroborado
+        evidence: corroborated
+        sources: [fonte-a, fonte-b]
+        minIntensity: 0.6
+provenance:
+  sources:
+    - { id: fonte-a, type: other, title: Synthetic source A, usage: consulted }
+    - { id: fonte-b, type: other, title: Synthetic source B, usage: consulted }
+`;
+    const persona = await resolvePersona(id, createMemorySource({ [id]: text }));
+    const high = compilePersona(persona, { intensity: 0.7 }).instructions;
+    const heading = high.indexOf("## Forms not yet confirmed by speakers");
+    expect(heading).toBeGreaterThan(high.indexOf("## Vocabulary"));
+    expect(high).toContain(UNCONFIRMED_GUIDANCE);
+    expect(high.indexOf("termo-sintético-corroborado")).toBeGreaterThan(heading);
+    expect(high.indexOf("termo-sintético-confirmado")).toBeLessThan(heading);
+
+    const low = compilePersona(persona, { intensity: 0.5 }).instructions;
+    expect(low).not.toContain("## Forms not yet confirmed by speakers");
+    expect(low).not.toContain("termo-sintético-corroborado");
   });
 
   it("flags non-reviewed maturity in the output itself", () => {

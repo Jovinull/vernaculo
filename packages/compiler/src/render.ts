@@ -62,6 +62,20 @@ function section(title: string, lines: readonly string[]): string[] {
   return lines.length > 0 ? ["", `## ${title}`, "", ...lines] : [];
 }
 
+function contextualBullet(item: { term: string; context: string; meaning?: string | undefined }) {
+  return bullet(item.term, [`Context: ${item.context}`, item.meaning].filter(Boolean).join(" "));
+}
+
+function patternLine(item: { description: string; example?: string | undefined }): string {
+  return item.example
+    ? `- ${inline(item.description)} Example: "${inline(item.example)}"`
+    : `- ${inline(item.description)}`;
+}
+
+/** How the model must treat `corroborated` forms (docs/specification/provenance.md). */
+export const UNCONFIRMED_GUIDANCE: string =
+  "Independent public sources report these forms for this variety, but they have not been validated in a structured speaker review. This source convergence does not establish how common or region-exclusive they are. Use them rarely: only in clearly informal conversation, at most one of them per reply, and never where a form listed above would do.";
+
 /** Renders a PersonaIR as provider-neutral Markdown instructions. Pure and deterministic. */
 export function renderInstructions(ir: PersonaIR): string {
   const { persona, pragmatics } = ir;
@@ -83,9 +97,7 @@ export function renderInstructions(ir: PersonaIR): string {
     ...(preferred.length > 0 ? ["Use where it fits naturally:"] : []),
     ...preferred.map((item) => bullet(item.term, item.meaning)),
     ...(contextual.length > 0 ? ["Use only in the stated context:"] : []),
-    ...contextual.map((item) =>
-      bullet(item.term, [`Context: ${item.context}`, item.meaning].filter(Boolean).join(" ")),
-    ),
+    ...contextual.map(contextualBullet),
   ];
   lines.push(...section("Vocabulary", vocabulary));
   lines.push(
@@ -94,16 +106,7 @@ export function renderInstructions(ir: PersonaIR): string {
       ir.discourseMarkers.map((item) => bullet(item.form, item.function)),
     ),
   );
-  lines.push(
-    ...section(
-      "Sentence patterns",
-      ir.morphosyntax.map((item) =>
-        item.example
-          ? `- ${inline(item.description)} Example: "${inline(item.example)}"`
-          : `- ${inline(item.description)}`,
-      ),
-    ),
-  );
+  lines.push(...section("Sentence patterns", ir.morphosyntax.map(patternLine)));
 
   const conventions: [string, readonly { form: string; usage?: string | undefined }[]][] = [
     ["Forms of address", pragmatics.addressForms],
@@ -123,6 +126,32 @@ export function renderInstructions(ir: PersonaIR): string {
         ]),
     ),
   );
+
+  const unconfirmed = ir.corroborated;
+  const unconfirmedForms = [
+    ...unconfirmed.vocabulary.preferred.map((item) => bullet(item.term, item.meaning)),
+    ...unconfirmed.vocabulary.contextual.map(contextualBullet),
+    ...unconfirmed.discourseMarkers.map((item) => bullet(item.form, item.function)),
+    ...unconfirmed.morphosyntax.map(patternLine),
+    ...[
+      unconfirmed.pragmatics.addressForms,
+      unconfirmed.pragmatics.greetings,
+      unconfirmed.pragmatics.acknowledgements,
+      unconfirmed.pragmatics.disagreements,
+      unconfirmed.pragmatics.closings,
+    ]
+      .flat()
+      .map((item) => bullet(item.form, item.usage)),
+  ];
+  if (unconfirmedForms.length > 0) {
+    lines.push(
+      ...section("Forms not yet confirmed by speakers", [
+        UNCONFIRMED_GUIDANCE,
+        "",
+        ...unconfirmedForms,
+      ]),
+    );
+  }
 
   lines.push(
     ...section(

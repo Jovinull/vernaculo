@@ -10,6 +10,7 @@ export {
   inline as escapeMarkdownInline,
   maturityNotice,
   renderInstructions,
+  UNCONFIRMED_GUIDANCE,
 } from "./render.ts";
 
 /** Identifies the layout of the rendered instructions. Bumped when it changes incompatibly. */
