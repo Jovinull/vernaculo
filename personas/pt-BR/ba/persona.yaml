@@ -8,8 +8,8 @@ metadata:
   description: >-
     Camada de português brasileiro escrito com um conjunto pequeno de opções lexicais
     rotuladas para a Bahia. Não presume que exista uma única fala baiana uniforme, nem
-    atribui identidade regional ao agente. Rascunho bibliográfico, ainda sem revisão
-    por falantes.
+    atribui identidade regional ao agente. Rascunho bibliográfico com uma pequena
+    varredura exploratória de podcast; ainda sem revisão por falantes.
   language: pt-BR
   version: 0.1.0
   maturity: draft
@@ -64,6 +64,55 @@ linguistics:
           A amostra do ALiB registra a forma em Salvador; fontes históricas também a
           situam na Bahia. Não há dados de diferentes regiões baianas que justifiquem
           incluí-la no pack estadual. Não renderizar aqui.
+  discourse:
+    markers:
+      - form: viu
+        function: >-
+          Pode aparecer no fim de uma frase para dar ênfase ou conferir a atenção do
+          interlocutor; função a confirmar em uma amostra maior.
+        evidence: hypothesis
+        sources: [podcast-abq-t2ep02, podcast-abq-t2ep06]
+        notes: >-
+          As transcrições registram ocorrências nos episódios sobre Feira de Santana
+          e a região sisaleira, mas misturam entrevistador e convidados. A ocorrência
+          em fala baiana não demonstra distribuição estadual nem especificidade; não
+          renderizar até comparar com outras regiões e variedades.
+      - form: rapaz
+        function: >-
+          Pode funcionar como chamamento ou reação enfática em conversa informal; a
+          função e a distribuição precisam ser verificadas.
+        evidence: hypothesis
+        sources: [podcast-abq-t2ep02, podcast-abq-t2ep06]
+        notes: >-
+          Há poucas ocorrências em dois episódios e não há anotação segura de todos
+          os turnos. A forma é corrente em outras variedades do português brasileiro;
+          não a tratar como marca da Bahia nem renderizar.
+      - form: olhe
+        function: >-
+          Abre uma resposta explicativa, como em “olhe, veja bem”; possível marcador
+          conversacional a investigar.
+        evidence: hypothesis
+        sources: [podcast-abq-t2ep02]
+        notes: >-
+          A transcrição de uma entrevista de Feira de Santana registra poucos casos.
+          A amostra não demonstra que a função ou a forma sejam específicas da Bahia;
+          não renderizar.
+  morphosyntax:
+    patterns:
+      - id: posicao-de-mais-nunca
+        description: >-
+          Sequência “mais nunca” depois do verbo, com valor contextual de “nunca mais”,
+          como em “a obra não vai acontecer mais nunca”; possível padrão coloquial a
+          pesquisar.
+        example: A obra não vai acontecer mais nunca.
+        evidence: hypothesis
+        sources: [podcast-abq-t2ep02]
+        notes: >-
+          A expressão aparece quatro vezes no mesmo trecho do episódio sobre Feira:
+          o entrevistador a usa na pergunta e o convidado a repete na resposta. Pode
+          haver eco conversacional; não são quatro observações independentes e isso
+          não comprova distribuição baiana. Comparar com fala de outras regiões antes
+          de qualquer renderização.
   orthography:
     phoneticSpelling: avoid
 examples:
@@ -178,9 +227,60 @@ provenance:
       usage: consulted
       accessed: "2026-09-29"
       notes: Fonte histórica consultada como pista para “queimado”; não mede uso atual.
+    - id: podcast-abq-series
+      type: other
+      title: "A Bahia quer o quê? — página da série no Bahia Notícias"
+      url: https://www.bahianoticias.com.br/tags/a-bahia-quer-o-que
+      citation: "BAHIA NOTÍCIAS. A Bahia quer o quê? Página da série e arquivo de episódios."
+      license: Direitos e condições de reutilização não avaliados nesta revisão
+      usage: consulted
+      accessed: "2026-09-29"
+      notes: >-
+        Série de entrevistas com comunicadores ligados a diferentes regiões da Bahia.
+        Referência de contexto editorial; não é um corpus sociolinguístico balanceado.
+    - id: podcast-abq-t2ep13
+      type: corpus
+      title: "A Bahia quer o quê? T2EP13 — Edvan Lessa (Chapada Diamantina)"
+      url: https://www.youtube.com/watch?v=b0o8sH8xNTw
+      citation: "BAHIA NOTÍCIAS. A Bahia quer o quê?, temporada 2, episódio 13: Edvan Lessa. YouTube."
+      license: Direitos e condições de reutilização não avaliados nesta revisão
+      usage: consulted
+      accessed: "2026-09-29"
+      notes: >-
+        O episódio situa a conversa na Chapada Diamantina e apresenta Edvan Lessa
+        ligado a Seabra. Uma transcrição de apoio foi consultada nesta revisão e a
+        cópia de trabalho removida após a síntese; não presumir naturalidade ou local
+        de nascimento do entrevistado.
+    - id: podcast-abq-t2ep02
+      type: corpus
+      title: "A Bahia quer o quê? T2EP02 — Dilton Coutinho (Feira de Santana / Portal do Sertão)"
+      url: https://www.youtube.com/watch?v=81Kp1ecAtxo
+      citation: "BAHIA NOTÍCIAS. A Bahia quer o quê?, temporada 2, episódio 2: Dilton Coutinho. YouTube."
+      license: Direitos e condições de reutilização não avaliados nesta revisão
+      usage: consulted
+      accessed: "2026-09-29"
+      notes: >-
+        A conversa é situada em Feira de Santana e no Portal do Sertão; o entrevistado
+        é associado ao Acorda Cidade. Uma transcrição de apoio foi consultada nesta
+        revisão e a cópia de trabalho removida após a síntese; região de atuação não
+        equivale a local de nascimento.
+    - id: podcast-abq-t2ep06
+      type: corpus
+      title: "A Bahia quer o quê? T2EP06 — Raimundo Mascarenhas (região sisaleira)"
+      url: https://www.youtube.com/watch?v=uz8es7_mMWI
+      citation: "BAHIA NOTÍCIAS. A Bahia quer o quê?, temporada 2, episódio 6: Raimundo Mascarenhas. YouTube."
+      license: Direitos e condições de reutilização não avaliados nesta revisão
+      usage: consulted
+      accessed: "2026-09-29"
+      notes: >-
+        A conversa trata da região sisaleira e associa o entrevistado ao Calila
+        Notícias. Uma transcrição de apoio foi consultada nesta revisão e a cópia de
+        trabalho removida após a síntese; região de atuação não equivale a local de
+        nascimento.
   notes: >-
     O pack estadual prioriza precisão sobre quantidade. Só inclui como formas
     renderizáveis itens com rótulo regional de referência para a Bahia; ainda assim,
     o rótulo não prova frequência nem distribuição uniforme. Traços de Salvador e de
     comunidades específicas ficam nos respectivos estudos e não são generalizados.
-    Detalhes, limites e autorrevisão em RESEARCH.md.
+    As pistas extraídas dos três episódios do podcast estão como hipóteses e nunca
+    são renderizadas. Detalhes, limites e autorrevisão em RESEARCH.md.

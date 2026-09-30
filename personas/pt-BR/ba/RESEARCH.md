@@ -53,6 +53,105 @@ acadêmico acessível que estabeleça distribuição), nem `meu rei`/`minha rain
 fonte de distribuição encontrada). Não os classifico como “errados”; apenas não há
 evidência suficiente para fazê-los representar o estado inteiro.
 
+## Varredura exploratória de três episódios baianos
+
+Usei as transcrições adicionadas à pasta `PODCAST` como uma primeira fonte de fala
+contemporânea, inclusive para procurar pistas que não estavam na bibliografia
+anterior. A série [*A Bahia quer o quê?*](https://www.bahianoticias.com.br/tags/a-bahia-quer-o-que), do Bahia Notícias, entrevista comunicadores ligados a diferentes regiões. Os
+três arquivos cobrem territórios distintos:
+
+| Episódio e convidado | Região situada na conversa | Vídeo |
+| --- | --- | --- |
+| T2EP13 — Edvan Lessa | Chapada Diamantina; o programa o situa em Seabra | [YouTube](https://www.youtube.com/watch?v=b0o8sH8xNTw) |
+| T2EP02 — Dilton Coutinho | Feira de Santana e Portal do Sertão; ligado ao Acorda Cidade | [YouTube](https://www.youtube.com/watch?v=81Kp1ecAtxo) |
+| T2EP06 — Raimundo Mascarenhas | Região sisaleira; ligado ao Calila Notícias e a Conceição do Coité | [YouTube](https://www.youtube.com/watch?v=uz8es7_mMWI) |
+
+As localidades acima são as apresentadas pelos episódios e indicam o assunto ou a
+atuação regional dos convidados; não confirmam local de nascimento ou história de
+vida. Nos três, o apresentador é Francis Juliano. Portanto, há diversidade de assunto
+e região, mas não três amostras independentes de conversa cotidiana: o gênero é
+entrevista jornalística sobre questões locais, com profissionais de comunicação,
+perguntas conduzidas pelo mesmo apresentador e foco político-eleitoral.
+
+O conteúdo também oferece contexto para entender a diversidade regional sem
+transformá-la em vocabulário de persona: o episódio da Chapada passa por nascentes,
+rios, comunidades e pela centralidade de serviços em Seabra; o de Feira trata da
+função rodoviária e econômica da cidade e de infraestrutura, saúde e política; o da
+região sisaleira aborda a cadeia do sisal, derivados de mandioca como beiju, saúde,
+estradas e cobertura jornalística local. Esses assuntos podem orientar cenários de
+avaliação regionalmente informados, mas seus nomes e tópicos não são marcas de fala.
+
+### O que a varredura encontrou
+
+Uma contagem das transcrições de trabalho consultadas nesta revisão dá muitas
+ocorrências de `né`, `a gente`, `aí`, `tá` e `então`. A tabela conta palavras nos
+textos completos, sem separar apresentador e convidado nem normalizar pela duração.
+As cópias de trabalho foram removidas após a síntese; os vídeos continuam como fontes
+primárias, mas a contagem não é uma medida de frequência na Bahia.
+
+| Forma | T2EP13 | T2EP02 | T2EP06 | Leitura provisória |
+| --- | ---: | ---: | ---: | --- |
+| `né` | 93 | 78 | 123 | Marcador conversacional recorrente, mas comum no português brasileiro e presente na condução do programa. |
+| `a gente` | 92 | 50 | 67 | Alterna com `nós`; o corpus não mostra que essa alternância seja especificamente baiana. |
+| `aí` | 48 | 54 | 35 | Organiza sequência e retomada, sem evidência de especificidade estadual. |
+| `tá` | 27 | 60 | 57 | Redução coloquial corrente em muitas variedades. |
+| `então` | 33 | 28 | 68 | Conector de progressão comum em fala de entrevista. |
+| `viu` | 0 | 20 | 6 | Aparece como ênfase ou checagem em alguns trechos; turnos não estão consistentemente separados. Mantido como hipótese, não como traço baiano confirmado. |
+| `rapaz` | 0 | 3 | 1 | Poucos casos, possivelmente chamamento ou reação; uso não exclusivo da Bahia. |
+| `olhe` | 1 | 2 | 0 | Há aberturas como “olhe, veja bem” no episódio de Feira; uma localidade não sustenta generalização. |
+| `mais nunca` | 0 | 4 | 0 | Pista nova descrita abaixo; as ocorrências concentram-se numa única sequência conversacional. |
+
+As transcrições consultadas não registram `massa`, `porreta`, `oxe`, `oxente`, `vixe`, `visse`,
+`barril`, `meu rei`, `baba` nem `queimado`. Essa ausência só descreve os três episódios:
+entrevistas jornalísticas não são questionários lexicais, e transcrição automática
+pode perder formas. Não é evidência de que essas expressões não sejam usadas na
+Bahia.
+
+### Novas pistas mantidas como hipótese
+
+- **`mais nunca`**: no episódio de Feira, aparece quatro vezes na mesma troca. O
+  apresentador usa a expressão ao formular a pergunta; o convidado a retoma ao
+  desenvolver a resposta. O eco pode ser acomodação ao interlocutor, então não são
+  quatro ocorrências independentes. É uma boa pista para comparar em gravações de
+  outras regiões, mas ainda não demonstra distribuição estadual. Ficou registrada em
+  `morphosyntax.patterns` como `hypothesis` e não é renderizada.
+- **`viu`**, **`rapaz`** e **`olhe`**: são recursos conversacionais observados nos
+  episódios sobre Feira e a região sisaleira, em diferentes trechos do apresentador e
+  dos convidados. Podem ajudar a descrever fala informal, mas também são encontrados
+  fora da Bahia e o corpus não permite atribuí-los sempre a um falante. Estão no YAML
+  apenas como hipóteses não renderizáveis, para uma comparação posterior.
+- **`Deus livre de acabar o sisal`**: expressão enfática registrada na transcrição do
+  episódio sisaleiro. A forma pode ter sido transcrita com palavras omitidas; além
+  disso, a expressão por si não é um marcador estadual. Não a promovi a traço.
+- **`chapada humana`**: expressão usada por Edvan Lessa e atribuída por ele a uma
+  colega da UNEB. É um conceito situado e explicitamente citado, não uma palavra que
+  se deva pôr na voz de qualquer agente baiano.
+
+Também aparecem repetições, pausas preenchidas (`eh`), reinícios e reformulações.
+Eles refletem a fala ao vivo e o formato de entrevista; reproduzi-los por escrito
+seria imitar hesitação, não representar um traço regional. Em contrapartida, nomes e
+conceitos como Chapada Diamantina, Seabra, Portal do Sertão, Feira de Santana, região
+sisaleira, Conceição do Coité, sisal, beiju e territórios de identidade ajudam a
+compreender o contexto de cada conversa. São conhecimento geográfico ou temático,
+não marcadores de estilo para inserir fora de contexto.
+
+### Limites deste material
+
+As transcrições parecem ter sido geradas por reconhecimento automático, mas o método
+de transcrição não está documentado. Há erros visíveis em nomes próprios, números e
+segmentação; apenas dois arquivos trazem marcação de tempo, e nenhum oferece
+identificação consistente de cada turno. As contagens acima são reproduzíveis sobre
+os `.txt`, não foram conferidas palavra por palavra com o áudio e não podem distinguir
+com segurança fala do apresentador, do convidado e possíveis correções do sistema.
+As cópias dos `.txt` foram removidas do workspace após a extração; para reproduzir
+as contagens será preciso consultar novamente as transcrições dos vídeos.
+
+Esta varredura ampliou a lista de perguntas de pesquisa, não o vocabulário positivo
+renderizado. Ela não valida `massa` ou `porreta`, que não apareceram nos arquivos, e
+não prova que `mais nunca`, `viu`, `rapaz` ou `olhe` sejam exclusivos ou frequentes na
+Bahia. Para incorporá-los como opção estadual, seria necessário comparar outras
+localidades e contextos, conferir os áudios e separar os turnos.
+
 O rascunho anterior `pt-BR/ba/salvador` permanece separado. Seus resultados de
 tratamento, pronomes, imperativo e léxico dizem respeito a Salvador ou às amostras
 citadas, não ao estado todo. A existência do diretório estadual não cria herança
@@ -109,9 +208,18 @@ descartar candidatos sem projetar uma forma de Salvador sobre o interior.
 
 - SAMPAIO, Bernardo Pedral. *Língua portuguesa no Brasil: modalidades de falar nos estados da Bahia e São Paulo*. Salvador, 1961. [Cópia digital no acervo da UFBA](https://repositorio.ufba.br/bitstream/ri/23823/1/SAMPAIO%2C%20B.%20P.%20L%C3%ADngua%20Portuguesa%20no%20Brasil%20modalidades%20de%20falar%20nos%20estados%20da%20Bahia%20e%20S%C3%A3o%20Paulo.pdf). Fonte histórica, não evidência de frequência contemporânea.
 
+### Corpus audiovisual exploratório
+
+- BAHIA NOTÍCIAS. *A Bahia quer o quê?* Página da série e arquivo de episódios. [Bahia Notícias](https://www.bahianoticias.com.br/tags/a-bahia-quer-o-que). Acesso em 29 set. 2026.
+- BAHIA NOTÍCIAS. *A Bahia quer o quê?* Temporada 2, episódio 13: Edvan Lessa — Chapada Diamantina. [YouTube](https://www.youtube.com/watch?v=b0o8sH8xNTw). Acesso em 29 set. 2026. Transcrição de apoio consultada nesta revisão; cópia de trabalho removida após a síntese.
+- BAHIA NOTÍCIAS. *A Bahia quer o quê?* Temporada 2, episódio 2: Dilton Coutinho — Feira de Santana / Portal do Sertão. [YouTube](https://www.youtube.com/watch?v=81Kp1ecAtxo). Acesso em 29 set. 2026. Transcrição de apoio consultada nesta revisão; cópia de trabalho removida após a síntese.
+- BAHIA NOTÍCIAS. *A Bahia quer o quê?* Temporada 2, episódio 6: Raimundo Mascarenhas — região sisaleira. [YouTube](https://www.youtube.com/watch?v=uz8es7_mMWI). Acesso em 29 set. 2026. Transcrição de apoio consultada nesta revisão; cópia de trabalho removida após a síntese.
+
 ## Limites
 
 - Sem revisão por falantes e sem teste com um modelo externo nesta etapa.
+- As transcrições do podcast servem para gerar e testar hipóteses; não constituem uma
+  amostra representativa de falantes baianos nem uma revisão por falantes do pack.
 - O estudo estadual descreve fala; este pack afeta texto escrito e não representa
   pronúncia, ritmo ou prosódia.
 - Rótulo regional em dicionário não estima frequência, idade, classe social,
