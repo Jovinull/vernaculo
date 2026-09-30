@@ -19,7 +19,16 @@ Legenda: ✅ feito · 🔜 próximo · 📋 planejado · 💡 ideia (não é com
 | Repositório público no GitHub (https://github.com/Jovinull/vernaculo) | ✅ |
 | Documentação e metadados em português (ADR-0016) | ✅ |
 | Resolver as questões em aberto restantes: executor de evals, distribuição do catálogo | 🔜 |
-| Pesquisar e escrever o rascunho de `pt-BR/ba/salvador`, `pt-BR/se/aracaju`, `pt-BR/pe/recife`, `pt-BR/sp/sao-paulo` | 🔜 |
+| Rascunho estadual `pt-BR/ba` e recorte de Salvador `pt-BR/ba/salvador`, com dossiês de pesquisa | ✅ |
+| A camada serve a qualquer IA; packs sem caso de uso pressuposto (ADR-0017) | ✅ |
+| Laboratório local de agente (`examples/agent-lab`): várias IAs hospedeiras e cenários com e sem a camada, relatório e folha de revisão cega | ✅ |
+| Reconhecimento como dimensão de avaliação: pergunta cega "de onde parece ser?" no laboratório e na revisão humana | ✅ |
+| Questionário para falantes de Salvador (`SPEAKER-SURVEY.md`) para confirmar formas e hipóteses | ✅ |
+| Autorrevisar exemplos e compilar o pack estadual em intensidades diferentes | ✅ |
+| Ampliar corpus contemporâneo de diferentes regiões da Bahia para buscar traços compartilhados com melhor cobertura | 🔜 |
+| Rodar o laboratório com um modelo real, quando houver credenciais locais disponíveis | 📋 |
+| Revisões por falantes dos rascunhos da Bahia (recomendadas, nunca um portão) | 📋 |
+| Pesquisar e escrever packs de outras cidades e estados após consolidar a camada ampla da Bahia | 📋 |
 | Conjunto compartilhado de cenários e executor de evals com modelos (local, credenciais do usuário) | 📋 |
 | Primeiras rodadas de revisão humana (recomendadas, não um portão); schema dos registros de revisão | 📋 |
 | CLI `add`, `search`, `update` (depois da decisão sobre o catálogo); `@clack/prompts` para fluxos interativos | 📋 |
@@ -33,7 +42,7 @@ Legenda: ✅ feito · 🔜 próximo · 📋 planejado · 💡 ideia (não é com
 | `@vernaculo/mcp`: servidor stdio local que expõe personas (MCP TS SDK v2) | 📋 |
 | Adapters: Anthropic, Gemini, modelos locais (Ollama) | 📋 |
 | Relatórios de evals entre provedores por pack | 📋 |
-| Modelagem de registro (atendimento / casual / formal) | 💡 (questão em aberto) |
+| Modelagem de registro (formal / informal) | 💡 (questão em aberto) |
 | Packs com vários arquivos, arquivos de eval por pack | 💡 (questão em aberto) |
 | Adapter de conveniência `@vernaculo/openai-agents` | 💡 |
 | Intensidade escolhida em runtime nas skills exportadas | 💡 (questão em aberto) |

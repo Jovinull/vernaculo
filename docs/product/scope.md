@@ -14,7 +14,8 @@ assumida, não implementada), **ideia** (futuro possível, não é requisito),
 | `@vernaculo/skills` (exportador de Agent Skills) | feito |
 | CLI: `list`, `inspect`, `validate`, `compile`, `export --target skill`, `eject` | feito |
 | CLI: `add`, `search`, `update` | planejado (depende da distribuição do catálogo; veja as questões em aberto) |
-| Quatro packs pesquisados, com revisão humana recomendada: `pt-BR/ba/salvador`, `pt-BR/se/aracaju`, `pt-BR/pe/recife`, `pt-BR/sp/sao-paulo` | planejado (pesquisa não iniciada) |
+| Packs pesquisados, com revisão humana recomendada: começar por `pt-BR/ba`, depois especializar localidades com evidência | em andamento: Bahia estadual e Salvador em rascunho (sem revisão por falantes); outras localidades aguardam pesquisa |
+| Laboratório local para testar packs com um modelo real e gerar amostras para revisão (`examples/agent-lab`) | feito (manual; o executor de evals continua em aberto) |
 | Licença do conteúdo (Apache-2.0) e política de revisão (recomendada, não obrigatória) | feito (ADR-0014, ADR-0015) |
 | Metodologia de evals, dimensões e rótulos de revisão humana | feito (documentado) |
 | Executor de evals e suítes de eval por pack | planejado |
@@ -31,7 +32,7 @@ assumida, não implementada), **ideia** (futuro possível, não é requisito),
 | Adapters para Anthropic / Gemini / modelos locais (Ollama) | planejado (o design já suporta) |
 | Site de documentação/catálogo (estático, por exemplo Astro + Starlight em hospedagem gratuita) | ideia |
 | Outros idiomas e variedades (`pt-PT`, `es-AR`, `es-MX`, `en-US`, `en-GB`...) | ideia |
-| Subpersonas de registro (`.../customer-service`, `.../casual`, `.../formal`) | ideia (questão em aberto) |
+| Modelagem de registro (formal/informal); variantes por caso de uso ficam em personas de projeto, não na biblioteca (ADR-0017) | ideia (questão em aberto) |
 | Implementação em Python (PyPI) | ideia |
 | Core em Rust / binário standalone | ideia (só com necessidade concreta, ADR-0004) |
 | Regionalização de voz / fala | ideia |
