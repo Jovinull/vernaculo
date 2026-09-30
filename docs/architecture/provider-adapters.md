@@ -20,12 +20,13 @@ import { withPersona } from "@vernaculo/openai";
 const persona = compilePersona(await loadPersona("pt-BR/ba/salvador"), { intensity: 0.25 });
 
 const response = await new OpenAI().responses.create(
-  withPersona({ model, instructions: instrucoesDoAgenteDaConcessionaria, input: mensagemDoCliente }, persona),
+  withPersona({ model, instructions: instrucoesDaSuaIA, input: mensagemDaPessoa }, persona),
 );
 ```
 
-(`pt-BR/ba/salvador` ainda não existe; veja [`examples/openai`](../../examples/openai/)
-para uma versão executável com fixtures.)
+(`pt-BR/ba/salvador` existe como rascunho; veja [`examples/openai`](../../examples/openai/)
+para uma versão executável com fixtures e [`examples/agent-lab`](../../examples/agent-lab/)
+para testar um pack com um modelo real.)
 
 Fatos em que o adapter se apoia (verificados em 2026-09-29):
 

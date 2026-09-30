@@ -44,12 +44,12 @@ evals — veja as [questões em aberto](../roadmap/open-questions.md).
 
 ## Orientação para escolher uma intensidade
 
-Da conversa de concepção (provisória, a ser verificada com evals):
+Adaptada da conversa de concepção (provisória, a ser verificada com evals):
 
 | Uso | Faixa |
 | --- | --- |
-| Atendimento comercial | 0.15–0.35 |
-| Personagens de jogos | 0.40–0.70 |
+| Uso cotidiano (assistentes, tutores, ferramentas, atendimento) | 0.15–0.35 |
+| Personagens de jogos e ficção | 0.40–0.70 |
 | Experimentos linguísticos | 0.80+ |
 
 O primeiro esboço da conversa usava rótulos (*leve / moderada / forte*); a escala
@@ -58,7 +58,7 @@ normativas no compilador.
 
 ## Orientação para autores de packs
 
-- Defina `defaultIntensity` para o uso mais comum pretendido do pack (geralmente sutil).
+- Defina `defaultIntensity` sutil: o pack não sabe em que IA será usado, então o padrão precisa ser discreto; cada IA hospedeira escolhe a sua ([ADR-0017](../decisions/0017-any-ai-use-case-neutral-packs.md)).
 - Deixe `minIntensity` sem definir (0) para traços não marcados ou amplamente compartilhados na variedade; aumente-o para traços que os falantes percebem como fortemente marcados. Registre a evidência dessa percepção.
 - Dê uma `intensity` aos exemplos, para que cada um ilustre o nível a que pertence.
 - Revise as saídas em várias intensidades (por exemplo, 0, a padrão, 0.7 e 1) com falantes; "exagerado" na intensidade 1 continua sendo um defeito.

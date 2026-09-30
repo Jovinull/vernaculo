@@ -41,15 +41,16 @@ Da conversa de concepção, um agente em produção combina preocupações indep
 | --- | --- | --- |
 | Idioma | `pt-BR` | persona do Vernáculo (id, `metadata.language`) |
 | Granularidade da variedade | Nordeste → Bahia → Salvador (ou uma variedade não administrativa) | id da persona + `extends` |
-| Registro | conversacional, atendimento | questão em aberto (não modelado na v1alpha1) |
+| Registro | formal, informal | questão em aberto (não modelado na v1alpha1) |
 | Intensidade regional | 0.0–1.0 | Vernáculo (opção no momento de compilar/exportar) |
-| Papel | assistente de vendas | agente hospedeiro |
-| Domínio | automotivo | agente hospedeiro |
-| Marca | a concessionária | agente hospedeiro |
-| Regras da empresa | financiamento, políticas da loja | agente hospedeiro |
+| Papel | assistente geral, tutor, personagem, atendente de vendas | IA hospedeira |
+| Domínio | educação, jogos, automotivo | IA hospedeira |
+| Marca | um produto, uma empresa | IA hospedeira |
+| Regras | políticas de uma loja, regras pedagógicas de um tutor | IA hospedeira |
 
 O Vernáculo cuida apenas das preocupações de linguagem
-([ADR-0009](../decisions/0009-regional-layer-separate-from-agent-role.md)).
+([ADR-0009](../decisions/0009-regional-layer-separate-from-agent-role.md)) e não
+pressupõe nenhum papel ([ADR-0017](../decisions/0017-any-ai-use-case-neutral-packs.md)).
 
 ## Propriedades-chave do design
 

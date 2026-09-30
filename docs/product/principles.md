@@ -37,6 +37,11 @@ A persona ajusta apenas a linguagem; o papel, as regras, as políticas e os fato
 agente hospedeiro sempre vencem. O agente nunca afirma ter origem regional.
 [ADR-0009](../decisions/0009-regional-layer-separate-from-agent-role.md)
 
+A camada serve a **qualquer IA** — assistente, tutor, personagem, ferramenta de
+escrita, atendimento — e os packs não pressupõem caso de uso: descrevem a variedade;
+o uso é de quem integra.
+[ADR-0017](../decisions/0017-any-ai-use-case-neutral-packs.md)
+
 ## 6. Sociolinguística, não caricatura
 
 Apenas traços de linguagem observáveis. Nenhuma personalidade, humor, inteligência,

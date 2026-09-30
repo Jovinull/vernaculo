@@ -1,29 +1,31 @@
 # Vernáculo
 
-**Camadas de linguagem regional para agentes de IA — abertas, self-hosted e independentes de provedor.**
+**Camadas de linguagem regional para qualquer IA — abertas, self-hosted e independentes de provedor.**
 
 > **Status: bootstrap inicial (setembro de 2026).** A especificação (`v1alpha1`),
-> a implementação de referência e a CLI funcionam e estão testadas, mas **ainda não
-> existe nenhum pack regional real** — só fixtures sintéticos. Nada foi publicado no
-> npm ainda. Não use em produção.
+> a implementação de referência e a CLI funcionam e estão testadas. Os packs da Bahia
+> são rascunhos bibliográficos, ainda sem revisão por falantes: há um pack estadual
+> conservador e um recorte específico de Salvador. Nada foi publicado no npm ainda.
+> Não use em produção.
 
 ## O problema
 
-O mesmo agente de IA costuma ser colocado em muitos lugares. O assistente de vendas
-de uma concessionária em Salvador e em Recife deve compartilhar produtos, políticas
-e regras, mas as pessoas falam de um jeito diferente em cada cidade. Escrever um
-prompt por empresa × região cria versões divergentes das regras de negócio; pedir a
-um modelo que "fale como alguém daqui" produz estereótipos e gírias inventadas.
+A mesma IA — um assistente, um tutor, um personagem, uma ferramenta de escrita, um
+atendente — conversa com gente de muitos lugares, e as pessoas falam de um jeito
+diferente em cada cidade. Escrever um prompt por IA × região cria versões
+divergentes das regras; pedir a um modelo que "fale como alguém daqui" produz
+estereótipos e gírias inventadas.
 
 ## O que é o Vernáculo
 
 O Vernáculo descreve como uma variedade da língua é falada — vocabulário,
 marcadores discursivos, formas de tratamento, convenções de conversa, padrões de
 frase — como **dados portáveis e versionados**, e compila isso em uma **camada de
-linguagem** que você coloca sobre o agente que já tem:
+linguagem** que você coloca sobre a IA que já tem — um assistente, um tutor, um
+personagem, uma ferramenta de escrita, um atendente:
 
 ```text
-seu agente (papel, regras, conhecimento)  +  camada de persona regional  =  agente localizado
+sua IA (qualquer papel, regras, conhecimento)  +  camada de persona regional  =  a mesma IA, com o jeito local
 ```
 
 Nenhum modelo é alterado nem passa por fine-tuning: a camada é um texto de
@@ -38,9 +40,9 @@ região. [Por quê e como →](docs/linguistic/anti-caricature.md)
 ## Como funciona
 
 1. **Uma persona por lugar.** Um arquivo `persona.yaml` descreve, com pesquisa e fontes, como se fala ali: palavras e expressões, formas de tratamento, jeito de cumprimentar e de se despedir, o que evitar e exemplos.
-2. **Você escolhe a intensidade**, de 0 (português neutro) a 1 (bem marcado). Em torno de 0,3 é um toque leve, bom para atendimento.
+2. **Você escolhe a intensidade**, de 0 (português neutro) a 1 (bem marcado). Em torno de 0,3 é um toque leve, um bom ponto de partida para qualquer uso.
 3. **O Vernáculo gera, na sua máquina, um bloco de instruções** a partir do arquivo — sem chamar nenhuma IA e sem internet.
-4. **Esse bloco vai depois do prompt do seu agente.** A IA que você já usa (OpenAI, Claude, um modelo local...) passa a responder com o jeito local, mantendo todas as regras do negócio.
+4. **Esse bloco vai depois do prompt da sua IA**, seja ela um assistente, um tutor, um personagem ou um atendente. O modelo que você já usa (OpenAI, Claude, um modelo local...) passa a escrever com o jeito local, mantendo o papel e as regras que você definiu. Os packs não pressupõem nenhum uso ([ADR-0017](docs/decisions/0017-any-ai-use-case-neutral-packs.md)).
 
 Três formas de usar:
 
@@ -74,8 +76,10 @@ const persona = compilePersona(await loadPersona("pt-BR/x-fixture/cidade-a", { r
 const params = withPersona({ model, instructions: instrucoesDoSeuAgente, input }, persona);
 ```
 
-(`pt-BR/x-fixture/...` são fixtures sintéticos com palavras inventadas. Os primeiros
-packs reais — Salvador/BA, Aracaju/SE, Recife/PE e São Paulo/SP — estão planejados.)
+(`pt-BR/x-fixture/...` são fixtures sintéticos com palavras inventadas. O pack amplo
+da Bahia (`pt-BR/ba`) e o recorte de Salvador (`pt-BR/ba/salvador`) são rascunhos
+bibliográficos ainda sem revisão por falantes. Outros estados e cidades estão
+planejados.)
 
 ## Princípios
 
@@ -96,7 +100,10 @@ packs reais — Salvador/BA, Aracaju/SE, Recife/PE e São Paulo/SP — estão pl
 | `@vernaculo/skills` (exportador de Agent Skills) | feito |
 | CLI `vernaculo`: `list`, `inspect`, `validate`, `compile`, `export --target skill`, `eject` | feito |
 | CLI `add` / `search` / `update` | planejado |
-| Packs regionais (Salvador, Aracaju, Recife, São Paulo) | planejado — pesquisa não iniciada |
+| Pack estadual da Bahia (`pt-BR/ba`) | rascunho — pesquisa bibliográfica, escopo conservador e sem revisão por falantes ([dossiê](personas/pt-BR/ba/RESEARCH.md)) |
+| Recorte de Salvador (`pt-BR/ba/salvador`) | rascunho — pesquisa bibliográfica específica da capital ([dossiê](personas/pt-BR/ba/salvador/RESEARCH.md)) |
+| Packs regionais de Aracaju, Recife e São Paulo | planejado — pesquisa não iniciada |
+| Laboratório local para testar packs com um modelo real ([`examples/agent-lab`](examples/agent-lab/)) | feito |
 | Executor de evals com modelos, rodadas de revisão humana | planejado (metodologia documentada) |
 | Adapters MCP, Anthropic, Gemini e de modelos locais | planejado |
 

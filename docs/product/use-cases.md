@@ -1,7 +1,21 @@
 # Casos de uso
 
-Os exemplos vêm da conversa de concepção. Nomes de marcas (Honda) descrevem apenas
-o cenário motivador; os exemplos do repositório usam empresas fictícias.
+O Vernáculo serve a qualquer IA que escreva na língua; nenhum uso é o padrão e os
+packs não pressupõem nenhum
+([ADR-0017](../decisions/0017-any-ai-use-case-neutral-packs.md)). Alguns usos:
+
+| IA hospedeira | O que a camada muda | O que continua com a IA |
+| --- | --- | --- |
+| Assistente geral / chatbot | como ele trata a pessoa e reage no dia a dia | tudo o que ele sabe e faz |
+| Tutor / educação | como explica e incentiva | método pedagógico, conteúdo |
+| Personagem de jogo ou ficção | como o personagem fala | história, personalidade do personagem (definida pelo autor, nunca pelo pack) |
+| Ferramenta de escrita | o jeito de escrever mensagens e textos informais | o que o usuário pediu |
+| Assistente de voz (em texto) | as frases que serão faladas | as ações do assistente |
+| Suporte, vendas, atendimento | como fala com quem procura a empresa | políticas, produtos, regras |
+
+Os casos abaixo vêm da conversa de concepção, que partiu de uma concessionária.
+Nomes de marcas (Honda) descrevem apenas esse cenário motivador; os exemplos do
+repositório usam empresas fictícias.
 
 ## 1. O mesmo agente de vendas em várias cidades (caso motivador)
 
@@ -30,15 +44,16 @@ createAgent({ role: hondaSalesAgent, persona: regional("br/pe/recife", { intensi
 O equivalente implementado é `withPersona(params, compilePersona(...))` — veja
 [provider-adapters.md](../architecture/provider-adapters.md).
 
-## 2. Qualquer agente de negócio × qualquer localidade
+## 2. Qualquer IA × qualquer localidade
 
 ```text
-Agente bancário + Vernáculo Recife = Agente bancário de Recife
-Agente de suporte + Vernáculo Salvador = Agente de suporte de Salvador
+Tutor de matemática + Vernáculo Recife   = o mesmo tutor, falando como em Recife
+Assistente pessoal  + Vernáculo Salvador = o mesmo assistente, falando como em Salvador
+Agente bancário     + Vernáculo Recife   = o mesmo agente bancário, falando como em Recife
 ```
 
-Nada de arquivos `pizzaria-baiano`, `banco-baiano`, `suporte-baiano`: cada
-combinação agente × localidade é uma composição.
+Nada de arquivos `tutor-baiano`, `banco-baiano`, `suporte-baiano`: cada combinação
+IA × localidade é uma composição.
 
 ## 3. Ajustes da empresa sobre um pack da biblioteca
 
@@ -59,11 +74,14 @@ e o exemplo executável [`examples/project-persona`](../../examples/project-pers
 
 ## 4. Intensidades diferentes para produtos diferentes
 
-| Uso | Faixa de intensidade (da conversa, provisória) |
+| Uso | Faixa de intensidade (provisória) |
 | --- | --- |
-| Atendimento comercial | 0.15–0.35 |
-| Personagem de jogo | 0.40–0.70 |
+| Uso cotidiano: assistentes, tutores, ferramentas, atendimento | 0.15–0.35 |
+| Personagem de jogo ou ficção | 0.40–0.70 |
 | Experimento linguístico | 0.80+ |
+
+(A conversa de concepção citou "atendimento comercial" na primeira faixa; a mesma
+faixa sutil vale para qualquer uso cotidiano.)
 
 A intensidade muda quanta marcação regional é renderizada, nunca as regras
 anti-caricatura. Veja [regional-intensity.md](../specification/regional-intensity.md).

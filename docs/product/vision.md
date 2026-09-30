@@ -2,16 +2,17 @@
 
 ## O problema
 
-Empresas colocam o mesmo agente de IA em muitos lugares. O assistente de vendas de
-uma concessionária em Salvador (BA) e em Recife (PE) deve conhecer os mesmos
-produtos, seguir a mesma política de financiamento e obedecer às mesmas regras —
-mas as pessoas falam de um jeito diferente em cada lugar, e um agente que soa como
-se tivesse sido escrito para outro lugar (ou, pior, como uma caricatura do lugar)
-passa uma impressão errada.
+A mesma IA — um assistente, um tutor, um personagem de jogo, uma ferramenta de
+escrita, um atendente — conversa com gente de muitos lugares. O que ela sabe e as
+regras que segue são as mesmas em todo lugar, mas as pessoas falam de um jeito
+diferente em cada um, e uma IA que soa como se tivesse sido escrita para outro lugar
+(ou, pior, como uma caricatura do lugar) passa uma impressão errada. O caso que deu
+origem ao projeto foi o assistente de vendas de uma concessionária com lojas em
+Salvador (BA) e em Recife (PE): mesmos produtos e políticas, fala diferente.
 
 Hoje as opções são ruins:
 
-- um prompt por empresa × região (`honda-baiano-prompt.txt`, `honda-pernambucano-prompt.txt`, ...), o que cria versões divergentes das regras de negócio e não escala;
+- um prompt por IA × região (`honda-baiano-prompt.txt`, `honda-pernambucano-prompt.txt`, `tutor-baiano`, ...), o que cria versões divergentes das regras e não escala;
 - instruções improvisadas do tipo "fale como alguém daqui", que produzem estereótipos e gírias inventadas;
 - fine-tuning, que é caro, preso a um provedor e cada vez menos disponível.
 
@@ -19,11 +20,16 @@ Hoje as opções são ruins:
 
 > **O Vernáculo é uma especificação, uma biblioteca e um conjunto de ferramentas
 > abertos, self-hosted e independentes de provedor para adicionar localização
-> sociolinguística — camadas de linguagem regional — a agentes de IA.**
+> sociolinguística — camadas de linguagem regional — a qualquer IA.**
 
 ```text
-agente de negócio  +  camada de persona regional  =  agente localizado
+IA hospedeira (qualquer papel)  +  camada de persona regional  =  IA localizada
 ```
+
+Serve a assistentes gerais, tutores, personagens de jogos e ficção, ferramentas de
+escrita, assistentes de voz (em texto), suporte e vendas. Nenhum desses usos é o
+padrão: os packs descrevem a variedade e quem integra decide o uso
+([ADR-0017](../decisions/0017-any-ai-use-case-neutral-packs.md)).
 
 Ele tem quatro ativos, em ordem de importância:
 
@@ -48,7 +54,7 @@ ecossistema de agentes mude completamente.
 - Uma persona é **dado, não prompt**: pode ser validada, versionada, revisada, comparada, herdada e avaliada.
 - Uma persona, vários runtimes: o mesmo pack compila para instruções da OpenAI, uma Agent Skill ou um prompt simples.
 - **Evals e revisão humana** por falantes de cada variedade fazem parte do produto, não são um detalhe posterior. O feedback que geram ("natural", "exagerado", "não reconheço isso", "isso é de outra região") é, por si só, dado de pesquisa valioso.
-- Credibilidade linguística: a granularidade segue a evidência (por exemplo, `pt-BR/ba/salvador` em vez de um "baiano" monolítico), com fontes e licenças registradas por traço.
+- Credibilidade linguística: a granularidade e as afirmações seguem a evidência. Um pack estadual pode listar opções com rótulo estadual, mas não vira uma voz uniforme nem absorve automaticamente traços de uma capital; fontes e limites ficam registrados por forma.
 
 ## Nome
 
@@ -67,5 +73,6 @@ Any AI." Quando usados, "identity" deve ser lido apenas como identidade
 ## Estágio atual
 
 Bootstrap inicial (setembro de 2026): a especificação `v1alpha1`, a implementação de
-referência, a CLI e os adapters existem; **ainda não existe nenhum pack regional
-real** — apenas fixtures sintéticos. Veja o [roadmap](../roadmap/roadmap.md).
+referência, a CLI e os adapters existem; os rascunhos regionais da Bahia (`pt-BR/ba`
+e `pt-BR/ba/salvador`) ainda não foram revisados por falantes. Veja o
+[roadmap](../roadmap/roadmap.md).
