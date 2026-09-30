@@ -9,7 +9,13 @@ export {
   VernaculoError,
 } from "./errors.ts";
 export { entryKey, isPersonaId, languageOfId } from "./ids.ts";
-export { assertIntensity, buildIR, type IROptions, type PersonaIR } from "./ir.ts";
+export {
+  assertIntensity,
+  buildIR,
+  type CorroboratedFeatures,
+  type IROptions,
+  type PersonaIR,
+} from "./ir.ts";
 export { type ParseOptions, parsePersonaYaml } from "./parse.ts";
 export {
   createMemorySource,
@@ -22,4 +28,10 @@ export {
   type SourceEntry,
 } from "./resolve.ts";
 export { type SerializeOptions, serializePersonaYaml } from "./serialize.ts";
-export { checkDocument, type ValidationResult, validatePersonaDocument } from "./validate.ts";
+export {
+  CORROBORATED_MIN_INTENSITY,
+  CORROBORATED_MIN_SOURCES,
+  checkDocument,
+  type ValidationResult,
+  validatePersonaDocument,
+} from "./validate.ts";

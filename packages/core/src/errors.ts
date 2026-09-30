@@ -9,6 +9,8 @@ export type IssueCode =
   | "duplicate-key"
   | "conflicting-forms"
   | "evidence-without-source"
+  | "insufficient-corroboration"
+  | "corroborated-below-min-intensity"
   // Resolution
   | "invalid-id"
   | "persona-not-found"

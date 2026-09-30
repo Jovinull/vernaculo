@@ -11,6 +11,12 @@ import {
 } from "./lists.ts";
 import { validateStructure } from "./parse.ts";
 
+/** A `corroborated` feature needs at least this many distinct sources (docs/specification/provenance.md). */
+export const CORROBORATED_MIN_SOURCES = 2;
+
+/** A `corroborated` feature is never rendered below this intensity (docs/specification/regional-intensity.md). */
+export const CORROBORATED_MIN_INTENSITY = 0.5;
+
 export type ValidationResult =
   | { readonly ok: true; readonly document: PersonaDocument }
   | { readonly ok: false; readonly issues: readonly Issue[] };
@@ -88,6 +94,23 @@ export function checkDocument(document: PersonaDocument, origin?: string): Issue
           code: "evidence-without-source",
           message: `Evidence "${item.evidence}" requires at least one source`,
           path: `${LIST_SPECS[name].pointer}/${index}`,
+          origin,
+        });
+      }
+      if (item.evidence !== "corroborated") return;
+      if (new Set(item.sources ?? []).size < CORROBORATED_MIN_SOURCES) {
+        issues.push({
+          code: "insufficient-corroboration",
+          message: `Evidence "corroborated" requires at least ${CORROBORATED_MIN_SOURCES} distinct sources`,
+          path: `${LIST_SPECS[name].pointer}/${index}`,
+          origin,
+        });
+      }
+      if ((item.minIntensity ?? 0) < CORROBORATED_MIN_INTENSITY) {
+        issues.push({
+          code: "corroborated-below-min-intensity",
+          message: `Evidence "corroborated" requires minIntensity of at least ${CORROBORATED_MIN_INTENSITY}`,
+          path: `${LIST_SPECS[name].pointer}/${index}/minIntensity`,
           origin,
         });
       }

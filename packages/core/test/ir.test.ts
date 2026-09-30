@@ -1,11 +1,26 @@
+import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { assertIntensity, buildIR, type PersonaIR, resolvePersona } from "../src/index.ts";
+import {
+  assertIntensity,
+  buildIR,
+  createMemorySource,
+  type PersonaIR,
+  resolvePersona,
+} from "../src/index.ts";
 import { createDirectorySource } from "../src/node.ts";
-import { fixturesRoot, issueCodes } from "./helpers.ts";
+import { conformanceDir, fixturesRoot, issueCodes } from "./helpers.ts";
 
 const resolved = await resolvePersona(
   "pt-BR/x-fixture/cidade-a",
   createDirectorySource(fixturesRoot),
+);
+
+const corroboratedId = "pt-BR/x-conformance/corroborated";
+const withCorroborated = await resolvePersona(
+  corroboratedId,
+  createMemorySource({
+    [corroboratedId]: readFileSync(`${conformanceDir}/valid/corroborated.yaml`, "utf8"),
+  }),
 );
 
 function positiveForms(ir: PersonaIR): string[] {
@@ -50,6 +65,20 @@ describe("buildIR", () => {
     expect(low).not.toContain("termo-sintético-marcado"); // minIntensity 0.6
     expect(high).toContain("termo-sintético-marcado");
     expect(high).toEqual(expect.arrayContaining(low));
+  });
+
+  it("keeps corroborated forms apart from confirmed ones", () => {
+    const ir = buildIR(withCorroborated, { intensity: 1 });
+    expect(ir.corroborated.vocabulary.preferred.map((item) => item.term)).toEqual([
+      "termo-sintético-corroborado",
+    ]);
+    expect(positiveForms(ir)).not.toContain("termo-sintético-corroborado");
+  });
+
+  it("gates corroborated forms by minIntensity like any other feature", () => {
+    const ir = buildIR(withCorroborated, { intensity: 0.4 });
+    expect(ir.corroborated.vocabulary.preferred).toEqual([]);
+    expect(ir.omitted.belowIntensity).toBe(1);
   });
 
   it("never renders hypotheses, at any intensity", () => {

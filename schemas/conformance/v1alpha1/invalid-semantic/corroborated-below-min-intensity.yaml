@@ -1,0 +1,28 @@
+# expect: corroborated-below-min-intensity
+# reason: corroborated features are never rendered below intensity 0.5, so minIntensity must be >= 0.5.
+apiVersion: vernaculo.dev/v1alpha1
+kind: Persona
+metadata:
+  id: pt-BR/x-conformance/invalid
+  name: Conformance — invalid
+  language: pt-BR
+  version: 0.1.0
+  maturity: fixture
+regionality:
+  defaultIntensity: 0.3
+linguistics:
+  vocabulary:
+    preferred:
+      - term: termo-sintético-a
+        evidence: corroborated
+        sources: [synthetic-newspaper-a, synthetic-newspaper-b]
+provenance:
+  sources:
+    - id: synthetic-newspaper-a
+      type: other
+      title: Synthetic newspaper A
+      usage: consulted
+    - id: synthetic-newspaper-b
+      type: other
+      title: Synthetic newspaper B
+      usage: consulted

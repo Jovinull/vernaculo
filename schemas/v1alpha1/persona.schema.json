@@ -85,8 +85,8 @@
       "enum": ["fixture", "draft", "reviewed"]
     },
     "evidence": {
-      "description": "attested: documentado em fontes citadas. reported: relatado por falantes/revisores (cite a revisão como fonte). hypothesis: não confirmado; compiladores NÃO DEVEM renderizá-lo. synthetic: dado de teste inventado; permitido apenas em personas fixture.",
-      "enum": ["attested", "reported", "hypothesis", "synthetic"]
+      "description": "attested: documentado em fonte de pesquisa ou referência. reported: confirmado em revisão por falantes (cite a revisão). corroborated: quando não houver fonte para attested, duas fontes públicas independentes, ao menos uma local e com base de evidência independente, descrevem a forma no mesmo sentido; exige minIntensity >= 0.5 e é renderizado à parte, sem revisão estruturada por falantes. Indica convergência documental, não frequência, exclusividade regional ou naturalidade geral. hypothesis: não confirmado; compiladores NÃO DEVEM renderizá-lo. synthetic: dado de teste inventado; permitido apenas em personas fixture.",
+      "enum": ["attested", "reported", "corroborated", "hypothesis", "synthetic"]
     },
     "sourceRefs": {
       "description": "Ids de entradas de provenance.sources (desta persona ou de um ancestral).",

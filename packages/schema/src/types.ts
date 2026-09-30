@@ -19,12 +19,13 @@ export const MATURITY_LEVELS: readonly ["fixture", "draft", "reviewed"] = [
 ];
 export type Maturity = (typeof MATURITY_LEVELS)[number];
 
-export const EVIDENCE_LEVELS: readonly ["attested", "reported", "hypothesis", "synthetic"] = [
+export const EVIDENCE_LEVELS: readonly [
   "attested",
   "reported",
+  "corroborated",
   "hypothesis",
   "synthetic",
-];
+] = ["attested", "reported", "corroborated", "hypothesis", "synthetic"];
 export type Evidence = (typeof EVIDENCE_LEVELS)[number];
 
 export const ANTI_PATTERN_CATEGORIES: readonly [

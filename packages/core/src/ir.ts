@@ -51,6 +51,12 @@ export interface PersonaIR {
     readonly disagreements: readonly PragmaticForm[];
     readonly closings: readonly PragmaticForm[];
   };
+  /**
+   * Selected features whose evidence is `corroborated`: described alike by
+   * independent public sources, not yet confirmed by speakers. They never appear
+   * in the lists above, so every target presents them apart, as unconfirmed.
+   */
+  readonly corroborated: CorroboratedFeatures;
   readonly examples: readonly Example[];
   /** Always included, at every intensity. */
   readonly antiPatterns: readonly AntiPattern[];
@@ -60,6 +66,17 @@ export interface PersonaIR {
     readonly belowIntensity: number;
     readonly hypotheses: number;
   };
+}
+
+/** The `corroborated` part of a selection, grouped like the confirmed features. */
+export interface CorroboratedFeatures {
+  readonly vocabulary: {
+    readonly preferred: readonly LexicalItem[];
+    readonly contextual: readonly ContextualItem[];
+  };
+  readonly discourseMarkers: readonly DiscourseMarker[];
+  readonly morphosyntax: readonly MorphosyntaxPattern[];
+  readonly pragmatics: PersonaIR["pragmatics"];
 }
 
 export interface IROptions {
@@ -86,6 +103,7 @@ export function assertIntensity(value: unknown): number {
  * - intensity 0 renders no regional feature (neutral language);
  * - `hypothesis` features are never rendered;
  * - a feature is rendered when intensity > 0 and `minIntensity` (default 0) <= intensity;
+ * - `corroborated` features are rendered by the same rule, but kept in `corroborated`;
  * - an example is rendered when intensity > 0 and its `intensity` (default 0) <= intensity;
  * - discouraged forms and anti-patterns are always rendered.
  */
@@ -107,6 +125,29 @@ export function buildIR(resolved: ResolvedPersona, options: IROptions = {}): Per
     });
   }
 
+  const preferred = select(lists.preferred);
+  const contextual = select(lists.contextual);
+  const markers = select(lists.markers);
+  const patterns = select(lists.patterns);
+  const pragmatics = {
+    addressForms: select(lists.addressForms),
+    greetings: select(lists.greetings),
+    acknowledgements: select(lists.acknowledgements),
+    disagreements: select(lists.disagreements),
+    closings: select(lists.closings),
+  };
+  const confirmed = <T extends FeatureBase>(items: T[]) =>
+    items.filter((item) => item.evidence !== "corroborated");
+  const corroborated = <T extends FeatureBase>(items: T[]) =>
+    items.filter((item) => item.evidence === "corroborated");
+  const pragmaticsWith = (pick: <T extends FeatureBase>(items: T[]) => T[]) => ({
+    addressForms: pick(pragmatics.addressForms),
+    greetings: pick(pragmatics.greetings),
+    acknowledgements: pick(pragmatics.acknowledgements),
+    disagreements: pick(pragmatics.disagreements),
+    closings: pick(pragmatics.closings),
+  });
+
   const ir: PersonaIR = {
     persona: {
       id: document.metadata.id,
@@ -121,18 +162,18 @@ export function buildIR(resolved: ResolvedPersona, options: IROptions = {}): Per
     intensity,
     phoneticSpelling: document.linguistics?.orthography?.phoneticSpelling ?? "avoid",
     vocabulary: {
-      preferred: select(lists.preferred),
-      contextual: select(lists.contextual),
+      preferred: confirmed(preferred),
+      contextual: confirmed(contextual),
       discouraged: lists.discouraged,
     },
-    discourseMarkers: select(lists.markers),
-    morphosyntax: select(lists.patterns),
-    pragmatics: {
-      addressForms: select(lists.addressForms),
-      greetings: select(lists.greetings),
-      acknowledgements: select(lists.acknowledgements),
-      disagreements: select(lists.disagreements),
-      closings: select(lists.closings),
+    discourseMarkers: confirmed(markers),
+    morphosyntax: confirmed(patterns),
+    pragmatics: pragmaticsWith(confirmed),
+    corroborated: {
+      vocabulary: { preferred: corroborated(preferred), contextual: corroborated(contextual) },
+      discourseMarkers: corroborated(markers),
+      morphosyntax: corroborated(patterns),
+      pragmatics: pragmaticsWith(corroborated),
     },
     examples: lists.examples.filter(
       (example) => intensity > 0 && (example.intensity ?? 0) <= intensity,

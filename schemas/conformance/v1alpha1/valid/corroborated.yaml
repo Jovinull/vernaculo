@@ -1,0 +1,30 @@
+# A corroborated feature: at least two distinct sources and minIntensity >= 0.5.
+# Renderers present it apart, as a form not yet confirmed by speakers.
+apiVersion: vernaculo.dev/v1alpha1
+kind: Persona
+metadata:
+  id: pt-BR/x-conformance/corroborated
+  name: Conformance — corroborated
+  language: pt-BR
+  version: 0.1.0
+  maturity: fixture
+regionality:
+  defaultIntensity: 0.3
+linguistics:
+  vocabulary:
+    preferred:
+      - term: termo-sintético-corroborado
+        meaning: Synthetic form described alike by two public sources.
+        evidence: corroborated
+        sources: [synthetic-newspaper-a, synthetic-newspaper-b]
+        minIntensity: 0.5
+provenance:
+  sources:
+    - id: synthetic-newspaper-a
+      type: other
+      title: Synthetic newspaper A
+      usage: consulted
+    - id: synthetic-newspaper-b
+      type: other
+      title: Synthetic newspaper B
+      usage: consulted
