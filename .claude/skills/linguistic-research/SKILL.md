@@ -24,11 +24,12 @@ description: Cria, amplia ou revisa um pack de persona regional do Vernáculo (p
 7. **Maturidade honesta**: trabalho novo é `draft`. A revisão humana por falantes é sempre recomendada e nunca obrigatória (ADR-0015): recomende-a sempre, nunca bloqueie por causa dela. Defina `reviewed` só quando uma revisão realmente aconteceu (`docs/linguistic/human-review.md`) e cite-a. Nunca descreva um pack como validado, natural ou representativo sem evidência.
 8. **Licença**: packs da biblioteca são Apache-2.0 (`metadata.license: Apache-2.0`, ADR-0014).
 9. **Idioma**: o conteúdo da persona fica no idioma da variedade; a documentação da pesquisa, em português (ADR-0016).
+10. **Nenhum caso de uso pressuposto** (ADR-0017): o pack serve a qualquer IA. Nada de "cliente", "venda", "atendimento" como moldura de traços, contextos, motivos, exemplos ou antipadrões; descreva a adequação pelo registro e pela relação (formal/informal, desconhecido, mais velho, próximo). Exemplos cobrem situações variadas.
 
 ## Procedimento
 
-1. Delimite a variedade e o uso pretendido (padrão: atendimento, intensidade sutil).
-2. Reúna traços candidatos com fontes; separe evidência de hipótese em uma nota de pesquisa.
+1. Delimite a variedade (padrão: uma cidade). Não delimite um caso de uso: o pack serve a qualquer IA; a intensidade padrão é sutil por prudência.
+2. Reúna traços candidatos com fontes; separe evidência de hipótese no `RESEARCH.md` do pack.
 3. Escreva/amplie `personas/<id>/persona.yaml` (veja `docs/specification/persona-format.md`): `minIntensity` nos traços marcados, itens contextuais com contextos explícitos, formas desencorajadas com motivo.
 4. Acrescente exemplos positivos (neutro vs. com a camada, intensidade declarada) e antipadrões (excesso, grafia fonética, estereótipo, outra região, formas inventadas).
 5. `pnpm build && pnpm vernaculo validate` e depois `pnpm vernaculo compile <id> --intensity 0|padrão|1`; leia a saída com olhar crítico: a intensidade 1 continua não sendo caricatura? o 0 é neutro?

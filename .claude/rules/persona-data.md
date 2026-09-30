@@ -8,6 +8,7 @@ paths:
 
 # Regras para dados de persona
 
+- Packs da biblioteca (`personas/`) descrevem a variedade para qualquer IA, sem pressupor caso de uso (ADR-0017): nada de "cliente", "venda" ou "atendimento" como moldura; adequação descrita por registro e relação (formal/informal, desconhecido, mais velho, próximo). Personas de projeto (como `examples/project-persona`) podem, sim, ser específicas de um uso.
 - Só traços de linguagem observáveis. Nunca personalidade, humor, inteligência, simpatia, agressividade, escolaridade, renda, classe social, profissão, religião, política ou comportamento — nem em notas ou exemplos.
 - Nunca invente formas regionais. Traços reais precisam de `evidence` (`attested`/`reported` com `sources`); formas não confirmadas ficam como `hypothesis` (nunca renderizadas).
 - Evidência `synthetic` e palavras inventadas só são permitidas em `fixtures/` e nos arquivos de conformidade, sempre com `maturity: fixture`, claramente marcadas como não sendo conteúdo linguístico, em segmentos de id `x-`.

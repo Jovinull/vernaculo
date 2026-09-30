@@ -2,10 +2,11 @@
 
 O Vernáculo é uma especificação + conjunto de ferramentas abertos, self-hosted e
 independentes de provedor que adiciona **camadas de linguagem regional** (localização
-sociolinguística) a agentes de IA existentes: `agente de negócio + camada de persona
-= agente localizado`. Bootstrap inicial: especificação `vernaculo.dev/v1alpha1`,
-pacotes e CLI funcionando; **ainda não existe nenhum pack regional real** (só
-fixtures sintéticos). Repositório: https://github.com/Jovinull/vernaculo.
+sociolinguística) a **qualquer IA** (assistente, tutor, personagem, ferramenta de
+escrita, atendimento...): `IA hospedeira + camada de persona = IA localizada`. Bootstrap inicial: especificação `vernaculo.dev/v1alpha1`,
+pacotes e CLI funcionando; há rascunhos bibliográficos para a Bahia em escopo estadual
+(`pt-BR/ba`) e para Salvador (`pt-BR/ba/salvador`), ainda sem revisão por falantes.
+Repositório: https://github.com/Jovinull/vernaculo.
 
 ## Onde o conhecimento fica
 
@@ -26,6 +27,7 @@ fixtures sintéticos). Repositório: https://github.com/Jovinull/vernaculo.
 - **Independência de provedor**: `schema`, `core` e `compiler` nunca importam SDKs/tipos de provedores. Direção de dependências: `schema ← core ← compiler ← openai, skills ← cli`. A OpenAI é só o primeiro adapter; MCP e `SKILL.md` são targets, nunca o formato canônico.
 - **Compilação determinística, sem LLM**: mesma entrada ⇒ mesmos bytes. Nada de timestamps ou aleatoriedade nas saídas.
 - **O formato é neutro de linguagem**: o JSON Schema em `schemas/` é normativo; o Zod o espelha. O significado do formato nunca pode depender de código TypeScript.
+- **Qualquer IA, nenhum caso de uso pressuposto** (ADR-0017): packs descrevem a variedade, não um uso; papel, domínio e ajustes de uso ficam na IA hospedeira ou numa persona de projeto; o texto enviado ao modelo não supõe papel.
 - **Só camada de linguagem**: personas nunca descrevem personalidade, humor, inteligência, escolaridade, renda, classe social, profissão, religião, política ou comportamento; a saída renderizada sempre carrega as regras de base (`docs/linguistic/anti-caricature.md`).
 - **Evidência antes de afirmações**: nunca chame um pack/saída de validado, natural, representativo, livre de estereótipos ou pronto para produção sem evidência de revisão humana + evals. Nunca invente regionalismos nem conteúdo regional real; dados sintéticos só em `fixtures/`, com `maturity: fixture`.
 - **Revisão recomendada, nunca obrigatória** (ADR-0015): sem portões nem limiares de revisão; sempre recomende revisão por falantes para packs `draft` (docs, PRs, dicas da CLI). `reviewed` só quando uma revisão realmente aconteceu.
@@ -73,7 +75,7 @@ pnpm changeset             # quando o comportamento público de um pacote public
 
 - `packages/{schema,core,compiler,openai,skills,cli}` — entrada em `src/index.ts`; `@vernaculo/core/node` concentra o código de sistema de arquivos.
 - `schemas/v1alpha1/persona.schema.json` + `schemas/conformance/v1alpha1/` (valid, invalid-schema, invalid-semantic, resolution).
-- `fixtures/personas/` personas sintéticas (`pt-BR/x-fixture/...`); `personas/` biblioteca real (vazia); `examples/`.
+- `fixtures/personas/` personas sintéticas (`pt-BR/x-fixture/...`); `personas/` biblioteca real (cada pack com `persona.yaml` + `RESEARCH.md`); `examples/` (inclui `agent-lab`, o laboratório com modelo real, que lê `examples/agent-lab/.env`).
 
 ## Convenções de qualidade
 
