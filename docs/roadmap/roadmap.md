@@ -24,6 +24,7 @@ Legenda: ✅ feito · 🔜 próximo · 📋 planejado · 💡 ideia (não é com
 | Laboratório local de agente (`examples/agent-lab`): várias IAs hospedeiras e cenários com e sem a camada, relatório e folha de revisão cega | ✅ |
 | Reconhecimento como dimensão de avaliação: pergunta cega "de onde parece ser?" no laboratório e na revisão humana | ✅ |
 | Questionário para falantes de Salvador (`SPEAKER-SURVEY.md`) para confirmar formas e hipóteses | ✅ |
+| Nível de evidência `corroborated` (fontes públicas independentes; renderizado à parte, a partir de 0.5) — ADR-0018 | ✅ |
 | Autorrevisar exemplos e compilar o pack estadual em intensidades diferentes | ✅ |
 | Ampliar corpus contemporâneo de diferentes regiões da Bahia para buscar traços compartilhados com melhor cobertura | 🔜 |
 | Rodar o laboratório com um modelo real, quando houver credenciais locais disponíveis | 📋 |
